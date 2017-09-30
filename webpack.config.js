@@ -4,6 +4,10 @@ module.exports = {
     entry: {
         app: './src/tokenAuth.js',
     },
+    output: {
+        library: 'ReduxTokenAuth',
+        libraryTarget: 'umd',
+    },
     module: {
         rules: [
             {
