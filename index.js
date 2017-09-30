@@ -1,3 +1,2 @@
-import tokenAuth from './tokenAuth';
 
-export default tokenAuth;
+module.exports = require('dist/app.bundle.js');
