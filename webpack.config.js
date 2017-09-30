@@ -5,6 +5,8 @@ module.exports = {
         app: './src/tokenAuth.js',
     },
     output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
         library: 'ReduxTokenAuth',
         libraryTarget: 'umd',
     },
@@ -27,8 +29,4 @@ module.exports = {
         ],
     },
     plugins: [],
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-    },
 };
