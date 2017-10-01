@@ -1378,7 +1378,7 @@ var buffers = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.authorizedFn = exports.saga = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
+exports.reducer = exports.authorizedFn = exports.saga = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.authUser = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
 
 var _extends2 = __webpack_require__(16);
 
@@ -1408,13 +1408,10 @@ var AUTH_REFRESH_TOKEN_FAILURE = 'AUTH_REFRESH_TOKEN_FAILURE';
 
 var reducerName = 'auth';
 
-var accessToken = function accessToken(state) {
-    return state[reducerName].tokens.accessToken;
+var authTokens = function authTokens(state) {
+    return state[reducerName].tokens;
 };
-var refreshToken = function refreshToken(state) {
-    return state[reducerName].tokens.refreshToken;
-};
-var authUser = function authUser(state) {
+var authUser = exports.authUser = function authUser(state) {
     return state[reducerName].user;
 };
 var isRefreshing = function isRefreshing(state) {
@@ -1432,10 +1429,42 @@ var isLoggingIn = exports.isLoggingIn = function isLoggingIn(state) {
 
 var remoteLogin = null;
 var remoteRefreshTokens = null;
+var detectShouldRefresh = null;
 
-var configure = exports.configure = function configure(loginFn, refreshTokensFn) {
-    remoteLogin = loginFn;
-    remoteRefreshTokens = refreshTokensFn;
+var configure = exports.configure = function configure(config) {
+    var authenticate = config.authenticate,
+        refreshTokens = config.refreshTokens,
+        shouldRefresh = config.shouldRefresh;
+
+
+    if (typeof authenticate !== 'function') {
+        remoteLogin = function remoteLogin(credentials) {
+            logger.error('Cannot authenticate use with ' + credentials + ': Supply authenticate function first.');
+            return {
+                user: null,
+                tokens: {}
+            };
+        };
+    } else {
+        remoteLogin = authenticate;
+    }
+
+    if (typeof refreshTokens !== 'function') {
+        remoteRefreshTokens = function remoteRefreshTokens(tokens) {
+            logger.error('Cannot refresh tokens. No refresh tokens fn supplied.');
+            return tokens;
+        };
+    } else {
+        remoteRefreshTokens = refreshTokens;
+    }
+
+    if (typeof shouldRefresh !== 'function') {
+        detectShouldRefresh = function detectShouldRefresh(error, response) {
+            return !!error;
+        };
+    } else {
+        remoteRefreshTokens = refreshTokens;
+    }
 };
 
 // -----------------------------------------------------------------------------
@@ -1557,32 +1586,32 @@ var saga = /*#__PURE__*/exports.saga = _regenerator2.default.mark(function saga(
 });
 
 var processTokenRefresh = /*#__PURE__*/_regenerator2.default.mark(function processTokenRefresh() {
-    var rToken, tokens;
+    var tokens, refreshedTokens;
     return _regenerator2.default.wrap(function processTokenRefresh$(_context3) {
         while (1) {
             switch (_context3.prev = _context3.next) {
                 case 0:
                     _context3.next = 2;
-                    return (0, _effects.select)(refreshToken);
+                    return (0, _effects.select)(authTokens);
 
                 case 2:
-                    rToken = _context3.sent;
+                    tokens = _context3.sent;
                     _context3.next = 5;
-                    return (0, _effects.put)(startTokenRefresh(rToken));
+                    return (0, _effects.put)(startTokenRefresh(tokens));
 
                 case 5:
                     _context3.prev = 5;
                     _context3.next = 8;
-                    return remoteRefreshTokens(rToken);
+                    return remoteRefreshTokens(tokens);
 
                 case 8:
-                    tokens = _context3.sent;
+                    refreshedTokens = _context3.sent;
                     _context3.next = 11;
-                    return (0, _effects.put)(stopTokenRefresh(null, tokens));
+                    return (0, _effects.put)(stopTokenRefresh(null, refreshedTokens));
 
                 case 11:
                     _context3.next = 13;
-                    return (0, _effects.put)(setTokens(tokens));
+                    return (0, _effects.put)(setTokens(refreshedTokens));
 
                 case 13:
                     _context3.next = 21;
@@ -1606,46 +1635,39 @@ var processTokenRefresh = /*#__PURE__*/_regenerator2.default.mark(function proce
     }, processTokenRefresh, this, [[5, 15]]);
 });
 
-var authorizedFn = /*#__PURE__*/exports.authorizedFn = _regenerator2.default.mark(function authorizedFn(detectShouldRefresh, fn) {
+var authorizedFn = /*#__PURE__*/exports.authorizedFn = _regenerator2.default.mark(function authorizedFn(fn) {
     var processFn, result;
     return _regenerator2.default.wrap(function authorizedFn$(_context5) {
         while (1) {
             switch (_context5.prev = _context5.next) {
                 case 0:
                     processFn = /*#__PURE__*/_regenerator2.default.mark(function processFn() {
-                        var aToken, rToken, user;
+                        var tokens, user;
                         return _regenerator2.default.wrap(function processFn$(_context4) {
                             while (1) {
                                 switch (_context4.prev = _context4.next) {
                                     case 0:
                                         _context4.next = 2;
-                                        return (0, _effects.select)(accessToken);
+                                        return (0, _effects.select)(authTokens);
 
                                     case 2:
-                                        aToken = _context4.sent;
+                                        tokens = _context4.sent;
                                         _context4.next = 5;
-                                        return (0, _effects.select)(refreshToken);
-
-                                    case 5:
-                                        rToken = _context4.sent;
-                                        _context4.next = 8;
                                         return (0, _effects.select)(authUser);
 
-                                    case 8:
+                                    case 5:
                                         user = _context4.sent;
-                                        _context4.next = 11;
+                                        _context4.next = 8;
                                         return (0, _effects.call)(function () {
-                                            return fn({
-                                                accessToken: aToken,
-                                                refreshToken: rToken,
+                                            return fn((0, _extends3.default)({}, tokens, {
                                                 user: user
-                                            });
+                                            }));
                                         });
 
-                                    case 11:
+                                    case 8:
                                         return _context4.abrupt('return', _context4.sent);
 
-                                    case 12:
+                                    case 9:
                                     case 'end':
                                         return _context4.stop();
                                 }

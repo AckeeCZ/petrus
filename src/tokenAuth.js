@@ -17,13 +17,10 @@ const AUTH_REFRESH_TOKEN_FAILURE = 'AUTH_REFRESH_TOKEN_FAILURE';
 
 const reducerName = 'auth';
 
-const accessToken = (state) => {
-    return state[reducerName].tokens.accessToken;
+const authTokens = (state) => {
+    return state[reducerName].tokens;
 };
-const refreshToken = (state) => {
-    return state[reducerName].tokens.refreshToken;
-};
-const authUser = (state) => {
+export const authUser = (state) => {
     return state[reducerName].user;
 };
 const isRefreshing = (state) => {
@@ -41,10 +38,43 @@ export const isLoggingIn = (state) => {
 
 let remoteLogin = null;
 let remoteRefreshTokens = null;
+let detectShouldRefresh = null;
 
-export const configure = (loginFn, refreshTokensFn) => {
-    remoteLogin = loginFn;
-    remoteRefreshTokens = refreshTokensFn;
+export const configure = (config) => {
+    let {
+        authenticate,
+        refreshTokens,
+        shouldRefresh,
+    } = config;
+
+    if (typeof authenticate !== 'function') {
+        remoteLogin = (credentials) => {
+            logger.error(`Cannot authenticate use with ${credentials}: Supply authenticate function first.`);
+            return {
+                user: null,
+                tokens: {},
+            };
+        };
+    } else {
+        remoteLogin = authenticate;
+    }
+
+    if (typeof refreshTokens !== 'function') {
+        remoteRefreshTokens = (tokens) => {
+            logger.error(`Cannot refresh tokens. No refresh tokens fn supplied.`);
+            return tokens;
+        }
+    } else {
+        remoteRefreshTokens = refreshTokens;
+    }
+
+    if (typeof shouldRefresh !== 'function') {
+        detectShouldRefresh = (error, response) => {
+            return !!error;
+        }
+    } else {
+        remoteRefreshTokens = refreshTokens;
+    }
 };
 
 // -----------------------------------------------------------------------------
@@ -114,29 +144,27 @@ export const saga = function* () {
 };
 
 const processTokenRefresh = function*() {
-    const rToken = yield select(refreshToken)
-    yield put(startTokenRefresh(rToken));
+    const tokens = yield select(authTokens);
+    yield put(startTokenRefresh(tokens));
     try {
-        const tokens = yield remoteRefreshTokens(rToken);
-        yield put(stopTokenRefresh(null, tokens));
-        yield put(setTokens(tokens));
+        const refreshedTokens = yield remoteRefreshTokens(tokens);
+        yield put(stopTokenRefresh(null, refreshedTokens));
+        yield put(setTokens(refreshedTokens));
     } catch (refreshError) {
         yield put(stopTokenRefresh(refreshError));
         yield put(logout());
     }
 }
 
-export const authorizedFn = function*(detectShouldRefresh, fn) {
+export const authorizedFn = function*(fn) {
     const processFn = function*() {
-        const aToken = yield select(accessToken);
-        const rToken = yield select(refreshToken);
+        const tokens = yield select(authTokens);
         const user = yield select(authUser);
         return yield call(() => fn({
-            accessToken: aToken,
-            refreshToken: rToken,
+            ...tokens,
             user,
         }));
-    }
+    };
 
     // If token refreshing is being processed, wait for it to finish
     if (yield select(isRefreshing)) {
