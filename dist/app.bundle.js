@@ -1378,7 +1378,7 @@ var buffers = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.authorizedFn = exports.saga = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
+exports.reducer = exports.authorizedFn = exports.saga = exports.refreshTokens = exports.setTokens = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
 
 var _extends2 = __webpack_require__(16);
 
@@ -1405,6 +1405,7 @@ var SET_AUTH_TOKENS = 'SET_AUTH_TOKENS';
 var AUTH_REFRESH_TOKEN = 'AUTH_REFRESH_TOKEN';
 var AUTH_REFRESH_TOKEN_SUCCESS = 'AUTH_REFRESH_TOKEN_SUCCESS';
 var AUTH_REFRESH_TOKEN_FAILURE = 'AUTH_REFRESH_TOKEN_FAILURE';
+var PROCESS_TOKEN_REFRESH = 'PROCESS_TOKEN_REFRESH';
 
 var reducerName = 'auth';
 
@@ -1495,10 +1496,16 @@ var logout = exports.logout = function logout() {
     };
 };
 
-var setTokens = function setTokens(tokens) {
+var setTokens = exports.setTokens = function setTokens(tokens) {
     return {
         type: SET_AUTH_TOKENS,
         tokens: tokens
+    };
+};
+
+var refreshTokens = exports.refreshTokens = function refreshTokens() {
+    return {
+        type: PROCESS_TOKEN_REFRESH
     };
 };
 
@@ -1524,115 +1531,127 @@ var stopTokenRefresh = function stopTokenRefresh(error) {
     };
 };
 
+var processTokenRefresh = /*#__PURE__*/_regenerator2.default.mark(function processTokenRefresh() {
+    var tokens, refreshedTokens;
+    return _regenerator2.default.wrap(function processTokenRefresh$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    _context.next = 2;
+                    return (0, _effects.select)(authTokens);
+
+                case 2:
+                    tokens = _context.sent;
+                    _context.next = 5;
+                    return (0, _effects.put)(startTokenRefresh(tokens));
+
+                case 5:
+                    _context.prev = 5;
+                    _context.next = 8;
+                    return remoteRefreshTokens(tokens);
+
+                case 8:
+                    refreshedTokens = _context.sent;
+                    _context.next = 11;
+                    return (0, _effects.put)(stopTokenRefresh(null, refreshedTokens));
+
+                case 11:
+                    _context.next = 13;
+                    return (0, _effects.put)(setTokens(refreshedTokens));
+
+                case 13:
+                    _context.next = 21;
+                    break;
+
+                case 15:
+                    _context.prev = 15;
+                    _context.t0 = _context['catch'](5);
+                    _context.next = 19;
+                    return (0, _effects.put)(stopTokenRefresh(_context.t0));
+
+                case 19:
+                    _context.next = 21;
+                    return (0, _effects.put)(logout());
+
+                case 21:
+                case 'end':
+                    return _context.stop();
+            }
+        }
+    }, processTokenRefresh, this, [[5, 15]]);
+});
+
 var saga = /*#__PURE__*/exports.saga = _regenerator2.default.mark(function saga() {
     var handleLogin;
-    return _regenerator2.default.wrap(function saga$(_context2) {
+    return _regenerator2.default.wrap(function saga$(_context3) {
         while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
                 case 0:
                     handleLogin = /*#__PURE__*/_regenerator2.default.mark(function handleLogin(action) {
                         var _ref, user, tokens;
 
-                        return _regenerator2.default.wrap(function handleLogin$(_context) {
+                        return _regenerator2.default.wrap(function handleLogin$(_context2) {
                             while (1) {
-                                switch (_context.prev = _context.next) {
+                                switch (_context2.prev = _context2.next) {
                                     case 0:
-                                        _context.prev = 0;
-                                        _context.next = 3;
+                                        _context2.prev = 0;
+                                        _context2.next = 3;
                                         return (0, _effects.call)(function () {
                                             return remoteLogin(action.credentials);
                                         });
 
                                     case 3:
-                                        _ref = _context.sent;
+                                        _ref = _context2.sent;
                                         user = _ref.user;
                                         tokens = _ref.tokens;
-                                        _context.next = 8;
+                                        _context2.next = 8;
                                         return (0, _effects.put)(stopLogin(null, user));
 
                                     case 8:
-                                        _context.next = 10;
+                                        _context2.next = 10;
                                         return (0, _effects.put)(setTokens(tokens));
 
                                     case 10:
-                                        _context.next = 17;
+                                        _context2.next = 17;
                                         break;
 
                                     case 12:
-                                        _context.prev = 12;
-                                        _context.t0 = _context['catch'](0);
-                                        _context.next = 16;
-                                        return (0, _effects.put)(stopLogin(_context.t0));
+                                        _context2.prev = 12;
+                                        _context2.t0 = _context2['catch'](0);
+                                        _context2.next = 16;
+                                        return (0, _effects.put)(stopLogin(_context2.t0));
 
                                     case 16:
-                                        logger.error('Failed to login user: ' + _context.t0.message);
+                                        logger.error('Failed to login user: ' + _context2.t0.message);
 
                                     case 17:
                                     case 'end':
-                                        return _context.stop();
+                                        return _context2.stop();
                                 }
                             }
                         }, handleLogin, this, [[0, 12]]);
                     });
-                    _context2.next = 3;
+                    _context3.t0 = _effects.all;
+                    _context3.next = 4;
                     return (0, _effects.takeEvery)(AUTH_LOGIN, handleLogin);
 
-                case 3:
-                case 'end':
-                    return _context2.stop();
-            }
-        }
-    }, saga, this);
-});
+                case 4:
+                    _context3.t1 = _context3.sent;
+                    _context3.next = 7;
+                    return (0, _effects.takeEvery)(PROCESS_TOKEN_REFRESH, processTokenRefresh);
 
-var processTokenRefresh = /*#__PURE__*/_regenerator2.default.mark(function processTokenRefresh() {
-    var tokens, refreshedTokens;
-    return _regenerator2.default.wrap(function processTokenRefresh$(_context3) {
-        while (1) {
-            switch (_context3.prev = _context3.next) {
-                case 0:
-                    _context3.next = 2;
-                    return (0, _effects.select)(authTokens);
-
-                case 2:
-                    tokens = _context3.sent;
-                    _context3.next = 5;
-                    return (0, _effects.put)(startTokenRefresh(tokens));
-
-                case 5:
-                    _context3.prev = 5;
-                    _context3.next = 8;
-                    return remoteRefreshTokens(tokens);
-
-                case 8:
-                    refreshedTokens = _context3.sent;
+                case 7:
+                    _context3.t2 = _context3.sent;
+                    _context3.t3 = [_context3.t1, _context3.t2];
                     _context3.next = 11;
-                    return (0, _effects.put)(stopTokenRefresh(null, refreshedTokens));
+                    return (0, _context3.t0)(_context3.t3);
 
                 case 11:
-                    _context3.next = 13;
-                    return (0, _effects.put)(setTokens(refreshedTokens));
-
-                case 13:
-                    _context3.next = 21;
-                    break;
-
-                case 15:
-                    _context3.prev = 15;
-                    _context3.t0 = _context3['catch'](5);
-                    _context3.next = 19;
-                    return (0, _effects.put)(stopTokenRefresh(_context3.t0));
-
-                case 19:
-                    _context3.next = 21;
-                    return (0, _effects.put)(logout());
-
-                case 21:
                 case 'end':
                     return _context3.stop();
             }
         }
-    }, processTokenRefresh, this, [[5, 15]]);
+    }, saga, this);
 });
 
 var authorizedFn = /*#__PURE__*/exports.authorizedFn = _regenerator2.default.mark(function authorizedFn(fn) {

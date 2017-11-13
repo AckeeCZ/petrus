@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select, take } from 'redux-saga/effects';
+import { takeEvery, call, put, select, take, all} from 'redux-saga/effects';
 
 const logger = console;
 
@@ -13,6 +13,7 @@ const SET_AUTH_TOKENS = 'SET_AUTH_TOKENS';
 const AUTH_REFRESH_TOKEN = 'AUTH_REFRESH_TOKEN';
 const AUTH_REFRESH_TOKEN_SUCCESS = 'AUTH_REFRESH_TOKEN_SUCCESS';
 const AUTH_REFRESH_TOKEN_FAILURE = 'AUTH_REFRESH_TOKEN_FAILURE';
+const PROCESS_TOKEN_REFRESH = 'PROCESS_TOKEN_REFRESH';
 
 
 const reducerName = 'auth';
@@ -103,9 +104,13 @@ export const logout = () => ({
     type: AUTH_LOGOUT,
 });
 
-const setTokens = (tokens) => ({
+export const setTokens = (tokens) => ({
     type: SET_AUTH_TOKENS,
     tokens,
+});
+
+export const refreshTokens = () => ({
+    type: PROCESS_TOKEN_REFRESH,
 });
 
 const startTokenRefresh = (refreshToken) => ({
@@ -126,6 +131,19 @@ const stopTokenRefresh = (error, tokens = {}) => {
     };
 };
 
+const processTokenRefresh = function*() {
+    const tokens = yield select(authTokens);
+    yield put(startTokenRefresh(tokens));
+    try {
+        const refreshedTokens = yield remoteRefreshTokens(tokens);
+        yield put(stopTokenRefresh(null, refreshedTokens));
+        yield put(setTokens(refreshedTokens));
+    } catch (refreshError) {
+        yield put(stopTokenRefresh(refreshError));
+        yield put(logout());
+    }
+}
+
 export const saga = function* () {
     const handleLogin = function*(action) {
         try {
@@ -140,21 +158,11 @@ export const saga = function* () {
             logger.error(`Failed to login user: ${e.message}`);
         }
     }
-    yield takeEvery(AUTH_LOGIN, handleLogin);
+    yield all([
+        yield takeEvery(AUTH_LOGIN, handleLogin),
+        yield takeEvery(PROCESS_TOKEN_REFRESH, processTokenRefresh),
+    ]);
 };
-
-const processTokenRefresh = function*() {
-    const tokens = yield select(authTokens);
-    yield put(startTokenRefresh(tokens));
-    try {
-        const refreshedTokens = yield remoteRefreshTokens(tokens);
-        yield put(stopTokenRefresh(null, refreshedTokens));
-        yield put(setTokens(refreshedTokens));
-    } catch (refreshError) {
-        yield put(stopTokenRefresh(refreshError));
-        yield put(logout());
-    }
-}
 
 export const authorizedFn = function*(fn) {
     const processFn = function*() {
