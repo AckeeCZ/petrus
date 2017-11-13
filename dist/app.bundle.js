@@ -1378,7 +1378,7 @@ var buffers = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.authorizedFn = exports.saga = exports.refreshTokens = exports.setTokens = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
+exports.reducer = exports.authorizedFn = exports.saga = exports.refreshTokens = exports.setTokens = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.SET_AUTH_TOKENS = exports.AUTH_LOGOUT = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
 
 var _extends2 = __webpack_require__(16);
 
@@ -1398,9 +1398,9 @@ var AUTH_LOGIN = 'AUTH_LOGIN';
 var AUTH_LOGIN_SUCCESS = exports.AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 var AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_FAILURE = 'AUTH_LOGIN_FAILURE';
 
-var AUTH_LOGOUT = 'AUTH_LOGOUT';
+var AUTH_LOGOUT = exports.AUTH_LOGOUT = 'AUTH_LOGOUT';
 
-var SET_AUTH_TOKENS = 'SET_AUTH_TOKENS';
+var SET_AUTH_TOKENS = exports.SET_AUTH_TOKENS = 'SET_AUTH_TOKENS';
 
 var AUTH_REFRESH_TOKEN = 'AUTH_REFRESH_TOKEN';
 var AUTH_REFRESH_TOKEN_SUCCESS = 'AUTH_REFRESH_TOKEN_SUCCESS';
