@@ -1378,7 +1378,7 @@ var buffers = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.authorizedFn = exports.saga = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.authUser = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
+exports.reducer = exports.authorizedFn = exports.saga = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
 
 var _extends2 = __webpack_require__(16);
 
@@ -1411,20 +1411,20 @@ var reducerName = 'auth';
 var authTokens = function authTokens(state) {
     return state[reducerName].tokens;
 };
-var authUser = exports.authUser = function authUser(state) {
-    return state[reducerName].user;
-};
 var isRefreshing = function isRefreshing(state) {
     return state[reducerName].isRefreshing;
 };
-var isLoggedIn = function isLoggedIn(state) {
+var authUser = exports.authUser = function authUser(state) {
+    return state[reducerName].user;
+};
+var isLoggedIn = exports.isLoggedIn = function isLoggedIn(state) {
     return state[reducerName].isLoggedIn;
 };
 var loginErrors = exports.loginErrors = function loginErrors(state) {
     return state[reducerName].loginError;
 };
 var isLoggingIn = exports.isLoggingIn = function isLoggingIn(state) {
-    return state[reducerName].loggingIn;
+    return state[reducerName].isLoggingIn;
 };
 
 var remoteLogin = null;
