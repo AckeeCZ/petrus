@@ -87,7 +87,7 @@ export const login = (credentials) => {
     };
 };
 
-const stopLogin = (error, user) => {
+export const stopLogin = (error, user) => {
     if (error) {
         return {
             type: AUTH_LOGIN_FAILURE,

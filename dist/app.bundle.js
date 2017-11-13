@@ -1378,7 +1378,7 @@ var buffers = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.authorizedFn = exports.saga = exports.refreshTokens = exports.setTokens = exports.logout = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.SET_AUTH_TOKENS = exports.AUTH_LOGOUT = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
+exports.reducer = exports.authorizedFn = exports.saga = exports.refreshTokens = exports.setTokens = exports.logout = exports.stopLogin = exports.login = exports.configure = exports.isLoggingIn = exports.loginErrors = exports.isLoggedIn = exports.authUser = exports.SET_AUTH_TOKENS = exports.AUTH_LOGOUT = exports.AUTH_LOGIN_FAILURE = exports.AUTH_LOGIN_SUCCESS = undefined;
 
 var _extends2 = __webpack_require__(16);
 
@@ -1477,7 +1477,7 @@ var login = exports.login = function login(credentials) {
     };
 };
 
-var stopLogin = function stopLogin(error, user) {
+var stopLogin = exports.stopLogin = function stopLogin(error, user) {
     if (error) {
         return {
             type: AUTH_LOGIN_FAILURE,
