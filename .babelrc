@@ -1,0 +1,18 @@
+{
+    "plugins": [
+        "babel-plugin-transform-object-rest-spread",
+        "transform-runtime"
+    ],
+    "env": {
+        "lib": {
+            "presets": [
+                "es2015"
+            ]
+        },
+        "es": {
+            "presets": [
+                ["es2015", { "modules": false }]
+            ]
+        }
+    }
+}
