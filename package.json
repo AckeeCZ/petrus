@@ -1,19 +1,25 @@
 {
-    "name": "redux-token-auth",
-    "version": "0.1.0",
-    "description": "",
-    "main": "lib/tokenAuth.js",
-    "module": "es/tokenAuth.js",
+    "name": "ackee-redux-token-auth",
+    "version": "1.0.0",
+    "description": "Redux and redux saga logic for token authentication with an auto token refresh.",
+    "main": "lib/index.js",
+    "module": "es/index.js",
     "scripts": {
-        "dev": "webpack --watch",
         "build:lib": "cross-env BABEL_ENV=lib babel src --out-dir lib",
         "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
         "build:dist": "webpack --config webpack.config.js",
         "build": "npm run build:dist && npm run build:es && npm run build:lib",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "prepublish": "npm run build"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
+    "contributors": [
+        "Marek Janča <marek.janca@ackee.cz>"
+    ],
     "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://gitlab.ack.ee/Web/token-auth.git"
+    },
     "dependencies": {
         "redux-saga": "^0.15.6"
     },
