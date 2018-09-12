@@ -19,7 +19,7 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "https://gitlab.ack.ee/Web/token-auth.git"
+        "url": "https://gitlab.ack.ee/Web/token-auth"
     },
     "dependencies": {
         "redux-saga": "^0.15.6"
