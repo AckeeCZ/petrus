@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: './src/tokenAuth.js',
+        app: './src/index.js',
     },
     output: {
         filename: '[name].bundle.js',
@@ -19,13 +19,10 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: ['es2015'],
-                        plugins: [
-                            require('babel-plugin-transform-object-rest-spread'),
-                            'transform-runtime',
-                        ],
-                    }
-                }
-            }
+                        plugins: [require('babel-plugin-transform-object-rest-spread'), 'transform-runtime'],
+                    },
+                },
+            },
         ],
     },
     plugins: [],
