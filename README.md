@@ -1,4 +1,4 @@
-# redux-token-auth
+# qtoken-auth
 
 The library tackles a token based communication flow between a redux app and an data resource provider.
 
