@@ -64,7 +64,7 @@ export const saga = function* () {
             yield put(setTokens(tokens));
         } catch (e) {
             yield put(stopLogin(e));
-            logger.error(`Failed to login user: ${e.message}`);
+            logger.warn(`Failed to login user: ${e.message}`);
         }
     };
     yield all([yield takeEvery(AUTH_LOGIN, handleLogin), yield takeEvery(PROCESS_TOKEN_REFRESH, processTokenRefresh)]);
