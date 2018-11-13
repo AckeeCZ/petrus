@@ -1,14 +1,14 @@
 {
-  "env": {
-    "browser": true
-  },
-  "extends": ["ackee"],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true
+    "env": {
+        "browser": true
     },
-    "sourceType": "module"
-  }
+    "extends": ["ackee", "prettier"],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
+    }
 }
