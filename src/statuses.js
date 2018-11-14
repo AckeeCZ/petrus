@@ -22,8 +22,8 @@ export const authSessionEnd = () => ({
     type: types.AUTH_SESSION_END,
 });
 
-export const authSessionPaused = () => ({
-    type: types.AUTH_SESSION_PAUSED,
+export const authSessionPause = () => ({
+    type: types.AUTH_SESSION_PAUSE,
 });
 
 export const authSessionResume = () => ({
