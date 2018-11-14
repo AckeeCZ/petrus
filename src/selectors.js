@@ -18,3 +18,5 @@ export const loginErrors = state => {
 export const isLoggingIn = state => {
     return state[reducerName].isLoggingIn;
 };
+
+export const isUserFetching = state => state[reducerName].isUserFetching;

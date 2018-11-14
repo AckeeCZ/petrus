@@ -7,6 +7,9 @@ import {
     AUTH_REFRESH_TOKEN,
     AUTH_REFRESH_TOKEN_FAILURE,
     AUTH_REFRESH_TOKEN_SUCCESS,
+    FETCH_AUTH_USER_REQUEST,
+    FETCH_AUTH_USER_SUCCESS,
+    FETCH_AUTH_USER_FAILURE,
 } from './actionType';
 
 const initialState = {
@@ -16,6 +19,7 @@ const initialState = {
     loginError: null,
     tokens: {},
     isRefreshing: false,
+    isUserFetching: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -27,6 +31,7 @@ export const reducer = (state = initialState, action) => {
                 isLoggingIn: true,
                 loginError: null,
             };
+
         case AUTH_LOGIN_SUCCESS:
             return {
                 ...state,
@@ -35,6 +40,7 @@ export const reducer = (state = initialState, action) => {
                 user: action.user,
                 loginError: null,
             };
+
         case AUTH_LOGIN_FAILURE:
             return {
                 ...state,
@@ -43,6 +49,7 @@ export const reducer = (state = initialState, action) => {
                 user: null,
                 loginError: action.error,
             };
+
         case SET_AUTH_TOKENS:
             return {
                 ...state,
@@ -51,6 +58,7 @@ export const reducer = (state = initialState, action) => {
                     ...action.tokens,
                 },
             };
+
         case AUTH_LOGOUT:
             return {
                 ...state,
@@ -58,13 +66,14 @@ export const reducer = (state = initialState, action) => {
                 user: null,
                 tokens: {},
             };
-        case AUTH_REFRESH_TOKEN: {
+
+        case AUTH_REFRESH_TOKEN:
             return {
                 ...state,
                 isRefreshing: true,
             };
-        }
-        case AUTH_REFRESH_TOKEN_SUCCESS: {
+
+        case AUTH_REFRESH_TOKEN_SUCCESS:
             return {
                 ...state,
                 isRefreshing: false,
@@ -73,13 +82,32 @@ export const reducer = (state = initialState, action) => {
                     ...action.tokens,
                 },
             };
-        }
-        case AUTH_REFRESH_TOKEN_FAILURE: {
+
+        case AUTH_REFRESH_TOKEN_FAILURE:
             return {
                 ...state,
                 isRefreshing: false,
             };
-        }
+
+        case FETCH_AUTH_USER_REQUEST:
+            return {
+                ...state,
+                isUserFetching: true,
+            };
+
+        case FETCH_AUTH_USER_SUCCESS:
+            return {
+                ...state,
+                user: action.user,
+                isUserFetching: false,
+            };
+
+        case FETCH_AUTH_USER_FAILURE:
+            return {
+                ...state,
+                isUserFetching: false,
+            };
+
         default:
             return state;
     }

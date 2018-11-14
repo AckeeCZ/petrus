@@ -8,6 +8,9 @@ import {
     AUTH_REFRESH_TOKEN,
     AUTH_REFRESH_TOKEN_FAILURE,
     AUTH_REFRESH_TOKEN_SUCCESS,
+    FETCH_AUTH_USER_REQUEST,
+    FETCH_AUTH_USER_SUCCESS,
+    FETCH_AUTH_USER_FAILURE,
 } from './actionType';
 
 export const login = credentials => {
@@ -60,3 +63,17 @@ export const stopTokenRefresh = (error, tokens = {}) => {
         tokens,
     };
 };
+
+export const fetchAuthUserRequest = () => ({
+    type: FETCH_AUTH_USER_REQUEST,
+});
+
+export const fetchAuthUserSuccess = user => ({
+    type: FETCH_AUTH_USER_SUCCESS,
+    user,
+});
+
+export const fetchAuthUserFailure = error => ({
+    type: FETCH_AUTH_USER_FAILURE,
+    error,
+});
