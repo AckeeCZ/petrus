@@ -12,7 +12,7 @@ const defaultOptions = {
 
 const isNotFn = val => typeof val !== 'function';
 
-export const configure = (customConfig = {}, customOptions = {}) => {
+export default function configure(customConfig = {}, customOptions = {}) {
     const { authenticate, refreshTokens, shouldRefresh, getAuthUser } = customConfig;
 
     config.options = {
@@ -62,4 +62,4 @@ export const configure = (customConfig = {}, customOptions = {}) => {
     } else {
         config.remoteGetAuthUser = getAuthUser;
     }
-};
+}

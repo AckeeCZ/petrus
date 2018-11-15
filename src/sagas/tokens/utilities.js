@@ -37,3 +37,20 @@ export function calcTimeout(expiration, requestDurationEstimate = 0) {
 
     return Math.max(timeout - requestDurationEstimate, 0);
 }
+
+export function validateTimeoutValue({ timeoutValue, tokens, options }) {
+    if (timeoutValue === 0) {
+        throw new Error(
+            `Can't set 0 timeout for refreshing tokens. Check the token 'expiration' propererty.\nTokens: ${JSON.stringify(
+                tokens,
+                null,
+                2,
+            )}`,
+        );
+    } else if (timeoutValue < options.minRequiredExpiration) {
+        throw new RangeError(
+            `Token 'timeoutValue' value is too low. Minimum required value is: ${options.minRequiredExpiration +
+                options.requestDurationEstimate}ms.`,
+        );
+    }
+}

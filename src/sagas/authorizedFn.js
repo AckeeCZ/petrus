@@ -1,7 +1,7 @@
 import { select, call, take } from 'redux-saga/effects';
 
 import { authTokens, authUser, isLoggedIn, isRefreshing } from '../selectors';
-import { AUTH_REFRESH_TOKEN_FAILURE, AUTH_REFRESH_TOKEN_SUCCESS } from '../actions';
+import { AUTH_REFRESH_TOKEN_FAILURE, AUTH_REFRESH_TOKEN_SUCCESS } from '../actionType';
 
 import config from './config';
 

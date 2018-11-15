@@ -16,7 +16,7 @@ import { runAuthSagas, cancelAuthSagas } from './withAuthSession';
 let authStateChannel = null;
 
 function* hydrateAuthStateChannel(chan) {
-    yield takeEvery(types.SET_TOKENS, function*(action) {
+    yield takeEvery(types.SET_AUTH_TOKENS, function*(action) {
         const { token } = action.tokens.accessToken;
         yield put(chan, accessTokenAvailable(token));
     });
