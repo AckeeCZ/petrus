@@ -30,6 +30,7 @@ export const reducer = (state = initialState, action) => {
                 isLoggedIn: false,
                 isLoggingIn: true,
                 loginError: null,
+                isUserFetching: true,
             };
 
         case AUTH_LOGIN_SUCCESS:
@@ -39,6 +40,7 @@ export const reducer = (state = initialState, action) => {
                 isLoggingIn: false,
                 user: action.user,
                 loginError: null,
+                isUserFetching: false,
             };
 
         case AUTH_LOGIN_FAILURE:
@@ -48,11 +50,13 @@ export const reducer = (state = initialState, action) => {
                 isLoggingIn: false,
                 user: null,
                 loginError: action.error,
+                isUserFetching: false,
             };
 
         case SET_AUTH_TOKENS:
             return {
                 ...state,
+                isLoggedIn: true,
                 tokens: {
                     ...state.tokens,
                     ...action.tokens,
