@@ -42,8 +42,9 @@ export const setTokens = tokens => ({
     tokens,
 });
 
-export const refreshTokens = () => ({
+export const refreshTokens = tokens => ({
     type: PROCESS_TOKEN_REFRESH,
+    tokens,
 });
 
 export const startTokenRefresh = refreshToken => ({

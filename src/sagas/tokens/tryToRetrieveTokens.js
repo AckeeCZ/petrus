@@ -10,7 +10,7 @@ import { retrieveTokens, clearTokens } from './storageHandlers';
 import { isAnyTokenExpired } from './utilities';
 
 export default function* tryToRetrieveTokens() {
-    if (config.options.tokens.persistance !== Consts.tokens.persistence.LOCAL) {
+    if (config.options.tokens.persistence === Consts.tokens.persistence.NONE) {
         yield clearTokens();
         return;
     }
@@ -25,7 +25,7 @@ export default function* tryToRetrieveTokens() {
     }
 
     if (isAnyTokenExpired(tokens)) {
-        yield put(refreshTokens());
+        yield put(refreshTokens(tokens));
     } else {
         yield put(setTokens(tokens));
         yield put(fetchAuthUserRequest());
