@@ -9,12 +9,14 @@
         "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
         "build:dist": "webpack --config webpack.config.js",
         "build": "npm run build:dist && npm run build:es && npm run build:lib",
-        "prepublish": "npm run build"
+        "prepublish": "npm run build",
+        "start": "onchange 'src/**/*.js' -- npm run build:es"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
         "Marek Janča <marek.janca@ackee.cz>",
-        "Lukáš Horák <lukas.horak@ackee.cz>"
+        "Lukáš Horák <lukas.horak@ackee.cz>",
+        "Jiří Čermák <jiri.cermak@ackee.cz>"
     ],
     "license": "ISC",
     "repository": {
@@ -40,6 +42,7 @@
         "eslint": "^5.5.0",
         "eslint-config-ackee": "^0.9.0",
         "eslint-config-prettier": "^3.3.0",
+        "onchange": "^5.1.0",
         "prettier": "^1.15.2",
         "prettier-config-ackee": "0.0.4",
         "webpack": "^4.25.1",
