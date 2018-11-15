@@ -18,12 +18,18 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['es2015'],
-                        plugins: [require('babel-plugin-transform-object-rest-spread'), 'transform-runtime'],
+                        presets: ['@babel/preset-env'],
+                        plugins: [
+                            '@babel/plugin-proposal-object-rest-spread',
+                            '@babel/plugin-proposal-class-properties',
+                            '@babel/plugin-proposal-export-namespace-from',
+                            '@babel/plugin-transform-runtime',
+                        ],
                     },
                 },
             },
         ],
     },
     plugins: [],
+    mode: 'development',
 };
