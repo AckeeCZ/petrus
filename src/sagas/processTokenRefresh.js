@@ -6,12 +6,15 @@ import { authTokens } from '../selectors';
 
 import config from './config';
 
-function* processTokenRefresh() {
+function* processTokenRefresh(action) {
     const tokens = yield select(authTokens);
     yield put(startTokenRefresh(tokens));
 
     try {
-        const refreshedTokens = yield config.remoteRefreshTokens(tokens);
+        const refreshedTokens = yield config.remoteRefreshTokens({
+            ...action.tokens,
+            ...tokens,
+        });
         yield put(stopTokenRefresh(null, refreshedTokens));
         yield put(setTokens(refreshedTokens));
     } catch (refreshError) {
