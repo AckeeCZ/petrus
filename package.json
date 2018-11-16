@@ -10,7 +10,7 @@
         "build:dist": "webpack --config webpack.config.js",
         "build": "npm run build:dist && npm run build:es && npm run build:lib",
         "prepublish": "npm run build",
-        "start": "onchange 'src/**/*.js' -- npm run build:es"
+        "start": "npm run build:es && onchange 'src/**/*.js' -- npm run build:es"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [

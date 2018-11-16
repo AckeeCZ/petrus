@@ -6,7 +6,7 @@ import { authTokens } from '../selectors';
 
 import config from './config';
 
-function* processTokenRefresh(action) {
+export function* processTokenRefresh(action) {
     const tokens = yield select(authTokens);
     yield put(startTokenRefresh(tokens));
 
