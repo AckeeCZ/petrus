@@ -55,7 +55,11 @@ export default function configure(customConfig = {}, customOptions = {}) {
         config.remoteGetAuthUser = () => {
             if (config.options.tokens.persistence === Consts.tokens.persistence.LOCAL) {
                 logger.error(
-                    `'getAuthUser' is not a function. Tokens persistence is set to 'local', you must provide function for fetching authorized user.`,
+                    `'getAuthUser' is not a function. Tokens persistence is set to '${
+                        Consts.tokens.persistence.LOCAL
+                    }'. Change persistence to '${
+                        Consts.tokens.persistence.NONE
+                    }' or provide function for fetching authorized user.`,
                 );
             }
         };
