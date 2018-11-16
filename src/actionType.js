@@ -14,3 +14,11 @@ export const PROCESS_TOKEN_REFRESH = '@@redux-token-auth/PROCESS_TOKEN_REFRESH';
 export const FETCH_AUTH_USER_REQUEST = '@@redux-token-auth/FETCH_AUTH_USER_REQUEST';
 export const FETCH_AUTH_USER_SUCCESS = '@@redux-token-auth/FETCH_AUTH_USER_SUCCESS';
 export const FETCH_AUTH_USER_FAILURE = '@@redux-token-auth/FETCH_AUTH_USER_FAILURE';
+
+export const ACCESS_TOKEN_AVAILABLE = '@@redux-token-auth/ACCESS_TOKEN_AVAILABLE';
+export const ACCESS_TOKEN_UNAVAILABLE = '@@redux-token-auth/ACCESS_TOKEN_UNAVAILABLE';
+
+export const AUTH_SESSION_START = '@@redux-token-auth/AUTH_SESSION_START';
+export const AUTH_SESSION_END = '@@redux-token-auth/AUTH_SESSION_END';
+export const AUTH_SESSION_PAUSE = '@@redux-token-auth/AUTH_SESSION_PAUSE';
+export const AUTH_SESSION_RESUME = '@@redux-token-auth/AUTH_SESSION_RESUME';
