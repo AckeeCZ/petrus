@@ -78,7 +78,7 @@ export default function* tokensActionsHandlers() {
     });
 
     yield all([
-        takeEvery(SET_AUTH_TOKENS, function*(action) {
+        takeEvery(SET_AUTH_TOKENS, function* setAuthTokens(action) {
             yield race({
                 task: setTokensHandler(action, refreshTokensTimeout),
                 abort: take(AUTH_LOGOUT),

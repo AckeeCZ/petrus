@@ -4,12 +4,12 @@ import * as Consts from '../../constants';
 
 import config from '../config';
 
-export const clearTokens = function*() {
+export function* clearTokens() {
     window.sessionStorage.removeItem(config.tokensKey);
     yield localforage.removeItem(config.tokensKey);
-};
+}
 
-export const storeTokens = function*(tokens) {
+export function* storeTokens(tokens) {
     switch (config.options.tokens.persistence) {
         case Consts.tokens.persistence.LOCAL:
             window.sessionStorage.removeItem(config.tokensKey);
@@ -23,9 +23,9 @@ export const storeTokens = function*(tokens) {
 
         default:
     }
-};
+}
 
-export const retrieveTokens = function*() {
+export function* retrieveTokens() {
     switch (config.options.tokens.persistence) {
         case Consts.tokens.persistence.LOCAL:
             window.sessionStorage.removeItem(config.tokensKey);
@@ -40,4 +40,4 @@ export const retrieveTokens = function*() {
         default:
             return null;
     }
-};
+}
