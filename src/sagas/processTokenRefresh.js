@@ -6,7 +6,7 @@ import { authTokens } from '../selectors';
 
 import config from './config';
 
-export function* processTokenRefresh(action) {
+export function* tryToRefreshTokens(action) {
     const tokens = yield select(authTokens);
     yield put(startTokenRefresh(tokens));
 
@@ -15,8 +15,8 @@ export function* processTokenRefresh(action) {
             ...action.tokens,
             ...tokens,
         });
-        yield put(stopTokenRefresh(null, refreshedTokens));
         yield put(setTokens(refreshedTokens));
+        yield put(stopTokenRefresh(null, refreshedTokens));
     } catch (refreshError) {
         yield put(stopTokenRefresh(refreshError));
         yield put(logout());
@@ -24,5 +24,5 @@ export function* processTokenRefresh(action) {
 }
 
 export default function*() {
-    yield takeEvery(PROCESS_TOKEN_REFRESH, processTokenRefresh);
+    yield takeEvery(PROCESS_TOKEN_REFRESH, tryToRefreshTokens);
 }

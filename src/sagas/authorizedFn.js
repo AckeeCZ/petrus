@@ -4,7 +4,7 @@ import { authTokens, authUser, isLoggedIn, isRefreshing } from '../selectors';
 import { AUTH_REFRESH_TOKEN_FAILURE, AUTH_REFRESH_TOKEN_SUCCESS } from '../actionType';
 
 import config from './config';
-import { processTokenRefresh } from './processTokenRefresh';
+import { tryToRefreshTokens } from './processTokenRefresh';
 
 export default function* authorizedFn(fn) {
     const processFn = function*() {
@@ -26,7 +26,7 @@ export default function* authorizedFn(fn) {
     try {
         const result = yield processFn();
         if (config.detectShouldRefresh(null, result)) {
-            yield processTokenRefresh();
+            yield tryToRefreshTokens();
             if (yield select(isLoggedIn)) {
                 return yield processFn();
             }
@@ -34,7 +34,7 @@ export default function* authorizedFn(fn) {
         return result;
     } catch (e) {
         if (config.detectShouldRefresh(e, null)) {
-            yield processTokenRefresh();
+            yield tryToRefreshTokens();
             if (yield select(isLoggedIn)) {
                 return yield processFn();
             }

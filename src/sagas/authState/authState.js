@@ -35,13 +35,13 @@ function* tokenAvailabilityCircuit() {
 function* authSessionCircuit() {
     const authSessionUnits = [
         {
-            pattern: types.SET_AUTH_TOKENS,
+            pattern: types.ACCESS_TOKEN_AVAILABLE,
             *task() {
                 yield put(authSessionStart());
             },
         },
         {
-            pattern: types.AUTH_LOGOUT,
+            pattern: types.ACCESS_TOKEN_UNAVAILABLE,
             *task() {
                 yield put(authSessionEnd());
             },
@@ -78,6 +78,15 @@ export function* getAuthStateChannel() {
 
     return authStateChannel;
 }
+
+export const authStateChannel = actionChannel([
+    types.AUTH_SESSION_START,
+    types.AUTH_SESSION_PAUSE,
+    types.AUTH_SESSION_RESUME,
+    types.AUTH_SESSION_END,
+    types.ACCESS_TOKEN_AVAILABLE,
+    types.ACCESS_TOKEN_UNAVAILABLE,
+]);
 
 export default function*() {
     yield all([tokenAvailabilityCircuit(), authSessionCircuit()]);
