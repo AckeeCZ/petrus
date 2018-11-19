@@ -43,14 +43,14 @@ export function* deepCircuit(units = []) {
     }
 
     const firstUnit = units[0];
-    const intermediateUnits = units.slice(1, units.length - 2);
+    const intermediateUnits = units.slice(1, units.length - 1);
     const lastUnit = units[units.length - 1];
 
     while (true) {
         yield runUnit(firstUnit);
 
         const result = yield race({
-            deepUnits: call(runUnits, intermediateUnits),
+            deepUnits: call(simpleCircuit, intermediateUnits),
             lastUnitResult: take(lastUnit.pattern),
         });
 
