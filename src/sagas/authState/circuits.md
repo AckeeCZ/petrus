@@ -43,7 +43,7 @@ function* simpleCircuit(units = []) {
 
 ### Deep circuit
 
-Run unit with index 0, then run so called intermediate units (all units (still sequentially) from index 1 to last index - 2). Intermediate units can be cancelled by pattern of the last unit. Then task of the last unit is executed. And repeat.
+Run unit with index 0, then run still sequentially so called intermediate units (all units from index 1 to last index - 2). Intermediate units can be cancelled by pattern of the last unit. Then task of the last unit is executed. And the whole cycle repeats.
 
 The implementation may look like this
 
@@ -59,25 +59,24 @@ function* runUnits(units = []) {
     }
 }
 
+function* simpleCircuit(units = []) {
+    while (true) {
+        yield runUnits(units);
+    }
+}
+
 const firstUnit = units[0];
-const intermediateUnits = units.slice(1, units.length - 2);
+const intermediateUnits = units.slice(1, units.length - 1);
 const lastUnit = units[units.length - 1];
 
 while (true) {
     yield runUnit(firstUnit);
 
     const result = yield race({
-        deepUnits: call(runUnits, intermediateUnits),
+        deepUnits: call(simpleCircuit, intermediateUnits),
         lastUnitResult: take(lastUnit.pattern),
     });
 
     yield call(lastUnit.task, result.lastUnitResult);
 }
 ```
-
-#### Flow that requires deep circuit:
-
--   AUTH_SESSION_START
-    -   AUTH_SESSION_PAUSE
-    -   AUTH_SESSION_RESUME
--   AUTH_SESSION_END

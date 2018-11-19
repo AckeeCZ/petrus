@@ -79,15 +79,6 @@ export function* getAuthStateChannel() {
     return authStateChannel;
 }
 
-export const authStateChannel = actionChannel([
-    types.AUTH_SESSION_START,
-    types.AUTH_SESSION_PAUSE,
-    types.AUTH_SESSION_RESUME,
-    types.AUTH_SESSION_END,
-    types.ACCESS_TOKEN_AVAILABLE,
-    types.ACCESS_TOKEN_UNAVAILABLE,
-]);
-
 export default function*() {
     yield all([tokenAvailabilityCircuit(), authSessionCircuit()]);
 }
