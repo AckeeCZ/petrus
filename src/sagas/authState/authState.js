@@ -22,7 +22,7 @@ function* tokenAvailabilityCircuit() {
             },
         },
         {
-            pattern: [types.AUTH_REFRESH_TOKEN_FAILURE, types.AUTH_LOGOUT],
+            pattern: [types.AUTH_REFRESH_TOKEN, types.AUTH_LOGOUT],
             *task() {
                 yield put(accessTokenUnavailable());
             },
@@ -35,13 +35,13 @@ function* tokenAvailabilityCircuit() {
 function* authSessionCircuit() {
     const authSessionUnits = [
         {
-            pattern: types.ACCESS_TOKEN_AVAILABLE,
+            pattern: types.SET_AUTH_TOKENS,
             *task() {
                 yield put(authSessionStart());
             },
         },
         {
-            pattern: types.ACCESS_TOKEN_UNAVAILABLE,
+            pattern: types.AUTH_LOGOUT,
             *task() {
                 yield put(authSessionEnd());
             },
