@@ -1,61 +1,95 @@
-# token-auth
+# ackee-redux-token-auth
 
-The library tackles a token based communication flow between a redux app and an data resource provider.
+The library aims to handle authentication logic with token based flow.
 
-## Problem/solution
+### Main features
 
-The problem: Given an token based communication schema, e.g. OAuth2, where valid **access token** is required for each request. Once access token expires, a different endpoint is called with **refresh token** to refresh the token pair. The communication then continues with the access token.
+-   **automatically refresh access token** before it becomes expired
+-   **persisting tokens state** in local or session storage (optional)
+-   automatically **fetching an authorized user** after successful tokens retrieval from a storage
+-   simple API for auth state management: [`getAuthStateChannel`](get-auth-state-channel), [`withAuthSession`](with-auth-session)
 
-The solution: `requestFn`. A functional wrapper that does the refresh process for you and retries the wrapped function call when it failes due to an expired token.
+> ### Requirements
+>
+> The library works best with React apps that use **Redux and Redux Saga** (since the authentication logic is heavily integrated with both these libraries).
 
-![workflow](readme-seq1.png)
+* * *
 
-## API
+## Table of contents
 
-### Selectors
+-   [Installing](installing)
+-   [Initialization](initialization)
+-   [API](api)
+    -   [Constants](constants)
+    -   [Action creators](action-creators)
+    -   [Action types](action-types)
+    -   [Selectors](selectors)
+    -   [Utilities](utilities)
+-   [Migration guides (`1.0.x` -> `1.1.x`)](migration-guides)
 
-#### `authUser(state: Object) => user:any`
+* * *
 
-Gets the user returned from `authenticate` method.
+## <a name="installing"></a>Installing
 
-#### `isLoggedIn(state: Object) => bool`
+Using npm:
 
-Returns `true` whether user is logged in, `false` otherwise.
+```bash
+$ npm install ackee-redux-token-auth
+```
 
-#### `isLoggingIn(state: Object) => bool`
+Using yarn:
 
-Returns `true` whether the login process is taking place, `false` otherwise.
+```bash
+$ yarn add ackee-redux-token-auth
+```
 
-### Initialization
+* * *
 
-#### `configure(config: Object) => void`
+## <a name="initialization"></a>Initialization
+
+#### <a name="configure"></a>`configure(config: Object, options: Object) => void`
 
 Sets the package configuration with an config object. Following config properties are supported:
 
-- `authenticate: Function`,
-- `refreshTokens: Function`,
-- `shouldRefresh: Function`.
+`config`:
+
+-   `authenticate: Function` - required
+-   `refreshTokens: Function` - required
+-   `getAuthUser: Function` - required
+-   `shouldRefresh: Function`
+
+`options`:
+
+-   `tokens`
+    -   `persistence: String` - [See details](#constants-tokens-persistence)
+    -   `requestDurationEstimate: Number`
+    -   `minRequiredExpiration: Number`
 
 Any of the functions can also be a saga generator.
 
-##### `authenticate(credentials: any) => {user: any, tokens: any }`
+##### `authenticate(credentials: any) => { user: any, tokens: any }`
 
 Required. This method is called when a `login(credentials)` action is dispatched. These credentials are passed to `authenticate` method.
 
-The method is exepected to return/or resolve with an Object with props `user, tokens` or throw an error. User and tokens are then stored as is to the redux state for later use.
-
+The method is expected to return/or resolve with an Object with props `user, tokens` or throw an error. User and tokens are then stored as is to the redux state for later use (`state.auth.user`).
 
 ##### `refreshTokens(tokens: Object) => tokens:Object`
 
-Optional. This method is called when the `requestFn` catches an error and `shouldRefresh` returns true. This triggers the token-refresh process.
+Required. This method is called when the timeout for refreshing tokens ends or when tokens are expired after retrieval from a local storage. This triggers the token-refresh process.
 
-Function is expected to return/or resolve with an tokens Object (`{ [tokenName: string]: token }`)
+Function is expected to return/or resolve with an tokens Object: (`{ [tokenName: string]: token }`)
 
-All handlers passed to `requestFn` are now blocked until the refresh process is complete. This is to prevent the refresh process to be started by simultaneous failing tasks. **Default**: no-op.
+##### `getAuthUser(void) => user:any`
 
-##### `shouldRefresh(error: Error) => boolean`
+Required. This method is called when tokens are successfully retrieved from a local storage.
 
-Optional. This function is called when the `requestFn` catches an error and should decide, whether to refresh the tokens and retry the action or not. **Default**: `() => true`.
+Function is expected to return/or resolve with a user object.
+
+##### [DEPRECATED]`shouldRefresh(error: Error) => boolean`
+
+Optional. This function is called when the `requestFn` catches an error and should decide, whether to refresh the tokens and retry the action or not.
+
+**Default**: `() => true`.
 
 ### `saga() => ReduxSaga`
 
@@ -65,26 +99,204 @@ Initializes the saga handlers generator. This should be passed along with your o
 
 The lib reducer. Needs to be plugged in under the `auth` key. Reducer name is not-yet configurable.
 
-### Utilities
+### Initialization overview
 
-#### `authorizedFn(handler: Function)`
+```js
+import * as ReduxAuth from 'ackee-redux-token-auth';
+
+// 1. Provide autheticate, refreshTokens and getAuthUser methods
+ReduxAuth.configure({
+    authenticate,
+    refreshTokens,
+    getAuthUser,
+});
+
+// 2. Launch ReduxAuth.saga
+function*() {
+    yield all([ReduxAuth.saga()])
+}
+
+// 3. Add auth reducer
+const rootReducer = combineReducers({
+    auth: ReduxAuth.reducer
+});
+```
+
+* * *
+
+## API
+
+### <a name="constants"></a>Constants
+
+#### `tokens`
+
+-   ##### <a name="constants-tokens-persistence"></a>`persistence`
+
+    Tokens persistence defines how and where will be tokens stored and when they will be cleared:
+
+    -   `LOCAL` (default) - Tokens are stored in `IndexedDB`. The state will be persisted even when the browser window is closed. An explicit sign out is needed to clear that state.
+    -   `SESSION` - Tokens are stored in `SessionStorage`.
+    -   `NONE` - Tokens will only be stored in Redux Store and will be cleared when the window or activity is refreshed.
+
+        ###### Example
+
+        ```js
+        import { configure, constants } from 'ackee-redux-token-auth';
+
+        const options = {
+            tokens: {
+                persistence: constants.tokens.persistence.NONE,
+            },
+        };
+
+        configure(
+            {
+                // ...
+            },
+            options,
+        );
+        ```
+
+### <a name="action-creators"></a>Action creators
+
+#### `login(credentials: Object) => ReduxAction`
+
+The `credentials` object is passed to `authenticate(credentials)` method you've provided in the [`configure`](#configure) method.
+
+#### `logout() => ReduxAction`
+
+Triggers a user logout. This clears the state of any auth data (tokens from local storage included).
+
+### <a name="action-types"></a>Action types
+
+#### Access token flow
+
+##### `ACCESS_TOKEN_AVAILABLE`
+
+Access token becomes available when one of following events successfully finished: login, local tokens retrieval or tokens refreshment.
+It's guaranteed that `ACCESS_TOKEN_UNAVAILABLE` action will be dispatched first, before another trigger of `ACCESS_TOKEN_AVAILABLE`.
+
+##### `ACCESS_TOKEN_UNAVAILABLE`
+
+Access token becomes unavailable on logout or when tokens refreshment start. It's also guaranteed that `ACCESS_TOKEN_AVAILABLE` action will be dispatched first, before another trigger of `ACCESS_TOKEN_UNAVAILABLE`.
+
+#### Authentication session flow
+
+##### `AUTH_SESSION_START`
+
+Once the application has available valid access token, this action is dispatched. It's guaranteed that `AUTH_SESSION_END` must be triggered first before another trigger.
+
+##### `AUTH_SESSION_PAUSE`
+
+The action is triggered on start of access token refreshment.
+
+##### `AUTH_SESSION_RESUME`
+
+If access token refreshment was successful, `AUTH_SESSION_RESUME` is triggered. It's guaranteed it will be dispatched only after `AUTH_SESSION_PAUSE` action.
+
+##### `AUTH_SESSION_END`
+
+If access token refreshment fails or `AUTH_LOGOUT` action§ is triggered, `AUTH_SESSION_END` is triggered.
+
+### <a name="selectors"></a>Selectors
+
+#### `authUser(state: Object) => user:any`
+
+Gets the user returned from `authenticate` method.
+
+#### `isLoggedIn(state: Object) => Boolean`
+
+Returns `true` whether user is logged in, `false` otherwise.
+
+#### `isLoggingIn(state: Object) => Boolean`
+
+Returns `true` whether the login process is taking place, `false` otherwise.
+
+#### `isUserFetching(state: Object) => Boolean`
+
+### <a name="utilities"></a>Utilities
+
+#### <a name="with-auth-session"></a>`withAuthSession(fn: Function) => void`
+
+A generator function that receives any function as 1st parameter. The provided function will be launched on `AUTH_SESSION_START` action and cancelled on `AUTH_SESSION_END`.
+Note that `withAuthSession` is a blocking task (if you need to make it non-blocking one, use it with `fork` effect).
+
+##### Example
+
+```js
+import { withAuthSession } from 'ackee-redux-token-auth';
+
+function* myAuthSaga() {}
+
+export default function*() {
+    yield withAuthSession(myAuthSaga);
+    // non-blocking version: yield fork(withAuthSession, myAuthSaga);
+}
+```
+
+#### <a name="get-auth-state-channel"></a>`getAuthStateChannel(void) => channel`
+
+A generator function that returns [action channel](https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Channels.md#using-channels) with following available actions:
+
+-   `ACCESS_TOKEN_AVAILABLE`
+-   `ACCESS_TOKEN_UNAVAILABLE`
+-   `AUTH_SESSION_START`
+-   `AUTH_SESSION_PAUSE`
+-   `AUTH_SESSION_RESUME`
+-   `AUTH_SESSION_END`
+
+##### Example
+
+```js
+import { takeEvery } from 'redux-saga/effects';
+import { getAuthStateChannel, actionTypes } from 'ackee-redux-token-auth';
+
+function* logOutEveryAuthStateStep() {
+    const authStateChannel = yield getAuthStateChannel();
+
+    yield takeEvery(authStateChannel, function*(action) {
+        switch (action.type) {
+            case actionTypes.ACCESS_TOKEN_AVAILABLE: {
+                const accessToken = action.payload;
+                // do something with accessToken
+                break;
+            }
+
+            case actionTypes.ACCESS_TOKEN_UNAVAILABLE:
+                break;
+        }
+    });
+}
+```
+
+#### [DEPRECATED] `authorizedFn(handler: Function)`
 
 A saga wrapper for the given `handler` Function or a saga generator.
 
 The handler is called with `{ ...tokens, user }` you returned in `configure.authenticate` and `configure.refreshTokens`.
 
-### Action creators
+* * *
 
-#### `logout() => ReduxAction`
+> ### Tokens management logic
+>
+> More details description of the [Tokens management logic](/src/sagas/tokens/tokens.md).
 
-Triggers a user logout. This clears the state of any auth data.
+* * *
 
-#### `setTokens(tokens: Object) => ReduxAction`
+## <a name="migration-guides"></a>Migration guides from `1.0.x` to `1.1.x`
 
-Sets the tokens to the state. In case you want to set them manually.
+The `configure` method now accept an object with following changes:
+1\.  `refreshTokens` function is now required
+2\.  `getAuthUser` is a required function, that returns a user object.
 
-*This should be used at application startup only. Using this elsewere is considered to be an anti-pattern.*
+The configure method should now look like this:
 
-#### `refreshTokens() => ReduxAction`
+```js
+import { configure } from 'ackee-redux-token-auth';
 
-Triggers the refresh-tokens process.
+configure({
+    autheticate,
+    refreshTokens, // now required
+    getAuthUser, // new method
+});
+```
