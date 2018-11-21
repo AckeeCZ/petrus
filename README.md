@@ -7,7 +7,7 @@ The library aims to handle authentication logic with token based flow.
 -   **automatically refresh access token** before it becomes expired
 -   **persisting tokens state** in local or session storage (optional)
 -   automatically **fetching an authorized user** after successful tokens retrieval from a storage
--   simple API for auth state management: [`getAuthStateChannel`](get-auth-state-channel), [`withAuthSession`](with-auth-session)
+-   simple API for auth state management: [`getAuthStateChannel`](#get-auth-state-channel), [`withAuthSession`](#with-auth-session)
 
 > ### Requirements
 >
@@ -17,15 +17,15 @@ The library aims to handle authentication logic with token based flow.
 
 ## Table of contents
 
--   [Installing](installing)
--   [Initialization](initialization)
--   [API](api)
-    -   [Constants](constants)
-    -   [Action creators](action-creators)
-    -   [Action types](action-types)
-    -   [Selectors](selectors)
-    -   [Utilities](utilities)
--   [Migration guides (`1.0.x` -> `1.1.x`)](migration-guides)
+-   [Installing](#installing)
+-   [Initialization](#initialization)
+-   [API](#api)
+    -   [Constants](#constants)
+    -   [Action creators](#action-creators)
+    -   [Action types](#action-types)
+    -   [Selectors](#selectors)
+    -   [Utilities](#utilities)
+-   [Migration guides (`1.0.x` -> `1.1.x`)](#migration-guides)
 
 * * *
 
