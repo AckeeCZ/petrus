@@ -279,15 +279,15 @@ The handler is called with `{ ...tokens, user }` you returned in `configure.auth
 
 > ### Tokens management logic
 >
-> More details description of the [Tokens management logic](/src/sagas/tokens/tokens.md).
+> More detail description of the [Tokens management logic](/src/sagas/tokens/tokens.md).
 
 * * *
 
 ## <a name="migration-guides"></a>Migration guides from `1.0.x` to `1.1.x`
 
 The `configure` method now accept an object with following changes:
-1\.  `refreshTokens` function is now required
-2\.  `getAuthUser` is a required function, that returns a user object.
+1.  `refreshTokens` function is now required
+2.  `getAuthUser` is a required function, that returns a user object.
 
 The configure method should now look like this:
 
