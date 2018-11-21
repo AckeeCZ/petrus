@@ -1,17 +1,22 @@
 {
     "plugins": [
-        "babel-plugin-transform-object-rest-spread",
-        "transform-runtime"
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-export-namespace-from"
     ],
     "env": {
         "lib": {
-            "presets": [
-                "es2015"
-            ]
+            "presets": ["@babel/preset-env"]
         },
         "es": {
             "presets": [
-                ["es2015", { "modules": false }]
+                [
+                    "@babel/preset-env",
+                    {
+                        "modules": false
+                    }
+                ]
             ]
         }
     }
