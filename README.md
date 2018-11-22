@@ -25,7 +25,7 @@ The library aims to handle authentication logic with token based flow.
     -   [Action types](#action-types)
     -   [Selectors](#selectors)
     -   [Utilities](#utilities)
--   [Migration guides (`1.0.x` -> `1.1.x`)](#migration-guides)
+-   [Migration guides (`1.x.x` -> `2.0.0`)](#migration-guides)
 
 * * *
 
@@ -283,7 +283,7 @@ The handler is called with `{ ...tokens, user }` you returned in `configure.auth
 
 * * *
 
-## <a name="migration-guides"></a>Migration guides from `1.0.x` to `1.1.x`
+## <a name="migration-guides"></a>Migration guides from `1.x.x` to `2.0.0`
 
 The `configure` method now accept an object with following changes:
 1.  `refreshTokens` function is now required
