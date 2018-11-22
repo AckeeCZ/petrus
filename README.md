@@ -13,7 +13,7 @@ The library aims to handle authentication logic with token based flow.
 >
 > The library works best with React apps that use **Redux and Redux Saga** (since the authentication logic is heavily integrated with both these libraries).
 
-* * *
+---
 
 ## Table of contents
 
@@ -25,9 +25,9 @@ The library aims to handle authentication logic with token based flow.
     -   [Action types](#action-types)
     -   [Selectors](#selectors)
     -   [Utilities](#utilities)
--   [Migration guides (`1.x.x` -> `2.0.0`)](#migration-guides)
+-   [Migration guides (`1.x.x` -> `2.0.x`)](#migration-guides)
 
-* * *
+---
 
 ## <a name="installing"></a>Installing
 
@@ -43,7 +43,7 @@ Using yarn:
 $ yarn add ackee-redux-token-auth
 ```
 
-* * *
+---
 
 ## <a name="initialization"></a>Initialization
 
@@ -122,7 +122,7 @@ const rootReducer = combineReducers({
 });
 ```
 
-* * *
+---
 
 ## API
 
@@ -130,7 +130,7 @@ const rootReducer = combineReducers({
 
 #### `tokens`
 
--   ##### <a name="constants-tokens-persistence"></a>`persistence`
+-   <a name="constants-tokens-persistence"></a>`persistence`
 
     Tokens persistence defines how and where will be tokens stored and when they will be cleared:
 
@@ -138,7 +138,7 @@ const rootReducer = combineReducers({
     -   `SESSION` - Tokens are stored in `SessionStorage`.
     -   `NONE` - Tokens will only be stored in Redux Store and will be cleared when the window or activity is refreshed.
 
-        ###### Example
+        Example
 
         ```js
         import { configure, constants } from 'ackee-redux-token-auth';
@@ -275,17 +275,18 @@ A saga wrapper for the given `handler` Function or a saga generator.
 
 The handler is called with `{ ...tokens, user }` you returned in `configure.authenticate` and `configure.refreshTokens`.
 
-* * *
+---
 
 > ### Tokens management logic
 >
-> More detail description of the [Tokens management logic](/src/sagas/tokens/tokens.md).
+> More detail description of the [Tokens management logic](https://gitlab.ack.ee/Web/token-auth/blob/master/src/sagas/tokens/tokens.md).
 
-* * *
+---
 
-## <a name="migration-guides"></a>Migration guides from `1.x.x` to `2.0.0`
+## <a name="migration-guides"></a>Migration guides from `1.x.x` to `2.0.x`
 
 The `configure` method now accept an object with following changes:
+
 1.  `refreshTokens` function is now required
 2.  `getAuthUser` is a required function, that returns a user object.
 
