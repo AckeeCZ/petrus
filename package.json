@@ -1,6 +1,6 @@
 {
     "name": "ackee-redux-token-auth",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Redux and redux saga logic for token authentication with an auto token refresh.",
     "main": "lib/index.js",
     "module": "es/index.js",
