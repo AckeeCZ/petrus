@@ -1,4 +1,4 @@
-import { put, fork, all, actionChannel } from 'redux-saga/effects';
+import { put, call, all, actionChannel } from 'redux-saga/effects';
 
 import * as types from '../../actionType';
 import {
@@ -22,14 +22,19 @@ function* tokenAvailabilityCircuit() {
             },
         },
         {
-            pattern: [types.AUTH_REFRESH_TOKEN, types.AUTH_LOGOUT],
+            pattern: [
+                types.AUTH_REFRESH_TOKEN,
+                types.AUTH_LOGOUT,
+                types.AUTH_LOGIN_FAILURE,
+                types.FETCH_AUTH_USER_FAILURE,
+            ],
             *task() {
                 yield put(accessTokenUnavailable());
             },
         },
     ];
 
-    yield fork(simpleCircuit, tokenAvailabilityUnits);
+    yield call(simpleCircuit, tokenAvailabilityUnits);
 }
 
 function* authSessionCircuit() {
@@ -41,7 +46,7 @@ function* authSessionCircuit() {
             },
         },
         {
-            pattern: types.AUTH_LOGOUT,
+            pattern: [types.AUTH_LOGOUT, types.AUTH_LOGIN_FAILURE, types.FETCH_AUTH_USER_FAILURE],
             *task() {
                 yield put(authSessionEnd());
             },
@@ -63,7 +68,7 @@ function* authSessionCircuit() {
         },
     ];
 
-    yield fork(deepCircuit, [authSessionUnits[0], ...authSessionInterruptionUnits, authSessionUnits[1]]);
+    yield call(deepCircuit, [authSessionUnits[0], ...authSessionInterruptionUnits, authSessionUnits[1]]);
 }
 
 export function* getAuthStateChannel() {

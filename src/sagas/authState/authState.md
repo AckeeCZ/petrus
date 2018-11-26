@@ -6,8 +6,8 @@ This generator function returns the always the same channel that was once inital
 
 -   `ACCESS_TOKEN_AVAILABLE` - It's triggered any time access token becomes available (e.g. on successful login or on successful token refresh).
 -   `ACCESS_TOKEN_UNAVAILABLE` - It's triggered any time access token becomes unavailable (e.g. on logout or on failed token refresh).
--   `AUTH_SESSION_START` - It's triggered once on successful login.
--   `AUTH_SESSION_END` - It's triggered once on logout.
+-   `AUTH_SESSION_START` - It's triggered once when tokens are set.
+-   `AUTH_SESSION_END` - It's triggered once on logout, when fetching auth. user fails or when login fails.
 -   `AUTH_SESSION_PAUSE` - Triggered when tokens refreshing start.
 -   `AUTH_SESSION_RESUME` - Triggered when tokens refreshing successfully finished.
 

@@ -1,7 +1,7 @@
 import { take, put, cancel, fork, takeEvery, race, all } from 'redux-saga/effects';
 
 import { refreshTokens } from '../../actions';
-import { SET_AUTH_TOKENS, AUTH_LOGOUT } from '../../actionType';
+import { SET_AUTH_TOKENS, ACCESS_TOKEN_UNAVAILABLE, AUTH_REFRESH_TOKEN_FAILURE } from '../../actionType';
 import { logger } from '../../config';
 
 import config from '../config';
@@ -81,9 +81,9 @@ export default function* tokensActionsHandlers() {
         takeEvery(SET_AUTH_TOKENS, function* setAuthTokens(action) {
             yield race({
                 task: setTokensHandler(action, refreshTokensTimeout),
-                abort: take(AUTH_LOGOUT),
+                abort: take([ACCESS_TOKEN_UNAVAILABLE, AUTH_REFRESH_TOKEN_FAILURE]),
             });
         }),
-        takeEvery(AUTH_LOGOUT, clearTokensHandler, refreshTokensTimeout),
+        takeEvery([ACCESS_TOKEN_UNAVAILABLE, AUTH_REFRESH_TOKEN_FAILURE], clearTokensHandler, refreshTokensTimeout),
     ]);
 }

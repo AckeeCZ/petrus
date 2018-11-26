@@ -46,7 +46,7 @@ export default function configure(customConfig = {}, customOptions = {}) {
     }
 
     if (isNotFn(shouldRefresh)) {
-        config.detectShouldRefresh = error => !!error;
+        config.detectShouldRefresh = () => true;
     } else {
         config.detectShouldRefresh = shouldRefresh;
     }
