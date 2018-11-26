@@ -1,14 +1,14 @@
 {
     "name": "ackee-redux-token-auth",
     "version": "2.0.1",
-    "description": "Redux and redux saga logic for token authentication with an auto token refresh.",
+    "description": "The library aims to handle authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
     "scripts": {
-        "build:lib": "cross-env BABEL_ENV=lib babel src --out-dir lib",
-        "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
-        "build:dist": "webpack --config webpack.config.js",
-        "build": "npm run build:dist && npm run build:es && npm run build:lib",
+        "build:lib": "cross-env BABEL_ENV=lib && rm -rf ./lib && babel src --out-dir lib",
+        "build:es": "cross-env BABEL_ENV=es && rm -rf ./es && babel src --out-dir es",
+        "build:dist": "rm -rf ./dist && webpack --config webpack.config.js",
+        "build": "rm -rf ./dist ./es ./lib && npm run build:dist && npm run build:es && npm run build:lib",
         "prepublish": "npm run build",
         "start": "npm run build:es && onchange 'src/**/*.js' -- npm run build:es"
     },
