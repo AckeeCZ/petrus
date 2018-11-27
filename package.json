@@ -1,6 +1,6 @@
 {
     "name": "ackee-redux-token-auth",
-    "version": "2.2.6",
+    "version": "2.2.7",
     "description": "The library aims to handle authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
@@ -54,6 +54,6 @@
         "> 1%",
         "maintained node versions",
         "not dead",
-        "not ie"
+        "IE > 11"
     ]
 }
