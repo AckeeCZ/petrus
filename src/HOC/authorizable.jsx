@@ -8,10 +8,10 @@ import * as selectors from '../selectors';
 const MockAppLoader = () => <div>Loading...</div>;
 
 const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
-    const AuthorizedComponent = ({ isLoggedIn, isLoggingIn, triedToRetrieveTokens, ...props }) => {
-        if (isLoggedIn) {
+    const AuthorizedComponent = props => {
+        if (props.authUser) {
             return <AuthorizableComponent {...props} />;
-        } else if (!triedToRetrieveTokens || isLoggingIn) {
+        } else if (!props.triedToRetrieveTokens || props.isLoggingIn) {
             return <Loader />;
         }
 
@@ -21,12 +21,16 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
     AuthorizedComponent.displayName = `Authorizable(${getDisplayName(AuthorizableComponent)})`;
 
     AuthorizedComponent.propTypes = {
-        isLoggedIn: PropTypes.bool.isRequired,
+        authUser: PropTypes.shape(),
         triedToRetrieveTokens: PropTypes.bool.isRequired,
     };
 
+    AuthorizedComponent.defaultProps = {
+        authUser: null,
+    };
+
     const mapStateToProps = state => ({
-        isLoggedIn: selectors.isLoggedIn(state),
+        authUser: selectors.authUser(state),
         triedToRetrieveTokens: selectors.triedToRetrieveTokens(state),
         isLoggingIn: selectors.isLoggingIn(state),
     });

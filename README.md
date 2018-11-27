@@ -282,7 +282,7 @@ The handler is called with `{ ...tokens, user }` you returned in `configure.auth
 
 High order component that based on current state of the `auth` reducer renders one of these components:
 
--   `AuthorizableComponent` is rendered only if `auth.isLoggedIn` is `true` (-> app is authorized)
+-   `AuthorizableComponent` it is rendered only if an authorized user had been fetched (-> `state.auth.user`)
 -   `Firewall` is rendered if application isn't authorized
 -   `Loader` (optional) is renderer whenever the app can't determinate if it's authorized or not (e.g. when app is loading and it doesn't know yet if tokens are available or not)
 
