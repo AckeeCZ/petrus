@@ -7,7 +7,7 @@
     ],
     "env": {
         "lib": {
-            "presets": ["@babel/preset-env"]
+            "presets": ["@babel/preset-env", "@babel/preset-react"]
         },
         "es": {
             "presets": [
@@ -16,7 +16,8 @@
                     {
                         "modules": false
                     }
-                ]
+                ],
+                "@babel/preset-react"
             ]
         }
     }
