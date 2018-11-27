@@ -1,15 +1,15 @@
 {
     "name": "ackee-redux-token-auth",
-    "version": "2.2.2",
+    "version": "2.2.6",
     "description": "The library aims to handle authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
     "scripts": {
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
-        "build": "rm -rf ./es ./lib && npm run build:es && npm run build:lib",
-        "prepublish": "npm run build",
-        "start": "npm run build:es && onchange 'src/**/*.js' -- npm run build:es"
+        "build": "rm -rf ./es ./lib && yarn run build:es & npm run build:lib",
+        "prepare": "npm run build",
+        "start": "yarn install && yarn run build:es && onchange 'src/**/*.js' -- yarn run build:es"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
@@ -25,7 +25,6 @@
     "dependencies": {
         "@babel/runtime": "^7.1.5",
         "localforage": "^1.7.3",
-        "prop-types": "^15.6.2",
         "react": "^16.6.3",
         "react-redux": "^5.1.1",
         "redux": "^4.0.1",
@@ -45,8 +44,16 @@
         "eslint": "^5.5.0",
         "eslint-config-ackee": "^0.9.0",
         "eslint-config-prettier": "^3.3.0",
+        "install-peers": "^1.0.3",
         "onchange": "^5.1.0",
         "prettier": "^1.15.2",
         "prettier-config-ackee": "0.0.4"
-    }
+    },
+    "browserslist": [
+        "last 2 version",
+        "> 1%",
+        "maintained node versions",
+        "not dead",
+        "not ie"
+    ]
 }
