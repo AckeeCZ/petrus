@@ -25,6 +25,7 @@ The library aims to handle authentication logic with token based flow.
     -   [Action types](#action-types)
     -   [Selectors](#selectors)
     -   [Utilities](#utilities)
+    -   [HOC](#hoc)
 -   [Migration guides (`1.x.x` -> `2.0.x`)](#migration-guides)
 
 ---
@@ -274,6 +275,33 @@ function* logOutEveryAuthStateStep() {
 A saga wrapper for the given `handler` Function or a saga generator.
 
 The handler is called with `{ ...tokens, user }` you returned in `configure.authenticate` and `configure.refreshTokens`.
+
+### <a name="hoc"></a>HOC
+
+#### `authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`
+
+High order component that based on current state of the `auth` reducer renders one of these components:
+
+-   `AuthorizableComponent` is rendered only if `auth.isLoggedIn` is `true` (-> app is authorized)
+-   `Firewall` is rendered if application isn't authorized
+-   `Loader` (optional) is renderer whenever the app can't determinate if it's authorized or not (e.g. when app is loading and it doesn't know yet if tokens are available or not)
+
+##### Example
+
+```js
+import React from 'react';
+import { authorizable } from 'ackee-redux-token-auth/lib/HOC';
+// or import { HOC } from 'ackee-redux-token-auth';
+// and then HOC.authorizable(...);
+
+const AuthContent = <div>User is logged in</div>;
+const Firewall = <div>Please login</div>;
+const Loader = <div>Loading...</div>;
+
+const AuthorizedComponent = authorizable(AuthContent, Firewall, Loader);
+
+export default AuthorizedComponent;
+```
 
 ---
 
