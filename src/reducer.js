@@ -10,6 +10,7 @@ import {
     FETCH_AUTH_USER_REQUEST,
     FETCH_AUTH_USER_SUCCESS,
     FETCH_AUTH_USER_FAILURE,
+    TRIED_TO_RETRIEVE_TOKENS,
 } from './actionType';
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
     tokens: {},
     isRefreshing: false,
     isUserFetching: false,
+    triedToRetrieveTokens: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -110,6 +112,12 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isUserFetching: false,
+            };
+
+        case TRIED_TO_RETRIEVE_TOKENS:
+            return {
+                ...state,
+                triedToRetrieveTokens: true,
             };
 
         default:

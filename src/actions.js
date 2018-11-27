@@ -17,6 +17,7 @@ import {
     AUTH_SESSION_END,
     ACCESS_TOKEN_AVAILABLE,
     ACCESS_TOKEN_UNAVAILABLE,
+    TRIED_TO_RETRIEVE_TOKENS,
 } from './actionType';
 
 export const login = credentials => {
@@ -108,4 +109,8 @@ export const authSessionPause = () => ({
 
 export const authSessionResume = () => ({
     type: AUTH_SESSION_RESUME,
+});
+
+export const triedToRetrieveTokens = () => ({
+    type: TRIED_TO_RETRIEVE_TOKENS,
 });

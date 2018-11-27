@@ -20,3 +20,5 @@ export const isLoggingIn = state => {
 };
 
 export const isUserFetching = state => state[reducerName].isUserFetching;
+
+export const triedToRetrieveTokens = state => state[reducerName].triedToRetrieveTokens;
