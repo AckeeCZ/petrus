@@ -10,3 +10,5 @@ export { reducer } from './reducer';
 export * from './sagas';
 
 export * as constants from './constants';
+
+export * as HOC from './HOC';

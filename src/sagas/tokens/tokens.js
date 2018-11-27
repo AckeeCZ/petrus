@@ -1,7 +1,7 @@
 import { take, put, cancel, fork, takeEvery, all } from 'redux-saga/effects';
 
 import { refreshTokens } from '../../actions';
-import { ACCESS_TOKEN_UNAVAILABLE, SET_AUTH_TOKENS } from '../../actionType';
+import { ACCESS_TOKEN_UNAVAILABLE, SET_AUTH_TOKENS, AUTH_REFRESH_TOKEN_FAILURE } from '../../actionType';
 import { logger } from '../../config';
 
 import config from '../config';
@@ -81,6 +81,10 @@ export default function* tokensActionsHandlers() {
 
     yield all([
         takeEvery(SET_AUTH_TOKENS, setTokensHandler, refreshTokensTimeout),
-        takeEvery(ACCESS_TOKEN_UNAVAILABLE, clearTokensHandler, refreshTokensTimeout),
+
+        // NOTE: AUTH_REFRESH_TOKEN_FAILURE must be also included,
+        // because if expired tokens are retrived from a local storage,
+        // Neither ACCESS_TOKEN_AVAILABLE will be dispatched, nor ACCESS_TOKEN_UNAVAILABLE
+        takeEvery([ACCESS_TOKEN_UNAVAILABLE, AUTH_REFRESH_TOKEN_FAILURE], clearTokensHandler, refreshTokensTimeout),
     ]);
 }

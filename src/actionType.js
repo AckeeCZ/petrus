@@ -22,3 +22,5 @@ export const AUTH_SESSION_START = '@@redux-token-auth/AUTH_SESSION_START';
 export const AUTH_SESSION_END = '@@redux-token-auth/AUTH_SESSION_END';
 export const AUTH_SESSION_PAUSE = '@@redux-token-auth/AUTH_SESSION_PAUSE';
 export const AUTH_SESSION_RESUME = '@@redux-token-auth/AUTH_SESSION_RESUME';
+
+export const TRIED_TO_RETRIEVE_TOKENS = '@@redux-token-auth/TRIED_TO_RETRIEVE_TOKENS';
