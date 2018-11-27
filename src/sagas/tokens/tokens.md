@@ -1,22 +1,22 @@
 # Tokens
 
-This directory contains logic for **storing and retrieving tokens** to and from a local storage and **setting timeout for refreshing tokens** before they expire.
+This directory contains logic for **storing and retrieving tokens** to and from a local storage (if persistance option isn't `NONE`) and **setting up timeout for refreshing access token** before it expires.
 
 ## How does it work
 
 1. ### `tryToRetrieveTokens.js`
 
-    - retrieve tokens from a local storage
+    - retrieve tokens
     - if tokens exist and aren't expired
         - send tokens to Redux store (dispatch `SET_AUTH_TOKENS` action)
         - fetch auth. user (use `getAuthUser` function)
     - if tokens exist, but are expired, refresh them
 
-    Since this triggers auth. flow, this saga should be initialized as last one.
+    Since this triggers auth. session flow, this saga should be initialized as last one.
 
 2. ### `tokens.js`
 
-    This saga stores tokens and sets timeout for their refreshing on `SET_AUTH_TOKENS`. And on `AUTH_LOGOUT`, it's going to clear the tokens tokens and the timeout.
+    This saga stores tokens and sets timeout for their refreshing on `SET_AUTH_TOKENS`. And on `ACCESS_TOKEN_AVAILABLE`, it's going to clear those tokens with the timeout for refreshment.
 
 3. ### `RefreshTokensTimeout.js`
 
