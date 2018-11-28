@@ -11,7 +11,7 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
     const AuthorizedComponent = props => {
         if (props.authUser) {
             return <AuthorizableComponent {...props} />;
-        } else if (!props.triedToRetrieveTokens || props.isLoggingIn) {
+        } else if (!props.triedToRetrieveTokens || props.isLoggingIn || props.isUserFetching) {
             return <Loader />;
         }
 
@@ -23,6 +23,8 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
     AuthorizedComponent.propTypes = {
         authUser: PropTypes.shape(),
         triedToRetrieveTokens: PropTypes.bool.isRequired,
+        isUserFetching: PropTypes.bool.isRequired,
+        isLoggingIn: PropTypes.bool.isRequired,
     };
 
     AuthorizedComponent.defaultProps = {
@@ -33,6 +35,7 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
         authUser: selectors.authUser(state),
         triedToRetrieveTokens: selectors.triedToRetrieveTokens(state),
         isLoggingIn: selectors.isLoggingIn(state),
+        isUserFetching: selectors.isUserFetching(state),
     });
 
     return connect(mapStateToProps)(AuthorizedComponent);
