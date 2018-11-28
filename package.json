@@ -5,6 +5,7 @@
     "main": "lib/index.js",
     "module": "es/index.js",
     "scripts": {
+        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
         "build": "rm -rf ./es ./lib && yarn run build:es & npm run build:lib",
