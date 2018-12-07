@@ -6,4 +6,5 @@ yarn.lock
 .eslintrc.json
 .eslintignore
 .editorconfig
-.babelrc
+babel.config.js
+.gitignore

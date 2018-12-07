@@ -8,7 +8,7 @@
         "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
-        "build": "rm -rf ./es ./lib && yarn run build:es & npm run build:lib",
+        "build": "yarn run build:es & npm run build:lib",
         "prepare": "npm run build",
         "start": "yarn install && yarn run build:es && onchange 'src/**/*.{js,jsx}' -- yarn run build:es"
     },
