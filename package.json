@@ -73,7 +73,7 @@
     },
     "lint-staged": {
         "*.{js,jsx,json,scss,less,css,md}": [
-            "prettier --config ./prettier.config.js --write",
+            "prettier --config ./prettier.config.js --write && yarn lint",
             "git add"
         ]
     },
