@@ -1,13 +1,26 @@
-export * from './actionType';
+import { login, stopLogin, logout, setTokens, refreshTokens, setTokensPersistence } from './actions';
+import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './selectors';
+
+export const actions = {
+    login,
+    stopLogin,
+    logout,
+    setTokens,
+    refreshTokens,
+    setTokensPersistence,
+};
+
+export const selectors = {
+    authUser,
+    isLoggedIn,
+    isLoggingIn,
+    loginErrors,
+    tokensPersistence,
+};
+
 export * as actionTypes from './actionType';
 
-export { authUser, isLoggedIn, isLoggingIn, loginErrors } from './selectors';
-
-export { login, stopLogin, logout, setTokens, refreshTokens } from './actions';
-
-export { reducer } from './reducer';
-
-export * from './sagas';
+export { configure, withAuthSession, getAuthStateChannel } from './sagas';
 
 export * as constants from './constants';
 

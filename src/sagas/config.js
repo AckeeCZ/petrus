@@ -4,10 +4,12 @@ const config = {
 
     remoteLogin: null,
     remoteRefreshTokens: null,
-    detectShouldRefresh: null,
     remoteGetAuthUser: null,
 
-    options: {},
+    options: {
+        reducerKey: 'auth',
+        tokens: {},
+    },
 };
 
 export default config;

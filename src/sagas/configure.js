@@ -1,69 +1,71 @@
-import { logger } from '../config';
-import config from './config';
 import * as Consts from '../constants';
-import RefreshTokensTimeout from './tokens/RefreshTokensTimeout';
+import { factoryReducer } from '../reducer';
 
-const defaultOptions = {
-    tokens: {
-        ...RefreshTokensTimeout.options,
-        persistence: Consts.tokens.persistence.LOCAL,
+import config from './config';
+import RefreshTokensTimeout from './tokens/RefreshTokensTimeout';
+import initializeSaga from './initialize';
+
+const isFn = val => typeof val === 'function';
+
+const handlersValidators = {
+    authenticate: {
+        errorMessage: authenticate => `@ackee/petrus: 'authenticate' is not a function: '${authenticate}'`,
+        validator: isFn,
+    },
+    refreshTokens: {
+        errorMessage: refreshTokens => `@ackee/petrus: 'refreshTokens' is not a function: ${refreshTokens}`,
+        validator: isFn,
+    },
+    getAuthUser: {
+        errorMessage: getAuthUser => {
+            const { LOCAL, NONE } = Consts.tokens.persistence;
+
+            return `@ackee/petrus: 'getAuthUser' is not a function: ${getAuthUser}. Tokens persistence is set to '${LOCAL}'. Change persistence to '${NONE}' or provide function for fetching authorized user.`;
+        },
+
+        validator: (value, tokensPersistence) =>
+            tokensPersistence === Consts.tokens.persistence.LOCAL ? isFn(value) : true,
     },
 };
 
-const isNotFn = val => typeof val !== 'function';
+function validateHandlers(handlers = {}, { persistence }) {
+    for (const [handlerKey, { errorMessage, validator }] of Object.entries(handlersValidators)) {
+        const handler = handlers[handlerKey];
 
-export default function configure(customConfig = {}, customOptions = {}) {
-    const { authenticate, refreshTokens, shouldRefresh, getAuthUser } = customConfig;
+        if (!validator(handler, persistence)) {
+            throw new TypeError(errorMessage(handler));
+        }
+    }
+}
+
+export default function configure(customParams) {
+    const { handlers, options, initialState } = {
+        handlers: {},
+        options: {},
+        ...customParams,
+    };
 
     config.options = {
-        ...defaultOptions,
-        ...customOptions,
+        ...config.options,
+        ...options,
         tokens: {
-            ...defaultOptions.tokens,
-            ...customOptions.tokens,
+            ...config.options.tokens,
+            ...RefreshTokensTimeout.options,
+            ...options.tokens,
         },
     };
 
-    if (isNotFn(authenticate)) {
-        config.remoteLogin = credentials => {
-            logger.error(`Cannot authenticate use with ${credentials}: Supply authenticate function first.`);
-            return {
-                user: null,
-                tokens: {},
-            };
-        };
-    } else {
-        config.remoteLogin = authenticate;
-    }
+    const tokensPersistence = initialState.tokensPersistence || Consts.tokens.persistence.LOCAL;
 
-    if (isNotFn(refreshTokens)) {
-        config.remoteRefreshTokens = tokens => {
-            logger.error('Cannot refresh tokens. No refresh tokens fn supplied.');
-            return tokens;
-        };
-    } else {
-        config.remoteRefreshTokens = refreshTokens;
-    }
+    validateHandlers(handlers, {
+        tokensPersistence,
+    });
 
-    if (isNotFn(shouldRefresh)) {
-        config.detectShouldRefresh = () => true;
-    } else {
-        config.detectShouldRefresh = shouldRefresh;
-    }
-
-    if (isNotFn(getAuthUser)) {
-        config.remoteGetAuthUser = () => {
-            if (config.options.tokens.persistence === Consts.tokens.persistence.LOCAL) {
-                logger.error(
-                    `'getAuthUser' is not a function. Tokens persistence is set to '${
-                        Consts.tokens.persistence.LOCAL
-                    }'. Change persistence to '${
-                        Consts.tokens.persistence.NONE
-                    }' or provide function for fetching authorized user.`,
-                );
-            }
-        };
-    } else {
-        config.remoteGetAuthUser = getAuthUser;
-    }
+    return {
+        saga: initializeSaga,
+        reducer: factoryReducer({
+            ...initialState,
+            tokensPersistence,
+        }),
+    };
 }
