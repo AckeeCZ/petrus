@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import getDisplayName from 'react-display-name';
 
-import { getDisplayName } from '../utilities';
 import * as selectors from '../selectors';
 
 const MockAppLoader = () => <div>Loading...</div>;
