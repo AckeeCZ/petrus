@@ -1,6 +1,6 @@
 # Tokens
 
-This directory contains logic for **storing and retrieving tokens** to and from a local storage (if persistance option isn't `NONE`) and **setting up timeout for refreshing access token** before it expires.
+This directory contains logic for **storing and retrieving tokens** to and from a local storage (if persistence option isn't `NONE`) and **setting up timeout for refreshing access token** before it expires.
 
 ## How does it work
 
@@ -68,9 +68,9 @@ This directory contains logic for **storing and retrieving tokens** to and from 
 
 4. ### `storageHandlers.js`
 
-    Storage handlers choose storage type based on the `persistance` option.
+    Storage handlers choose storage type based on the `persistence` option.
 
-    #### Tokens Persistance
+    #### Tokens Persistence
 
     - `LOCAL` - `IndexedDB` storage (through `localforage` API)
     - `SESSION` - `sessionStorage`

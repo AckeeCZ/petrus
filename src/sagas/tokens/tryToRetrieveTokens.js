@@ -1,16 +1,17 @@
-import { take, race, put, call } from 'redux-saga/effects';
+import { take, race, put, call, select } from 'redux-saga/effects';
 
 import { AUTH_LOGIN_SUCCESS } from '../../actionType';
 import { refreshTokens, setTokens, fetchAuthUserRequest, triedToRetrieveTokens } from '../../actions';
 import * as Consts from '../../constants';
-
-import config from '../config';
+import { tokensPersistence } from '../../selectors';
 
 import { retrieveTokens, clearTokens } from './storageHandlers';
 import { isAnyTokenExpired } from './utilities';
 
 function* tokensRetrieval() {
-    if (config.options.tokens.persistence === Consts.tokens.persistence.NONE) {
+    const persistence = yield select(tokensPersistence);
+
+    if (persistence === Consts.tokens.persistence.NONE) {
         yield clearTokens();
         return;
     }

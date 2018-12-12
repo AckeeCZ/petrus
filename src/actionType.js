@@ -24,3 +24,4 @@ export const AUTH_SESSION_PAUSE = '@@redux-token-auth/AUTH_SESSION_PAUSE';
 export const AUTH_SESSION_RESUME = '@@redux-token-auth/AUTH_SESSION_RESUME';
 
 export const TRIED_TO_RETRIEVE_TOKENS = '@@redux-token-auth/TRIED_TO_RETRIEVE_TOKENS';
+export const SET_TOKENS_PERSISTENCE = '@@redux-token-auth/SET_TOKENS_PERSISTENCE';
