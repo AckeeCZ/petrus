@@ -18,6 +18,7 @@ import {
     ACCESS_TOKEN_AVAILABLE,
     ACCESS_TOKEN_UNAVAILABLE,
     TRIED_TO_RETRIEVE_TOKENS,
+    SET_TOKENS_PERSISTENCE,
 } from './actionType';
 
 export const login = credentials => {
@@ -113,4 +114,9 @@ export const authSessionResume = () => ({
 
 export const triedToRetrieveTokens = () => ({
     type: TRIED_TO_RETRIEVE_TOKENS,
+});
+
+export const setTokensPersistence = persistence => ({
+    type: SET_TOKENS_PERSISTENCE,
+    persistence,
 });

@@ -1,24 +1,26 @@
-import { reducerName } from './config';
+import config from './sagas/config';
 
 export const authTokens = state => {
-    return state[reducerName].tokens;
+    return state[config.options.reducerKey].tokens;
 };
 export const isRefreshing = state => {
-    return state[reducerName].isRefreshing;
+    return state[config.options.reducerKey].isRefreshing;
 };
 export const authUser = state => {
-    return state[reducerName].user;
+    return state[config.options.reducerKey].user;
 };
 export const isLoggedIn = state => {
-    return state[reducerName].isLoggedIn;
+    return state[config.options.reducerKey].isLoggedIn;
 };
 export const loginErrors = state => {
-    return state[reducerName].loginError;
+    return state[config.options.reducerKey].loginError;
 };
 export const isLoggingIn = state => {
-    return state[reducerName].isLoggingIn;
+    return state[config.options.reducerKey].isLoggingIn;
 };
 
-export const isUserFetching = state => state[reducerName].isUserFetching;
+export const isUserFetching = state => state[config.options.reducerKey].isUserFetching;
 
-export const triedToRetrieveTokens = state => state[reducerName].triedToRetrieveTokens;
+export const triedToRetrieveTokens = state => state[config.options.reducerKey].triedToRetrieveTokens;
+
+export const tokensPersistence = state => state[config.options.reducerKey].tokensPersistence;

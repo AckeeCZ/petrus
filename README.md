@@ -1,4 +1,6 @@
-# ackee-redux-token-auth
+![ackee|Petrus](https://img.ack.ee/ackee/image/github/js)
+
+# Petrus
 
 The library aims to handle authentication logic with token based flow.
 
@@ -26,100 +28,123 @@ The library aims to handle authentication logic with token based flow.
     -   [Selectors](#selectors)
     -   [Utilities](#utilities)
     -   [HOC](#hoc)
--   [Migration guides (`1.x.x` -> `2.0.x`)](#migration-guides)
 
 ---
 
 ## <a name="installing"></a>Installing
 
-Using npm:
-
-```bash
-$ npm install ackee-redux-token-auth
-```
-
 Using yarn:
 
 ```bash
-$ yarn add ackee-redux-token-auth
+$ yarn add @ackee/petrus
+```
+
+Using npm:
+
+```bash
+$ npm i -S @ackee/petrus
 ```
 
 ---
 
 ## <a name="initialization"></a>Initialization
 
-#### <a name="configure"></a>`configure(config: Object, options: Object) => void`
+#### <a name="configure"></a>`configure(config: Object) => Object`
 
 Sets the package configuration with an config object. Following config properties are supported:
 
-`config`:
+##### paramaters
 
--   `authenticate: Function` - required
--   `refreshTokens: Function` - required
--   `getAuthUser: Function` - required
--   `shouldRefresh: Function`
+-   `config.handlers`: (all handlers are required)
 
-`options`:
+    -   [required] `authenticate(credentials: any) => { user: any, tokens: any }`
 
--   `tokens`
-    -   `persistence: String` - [See details](#constants-tokens-persistence)
-    -   `requestDurationEstimate: Number`
-    -   `minRequiredExpiration: Number`
+        Required. This method is called when a `login(credentials)` action is dispatched. These credentials are passed to `authenticate` method.
 
-Any of the functions can also be a saga generator.
+        The method is expected to return/or resolve with an Object with props `user, tokens` or throw an error. User and tokens are then stored as is to the redux state for later use (`state.auth.user`).
 
-##### `authenticate(credentials: any) => { user: any, tokens: any }`
+    -   [required] `refreshTokens(tokens: Object) => tokens:Object`
 
-Required. This method is called when a `login(credentials)` action is dispatched. These credentials are passed to `authenticate` method.
+        Required. This method is called when the timeout for refreshing tokens ends or when tokens are expired after retrieval from a local storage. This triggers the token-refresh process.
 
-The method is expected to return/or resolve with an Object with props `user, tokens` or throw an error. User and tokens are then stored as is to the redux state for later use (`state.auth.user`).
+        Function is expected to return/or resolve with an tokens Object: (`{ [tokenName: string]: token }`)
 
-##### `refreshTokens(tokens: Object) => tokens:Object`
+    -   [required] `getAuthUser(void) => user:any`
 
-Required. This method is called when the timeout for refreshing tokens ends or when tokens are expired after retrieval from a local storage. This triggers the token-refresh process.
+        Required. This method is called when tokens are successfully retrieved from a local storage.
 
-Function is expected to return/or resolve with an tokens Object: (`{ [tokenName: string]: token }`)
+        Function is expected to return/or resolve with a user object.
 
-##### `getAuthUser(void) => user:any`
+    Any of the functions can also be a saga generator.
 
-Required. This method is called when tokens are successfully retrieved from a local storage.
+-   `config.options`:
 
-Function is expected to return/or resolve with a user object.
+    Defaults:
 
-##### [DEPRECATED]`shouldRefresh(error: Error) => boolean`
+    ```js
+    {
+        reducerKey: 'auth',
+        tokens: {
+            requestDurationEstimate: 500,
+            minRequiredExpiration: 1000 * 60,
+        }
+    }
+    ```
 
-Optional. This function is called when the `requestFn` catches an error and should decide, whether to refresh the tokens and retry the action or not.
+-   `config.initialState`:
 
-**Default**: `() => true`.
+    Reducer initial state has these defaults:
 
-### `saga() => ReduxSaga`
+    ```js
+    {
+        user: null,
+        isLoggedIn: false,
+        isLoggingIn: false,
+        loginError: null,
+        tokens: {},
+        isRefreshing: false,
+        isUserFetching: false,
+        triedToRetrieveTokens: false,
+        tokensPersistence: 'LOCAL',
+    }
+    ```
 
-Initializes the saga handlers generator. This should be passed along with your other sagas.
+##### returns
 
-### `reducer: ReduxReducer`
+Returns object with `saga` and `reducer` props.
 
-The lib reducer. Needs to be plugged in under the `auth` key. Reducer name is not-yet configurable.
+-   `saga() => ReduxSaga` - Initializes the saga handlers generator. This should be passed along with your other sagas.
+
+-   `reducer: ReduxReducer` - The lib reducer. Needs to be plugged in under the `options.reducerKey` value, default is `auth`.
+
+---
 
 ### Initialization overview
 
+Minimal required configuration:
+
 ```js
-import * as ReduxAuth from 'ackee-redux-token-auth';
+import * as Petrus from '@ackee/petrus';
 
 // 1. Provide autheticate, refreshTokens and getAuthUser methods
-ReduxAuth.configure({
-    authenticate,
-    refreshTokens,
-    getAuthUser,
+const { saga, reducer } = Petrus.configure({
+    handlers: {
+        authenticate,
+        refreshTokens,
+        getAuthUser,
+    },
+    options: {},
+    initialState: {}
 });
 
 // 2. Launch ReduxAuth.saga
 function*() {
-    yield all([ReduxAuth.saga()])
+    yield all([saga()])
 }
 
 // 3. Add auth reducer
 const rootReducer = combineReducers({
-    auth: ReduxAuth.reducer
+    auth: reducer
 });
 ```
 
@@ -127,46 +152,21 @@ const rootReducer = combineReducers({
 
 ## API
 
-### <a name="constants"></a>Constants
-
-#### `tokens`
-
--   <a name="constants-tokens-persistence"></a>`persistence`
-
-    Tokens persistence defines how and where will be tokens stored and when they will be cleared:
-
-    -   `LOCAL` (default) - Tokens are stored in `IndexedDB`. The state will be persisted even when the browser window is closed. An explicit sign out is needed to clear that state.
-    -   `SESSION` - Tokens are stored in `SessionStorage`.
-    -   `NONE` - Tokens will only be stored in Redux Store and will be cleared when the window or activity is refreshed.
-
-        Example
-
-        ```js
-        import { configure, constants } from 'ackee-redux-token-auth';
-
-        const options = {
-            tokens: {
-                persistence: constants.tokens.persistence.NONE,
-            },
-        };
-
-        configure(
-            {
-                // ...
-            },
-            options,
-        );
-        ```
-
 ### <a name="action-creators"></a>Action creators
 
-#### `login(credentials: Object) => ReduxAction`
+#### `login(credentials: Object)`
 
 The `credentials` object is passed to `authenticate(credentials)` method you've provided in the [`configure`](#configure) method.
 
-#### `logout() => ReduxAction`
+#### `logout()`
 
 Triggers a user logout. This clears the state of any auth data (tokens from local storage included).
+
+#### `setTokensPersistence(persistence)`
+
+Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+
+---
 
 ### <a name="action-types"></a>Action types
 
@@ -199,6 +199,53 @@ If access token refreshment was successful, `AUTH_SESSION_RESUME` is triggered. 
 
 If access token refreshment fails or `AUTH_LOGOUT` action§ is triggered, `AUTH_SESSION_END` is triggered.
 
+---
+
+### <a name="constants"></a>Constants
+
+#### `tokens`
+
+-   <a name="constants-tokens-persistence"></a>`persistence`
+
+    Tokens persistence defines how and where will be tokens stored and when they will be cleared:
+
+    -   `LOCAL` (default) - Tokens are stored in `IndexedDB`. The state will be persisted even when the browser window is closed. An explicit sign out is needed to clear that state.
+    -   `SESSION` - Tokens are stored in `SessionStorage`.
+    -   `NONE` - Tokens will only be stored in Redux Store and will be cleared when the window or activity is refreshed.
+
+        Example - overide default `tokensPersistence`
+
+        ```js
+        import * as Petrus from '@ackee/petrus';
+
+        Petrus.configure({
+            // ...
+            initialState: {
+                tokensPersistence: Petrus.constants.tokens.persistence.NONE,
+            },
+        });
+        ```
+
+        Example - set tokens persistence dynamically
+
+        ```js
+        import { put } from 'redux-saga/effects';
+        import * as Petrus from '@ackee/petrus';
+
+        const { setTokensPersistence } = Petrus.actions;
+        const { NONE, LOCAL } from = Petrus.constants.tokens;
+
+        function* disableTokensPersistence() {
+            yield put(setTokensPersistence(NONE));
+        }
+
+        function* enableTokensPersistence() {
+            yield put(setTokensPersistence(LOCAL));
+        }
+        ```
+
+---
+
 ### <a name="selectors"></a>Selectors
 
 #### `authUser(state: Object) => user:any`
@@ -214,6 +261,12 @@ Returns `true` whether user is logged in, `false` otherwise.
 Returns `true` whether the login process is taking place, `false` otherwise.
 
 #### `isUserFetching(state: Object) => Boolean`
+
+#### `tokensPersistence(state: Object) => String`
+
+Get current tokens persistence value, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+
+---
 
 ### <a name="utilities"></a>Utilities
 
@@ -270,12 +323,6 @@ function* logOutEveryAuthStateStep() {
 }
 ```
 
-#### [DEPRECATED] `authorizedFn(handler: Function)`
-
-A saga wrapper for the given `handler` Function or a saga generator.
-
-The handler is called with `{ ...tokens, user }` you returned in `configure.authenticate` and `configure.refreshTokens`.
-
 ### <a name="hoc"></a>HOC
 
 #### `authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`
@@ -308,24 +355,3 @@ export default AuthorizedComponent;
 > ### Tokens management logic
 >
 > More detail description of the [Tokens management logic](https://gitlab.ack.ee/Web/token-auth/blob/master/src/sagas/tokens/tokens.md).
-
----
-
-## <a name="migration-guides"></a>Migration guides from `1.x.x` to `2.0.x`
-
-The `configure` method now accept an object with following changes:
-
-1.  `refreshTokens` function is now required
-2.  `getAuthUser` is a required function, that returns a user object.
-
-The configure method should now look like this:
-
-```js
-import { configure } from 'ackee-redux-token-auth';
-
-configure({
-    autheticate,
-    refreshTokens, // now required
-    getAuthUser, // new method
-});
-```
