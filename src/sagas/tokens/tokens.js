@@ -9,7 +9,6 @@ import config from '../config';
 import RefreshTokensTimeout from './RefreshTokensTimeout';
 import { storeTokens, clearTokens } from './storageHandlers';
 import { hasExpirationProperty } from './utilities';
-import setTokensPersistence from './setTokensPersistence';
 
 function* handleTimeoutChannel(timeoutChannel) {
     while (true) {
@@ -87,7 +86,5 @@ export default function* tokensActionsHandlers() {
         // because if expired tokens are retrived from a local storage,
         // Neither ACCESS_TOKEN_AVAILABLE will be dispatched, nor ACCESS_TOKEN_UNAVAILABLE
         takeEvery([ACCESS_TOKEN_UNAVAILABLE, AUTH_REFRESH_TOKEN_FAILURE], clearTokensHandler, refreshTokensTimeout),
-
-        setTokensPersistence(),
     ]);
 }
