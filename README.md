@@ -354,4 +354,4 @@ export default AuthorizedComponent;
 
 > ### Tokens management logic
 >
-> More detail description of the [Tokens management logic](https://gitlab.ack.ee/Web/token-auth/blob/master/src/sagas/tokens/tokens.md).
+> More detail description of the [Tokens management logic](src/sagas/tokens/tokens.md).
