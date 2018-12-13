@@ -61,6 +61,10 @@ export default function configure(customParams) {
         tokensPersistence,
     });
 
+    config.remoteLogin = handlers.authenticate;
+    config.remoteRefreshTokens = handlers.refreshTokens;
+    config.remoteGetAuthUser = handlers.getAuthUser;
+
     return {
         saga: initializeSaga,
         reducer: factoryReducer({
