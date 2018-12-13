@@ -7,19 +7,11 @@ import { clearTokens, retrieveTokens, storeTokens } from './storageHandlers';
 
 const { LOCAL, SESSION, NONE } = Consts.tokens.persistence;
 
-function* applyTokensPersistence(persitance) {
-    switch (persitance) {
+function* applyTokensPersistence(persistence) {
+    switch (persistence) {
+        case SESSION:
         case LOCAL: {
-            const tokens = yield retrieveTokens(SESSION);
-
-            if (tokens) {
-                yield storeTokens(tokens);
-            }
-            break;
-        }
-
-        case SESSION: {
-            const tokens = yield retrieveTokens(LOCAL);
+            const tokens = yield retrieveTokens(persistence === LOCAL ? SESSION : LOCAL);
 
             if (tokens) {
                 yield storeTokens(tokens);
@@ -36,10 +28,8 @@ function* applyTokensPersistence(persitance) {
 }
 
 function* setTokensPersistence(action) {
-    const { persitance } = action;
-
     try {
-        yield applyTokensPersistence(persitance);
+        yield applyTokensPersistence(action.persistence);
     } catch (error) {
         logger.error(error);
     }
