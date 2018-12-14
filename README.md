@@ -278,7 +278,7 @@ Note that `withAuthSession` is a blocking task (if you need to make it non-block
 ##### Example
 
 ```js
-import { withAuthSession } from 'ackee-redux-token-auth';
+import { withAuthSession } from '@ackee/petrus';
 
 function* myAuthSaga() {}
 
@@ -303,7 +303,7 @@ A generator function that returns [action channel](https://github.com/redux-saga
 
 ```js
 import { takeEvery } from 'redux-saga/effects';
-import { getAuthStateChannel, actionTypes } from 'ackee-redux-token-auth';
+import { getAuthStateChannel, actionTypes } from '@ackee/petrus';
 
 function* logOutEveryAuthStateStep() {
     const authStateChannel = yield getAuthStateChannel();
@@ -337,8 +337,8 @@ High order component that based on current state of the `auth` reducer renders o
 
 ```js
 import React from 'react';
-import { authorizable } from 'ackee-redux-token-auth/lib/HOC';
-// or import { HOC } from 'ackee-redux-token-auth';
+import { authorizable } from '@ackee/petrus/lib/HOC';
+// or import { HOC } from '@ackee/petrus';
 // and then HOC.authorizable(...);
 
 const AuthContent = <div>User is logged in</div>;
