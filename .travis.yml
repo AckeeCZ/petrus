@@ -3,11 +3,11 @@ node_js:
     - 8
 script: yarn lint && yarn install && yarn build
 deploy:
-    provider: yarn
+    provider: npm
     email: ackeedevelopment@gmail.com
     skip_cleanup: true
     api_key:
-        secure: T40K7EirWrwtNmwkA2uO++0+IxDSH3Yqy1SFoYGJXallY+9oNQSjzmkn+unjqj6S6z9Wc3ZzPF3/uRwp1q1tgGdYjQk73kDyOuhMApTzwZxmhnrJBnmaeyz/mmJBjm5cLmLOjNJ1G8dEPwxOdOKTllf5AU1K9+mAV7Z4JvQAq6ENKvSaJv9d8JVnoq5P44Qo+1tEuU5hgIYmKUImch47ZPM+RcnZQ0vvNx5FmDB2EJaY3t5beoI210IIlkD7CcatWUtNLkfdjqq5THsgE01mX2EhpzALDcuUxpxL9n+r089SJbuvjalmQDzUjZSKWZ8HFCHmDNC7Iik7HW0/zLb/ZpjeMmXw2iVfJcpGWmtpVXe6cdz1Dmlk4g44TjVVS+GgZswo+5dYZaeFv5Qya4Qh7h1DQywlpfIpYdZ45q1L5ZqwXdsCa1hQEficuzMElNJFkSTmzP3d9KgJc9R1dxT5EJLac92WHFrkYuT+jc7CyhrW62yk655Q5myTL8j1R4wmb7BHSGrvBbq/+fkCYmUFaR06WVXYO4ytPNKpLN1Yw7ixw/h9STIC3UoZJ5f8B+V+SyNwdwYTpZCEdPPPkdJSLZ6ucC8+cMXb1I4a/RHO7DvOoMqYuR1tywgGmkIYV5ydaT1oh0DWLg94KsCowSPaBwG6APzUy4zcxf0YL38FNHU=
+        secure: w/KgNOsYshcfDsUyLlXzaOD04PRYmAQWIGXfePQCxQwsIPCSHNvRz4SJKZ2CKPkdUUlc9mbveSy6rQkWFnL7uGYBnFjGmGFXFTJv7yQ46iVzMcJ85H5J7vNGb7cE/tQHZfViTpgYxtdgIu4bOlbJqb5Yf1fQPaibHBypkQHYW5T5YXQ3bMalLbyXSvQhEdDGiI1+0NNJjT2ibYvK9obct2Y4y3MDCJpP4HThE+VQQyWHz2Ue1araNV1E4UNdtGST2vCAHsdClSlzW7TpifEzn9xm5bxrXDOOM/e8xOVLXdYB7Acc2n6+zOl7hkANPkA97E1/CcXXLB0gJc9tAML0omFM4eABnTdr0//VfVN8knU9+Pw71WT+L3h4h8833TwCgNCZ3Y/l3wmlvsAXC+i2SQV8cFacjO6d5608+awMuyrTDYVphxdskLjYD2gw3Bkcra9SPNLxDXD6pyecTaRBiueGSMCLQMTIFfZOoN18BsEDqRmCmm++Omd7HXEnc/Sg6sRyIk14vwVie21kHgWtGNRMqlVTp3NjNnTnKxyk59FRte0YickfdezXNGNvMEX4eUtWG59e/9dAetv1AWElIc7bxMuTSDabCfQRY6Z1bozcz+6BuXfWg2e0IlO0iylj/tRdve9x1W0DqdmiCpedK3ITbAiRqWLVCuQaW4njM+Y=
     on:
         tags: true
         repo: AckeeCZ/petrus
