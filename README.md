@@ -164,7 +164,7 @@ The `credentials` object is passed to `authenticate(credentials)` method you've 
 
 Triggers a user logout. This clears the state of any auth data (tokens from local storage included).
 
-#### `setTokensPersistence(persistence)`
+#### `setTokensPersistence(persistence: String)`
 
 Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
 
@@ -235,7 +235,7 @@ If access token refreshment fails or `AUTH_LOGOUT` action§ is triggered, `AUTH_
         import * as Petrus from '@ackee/petrus';
 
         const { setTokensPersistence } = Petrus.actions;
-        const { NONE, LOCAL } from = Petrus.constants.tokens;
+        const { NONE, LOCAL } = Petrus.constants.tokens;
 
         function* disableTokensPersistence() {
             yield put(setTokensPersistence(NONE));
