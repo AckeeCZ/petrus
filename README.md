@@ -1,4 +1,4 @@
-![ackee|Petrus](https://img.ack.ee/ackee/image/github/js)
+![ackee|Petrus](assets/ackee_git_frontend_petrus.png)
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AckeeCZ/petrus/blob/master/LICENSE) [![CI Status](https://img.shields.io/travis/com/AckeeCZ/petrus.svg?style=flat)](https://travis-ci.com/AckeeCZ/petrus) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request) [![Dependency Status](https://img.shields.io/david/AckeeCZ/petrus.svg?style=flat-square)](https://david-dm.org/AckeeCZ/petrus)
 
@@ -267,6 +267,18 @@ Returns `true` whether the login process is taking place, `false` otherwise.
 #### `tokensPersistence(state: Object) => String`
 
 Get current tokens persistence value, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+
+#### Example
+
+```js
+import { select } from 'redux-saga/effects';
+import * as Petrus from '@ackee/petrus';
+
+function* selectAuthUser() {
+    const authUser = yield select(Petrus.selectors.authUser);
+    // ...
+}
+```
 
 ---
 
