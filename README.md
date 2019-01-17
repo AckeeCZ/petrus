@@ -168,6 +168,17 @@ Triggers a user logout. This clears the state of any auth data (tokens from loca
 
 Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
 
+#### Example
+
+```js
+import { put } from 'redux-saga/effects';
+import { actions } from '@ackee/petrus';
+
+function* logout() {
+    yield put(actions.logout());
+}
+```
+
 ---
 
 ### <a name="action-types"></a>Action types
@@ -200,6 +211,19 @@ If access token refreshment was successful, `AUTH_SESSION_RESUME` is triggered. 
 ##### `AUTH_SESSION_END`
 
 If access token refreshment fails or `AUTH_LOGOUT` action§ is triggered, `AUTH_SESSION_END` is triggered.
+
+#### Example
+
+```js
+import { put } from 'redux-saga/effects';
+import { actionTypes } from '@ackee/petrus';
+
+function* watchAuthSession() {
+    yield takeEvery(actionTypes.AUTH_SESSION_START, function*(action) {
+        // ...
+    });
+}
+```
 
 ---
 
