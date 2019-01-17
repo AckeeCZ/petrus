@@ -9,9 +9,12 @@ const MockAppLoader = () => <div>Loading...</div>;
 
 const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
     const AuthorizedComponent = props => {
-        if (props.authUser) {
+        const { authUser, triedToRetrieveTokens, isLoggingIn, isUserFetching } = props;
+        if (authUser) {
             return <AuthorizableComponent {...props} />;
-        } else if (!props.triedToRetrieveTokens || props.isLoggingIn || props.isUserFetching) {
+        }
+
+        if (!triedToRetrieveTokens || isLoggingIn || isUserFetching) {
             return <Loader />;
         }
 
