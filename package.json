@@ -10,7 +10,7 @@
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
         "build": "yarn run build:es & npm run build:lib",
         "prepare": "npm run build",
-        "start": "yarn install && yarn lint && yarn run build:es && onchange 'src/**/*.{js,jsx}' -- yarn run build",
+        "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
         "lint": "eslint 'src/**/*.{js,jsx}'"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
