@@ -23,6 +23,7 @@ The library aims to handle authentication logic with token based flow.
 
 -   [Installing](#installing)
 -   [Initialization](#initialization)
+-   [Usage with OAuth2](#usage-with-oauth2)
 -   [API](#api)
     -   [Action creators](#action-creators)
     -   [Action types](#action-types)
@@ -57,21 +58,21 @@ Sets the package configuration with an config object. Following config propertie
 
 ##### paramaters
 
--   `config.handlers`: (all handlers are required)
+-   `config.handlers`:
 
-    -   [required] `authenticate(credentials: any) => { user: any, tokens: any }`
+    -   `authenticate(credentials: any) => { user: any, tokens: any }`
 
         Required. This method is called when a `login(credentials)` action is dispatched. These credentials are passed to `authenticate` method.
 
         The method is expected to return/or resolve with an Object with props `user, tokens` or throw an error. User and tokens are then stored as is to the redux state for later use (`state.auth.user`).
 
-    -   [required] `refreshTokens(tokens: Object) => tokens:Object`
+    -   `refreshTokens(tokens: Object) => tokens:Object`
 
         Required. This method is called when the timeout for refreshing tokens ends or when tokens are expired after retrieval from a local storage. This triggers the token-refresh process.
 
         Function is expected to return/or resolve with an tokens Object: (`{ [tokenName: string]: token }`)
 
-    -   [required] `getAuthUser(void) => user:any`
+    -   `getAuthUser(void) => user:any`
 
         Required. This method is called when tokens are successfully retrieved from a local storage.
 
@@ -111,6 +112,10 @@ Sets the package configuration with an config object. Following config propertie
     }
     ```
 
+-   `config.oAuth`:
+
+    OAuth2 authentication is also supported, even with different flows. See more at ["Usage with OAuth"](#usage-with-oauth2).
+
 ##### returns
 
 Returns object with `saga` and `reducer` props.
@@ -147,6 +152,148 @@ function*() {
 // 3. Add auth reducer
 const rootReducer = combineReducers({
     auth: reducer
+});
+```
+
+---
+
+## <a name="usage-with-oauth2"></a>Usage with OAuth2
+
+`@ackee/petrus` also supports OAuth2 with following supported flows:
+
+-   [Implicit grant flow](https://docs.gitlab.com/ee/api/oauth2.html#implicit-grant-flow)
+    -   Matches with the default configuration.
+    -   `origin` property is required
+-   [Web application flow](https://docs.gitlab.com/ee/api/oauth2.html#web-application-flow)
+    -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method.
+
+### Available configuration options
+
+The defaults, you can see bellow, are configurated to handle the [Implicit grant flow](https://docs.gitlab.com/ee/api/oauth2.html#implicit-grant-flow).
+
+```js
+ {
+    // your app origin, e.g. 'http://myapp.com'
+    // REQUIRED
+    origin: '',
+
+    // pathname of redirect URL
+    redirectPathname: '/oauth/redirect',
+
+    /**
+     * Validate current URL on initialization,
+     * if the URL is valid, the 'parseRedirectUrl' method is called.
+     * @param {String} urlString
+     * @return {Boolean}
+     */
+    validateRedirectUrl(urlString) {
+        const url = new URL(urlString);
+
+        return url.origin === this.origin && url.pathname === this.redirectPathname;
+    },
+    /**
+     * get search params from url
+     * accepts both search and hash:
+     * - /redirect?access_token=123
+     * - /redirect#access_token=123
+     * @param {String} url
+     * @return {Object} search params
+     */
+    parseRedirectUrl: () => {
+        // Implementation of this function:
+        // src/sagas/utilities/getSearchParams.js
+    },
+
+    /**
+     * This method is called after 'parseRedirectUrl',
+     * But only if those search params don't include entry with `accessToken` key.
+     * Returns object with following required properties: `accessToken`, `expiresIn`, `refreshToken`
+     * @param {Object} searchParams - search params from the redirect URL
+     * @return {Object}
+     */
+    async fetchAccessToken(searchParams) {},
+
+    /**
+     * The method must return object with the scheme below (`token`, `expiration` properties are required).
+     * This method is called when access token is available.
+     * @param {Object} searchParams
+     * @return {Object}
+     */
+    enforeAccessTokenScheme(searchParams) {
+       const { accessToken, expiresIn, ...rest } = searchParams;
+
+       return {
+           ...rest,
+           token: accessToken,
+           expiration: expiresIn,
+       };
+    },
+
+   /**
+     * The method must return object with the scheme below (`token` property is required).
+     * This method is called when access token is available.
+     * @param {Object} searchParams
+     * @return {Object}
+     */
+    enforeRefreshTokenScheme(searchParams) {
+        const { refreshToken } = searchParams;
+
+        return {
+            token: refreshToken,
+        };
+    },
+ }
+```
+
+The [Web application flow](https://docs.gitlab.com/ee/api/oauth2.html#web-application-flow) is also supported. You have to additionally provide the `fetchAccessToken` method, rest of the configuration remains the same.
+
+### Example - Implicit grant flow
+
+```js
+import * as Petrus from '@ackee/petrus';
+
+// 1. Provide autheticate, refreshTokens and getAuthUser methods
+const { saga, reducer } = Petrus.configure({
+    oAuth: {
+        origin: 'http://myapp.com',
+    },
+    handlers: {
+        refreshTokens,
+        getAuthUser,
+    },
+    options: {},
+    initialState: {},
+});
+```
+
+### Example - Web application flow
+
+```js
+import * as Petrus from '@ackee/petrus';
+
+// 1. Provide autheticate, refreshTokens and getAuthUser methods
+const { saga, reducer } = Petrus.configure({
+    oAuth: {
+        origin: 'http://myapp.com',
+        fetchAccessToken(searchParams) {
+            const { code } = searchParams;
+
+            // the actuall API request:
+            const { accessToken, refreshToken, expiresIn } = await api.get('...')
+
+            return {
+                accessToken,
+                refreshToken,
+                expiresIn
+            }
+        }
+    },
+    handlers: {
+        refreshTokens,
+        getAuthUser,
+    },
+    options: {},
+    initialState: {}
 });
 ```
 
