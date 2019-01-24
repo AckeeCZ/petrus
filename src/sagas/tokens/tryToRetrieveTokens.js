@@ -26,7 +26,6 @@ function* tokensRetrieval() {
 
     if (!tokens && config.oAuth.enabled) {
         tokens = yield getOAuthTokens();
-        console.log({ tokens });
     }
 
     if (!tokens) {
