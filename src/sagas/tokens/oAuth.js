@@ -27,6 +27,7 @@ export function* getOAuthTokens() {
     const accessToken = enforeAccessTokenScheme(searchParams);
     const refreshToken = enforeRefreshTokenScheme(searchParams);
 
+    // eslint-disable-next-line
     return {
         accessToken,
         refreshToken,
