@@ -10,13 +10,11 @@ export function* getOAuthTokens() {
         enforeRefreshTokenScheme,
     } = config.oAuth;
 
-    const url = window.location.href;
-
-    if (!validateRedirectUrl(url)) {
+    if (!validateRedirectUrl(config.oAuth, window.location)) {
         return;
     }
 
-    const searchParams = parseRedirectUrl(url);
+    const searchParams = parseRedirectUrl(window.location);
 
     if (!searchParams.accessToken) {
         const result = yield fetchAccessToken(searchParams);

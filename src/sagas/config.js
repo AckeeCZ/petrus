@@ -4,10 +4,8 @@ const oAuth = {
     enabled: false,
     origin: '',
     redirectPathname: '/oauth/redirect',
-    validateRedirectUrl(urlString) {
-        const url = new URL(urlString);
-
-        return url.origin === oAuth.origin && url.pathname === oAuth.redirectPathname;
+    validateRedirectUrl(oAuthConfig, location) {
+        return location.origin === oAuthConfig.origin && location.pathname === oAuthConfig.redirectPathname;
     },
     parseRedirectUrl: getSearchParams,
     fetchAccessToken() {},

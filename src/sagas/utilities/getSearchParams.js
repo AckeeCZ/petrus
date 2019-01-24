@@ -18,13 +18,18 @@ function getSearchEntries(string) {
         .map(([key, value]) => [fromSnakeToCamelCase(key), value]);
 }
 
-export default function getUrlSearchParams(urlString) {
-    const url = new URL(urlString);
-
+export default function getUrlSearchParams(location) {
     // can't use url.search because the case with hash char (e.g. #access_token=123)
-    const search = url.href.replace(url.origin + url.pathname, '');
+    const search = location.href.replace(location.origin + location.pathname, '');
 
-    const entries = search.charAt(0) === '#' ? getSearchEntries(search.slice(1)) : url.searchParams.entries();
+    let entries = [];
+
+    if (search.charAt(0) === '#') {
+        entries = getSearchEntries(search.slice(1));
+    } else {
+        const url = new URL(location.href);
+        entries = url.searchParams.entries();
+    }
 
     const searchParams = {};
 

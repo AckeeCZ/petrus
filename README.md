@@ -183,23 +183,21 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
     /**
      * Validate current URL on initialization,
      * if the URL is valid, the 'parseRedirectUrl' method is called.
-     * @param {String} urlString
+     * @param {Object} location
      * @return {Boolean}
      */
-    validateRedirectUrl(urlString) {
-        const url = new URL(urlString);
-
-        return url.origin === this.origin && url.pathname === this.redirectPathname;
+    validateRedirectUrl(location) {
+        return location.origin === this.origin && location.pathname === this.redirectPathname;
     },
     /**
      * get search params from url
      * accepts both search and hash:
      * - /redirect?access_token=123
      * - /redirect#access_token=123
-     * @param {String} url
+     * @param {Object} location
      * @return {Object} search params
      */
-    parseRedirectUrl: () => {
+    parseRedirectUrl: (location) => {
         // Implementation of this function:
         // src/sagas/utilities/getSearchParams.js
     },
