@@ -11,11 +11,12 @@ const oAuth = {
     fetchAccessToken() {},
     enforeAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
+        const expirationDate = new Date(Date.now() + Number.parseFloat(expiresIn));
 
         return {
             ...rest,
             token: accessToken,
-            expiration: expiresIn,
+            expiration: expirationDate.toISOString(),
         };
     },
     enforeRefreshTokenScheme(searchParams) {

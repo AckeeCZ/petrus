@@ -214,17 +214,19 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
     /**
      * The method must return object with the scheme below (`token`, `expiration` properties are required).
      * This method is called when access token is available.
+     * NOTE: 'expiration' must be a valid date string!!!
      * @param {Object} searchParams
      * @return {Object}
      */
     enforeAccessTokenScheme(searchParams) {
-       const { accessToken, expiresIn, ...rest } = searchParams;
+        const { accessToken, expiresIn, ...rest } = searchParams;
+        const expirationDate = new Date(Date.now() + Number.parseFloat(expiresIn));
 
-       return {
-           ...rest,
-           token: accessToken,
-           expiration: expiresIn,
-       };
+        return {
+            ...rest,
+            token: accessToken,
+            expiration: expirationDate.toISOString(),
+        };
     },
 
    /**

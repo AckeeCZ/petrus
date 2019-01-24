@@ -34,8 +34,6 @@ export default function configure(customParams) {
 
     config.oAuth.enabled = isNonEmptyStr(config.oAuth.origin);
 
-    console.log(config.oAuth);
-
     validateOAuth(config.oAuth);
 
     validateHandlers(handlers, {
