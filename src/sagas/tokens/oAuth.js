@@ -4,17 +4,17 @@ import config from '../config';
 export function* getOAuthTokens() {
     const {
         validateRedirectUrl,
-        parseRedirectUrl,
+        parseRedirectUrlParams,
         fetchAccessToken,
-        enforeAccessTokenScheme,
-        enforeRefreshTokenScheme,
+        enforceAccessTokenScheme,
+        enforceRefreshTokenScheme,
     } = config.oAuth;
 
     if (!validateRedirectUrl(config.oAuth, window.location)) {
         return;
     }
 
-    const searchParams = parseRedirectUrl(window.location);
+    const searchParams = parseRedirectUrlParams(window.location);
 
     if (!searchParams.accessToken) {
         const result = yield fetchAccessToken(searchParams);
@@ -22,8 +22,8 @@ export function* getOAuthTokens() {
         Object.assign(searchParams, result);
     }
 
-    const accessToken = enforeAccessTokenScheme(searchParams);
-    const refreshToken = enforeRefreshTokenScheme(searchParams);
+    const accessToken = enforceAccessTokenScheme(searchParams);
+    const refreshToken = enforceRefreshTokenScheme(searchParams);
 
     // eslint-disable-next-line
     return {

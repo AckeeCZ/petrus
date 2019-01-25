@@ -182,7 +182,7 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
 
     /**
      * Validate current URL on initialization,
-     * if the URL is valid, the 'parseRedirectUrl' method is called.
+     * if the URL is valid, the 'parseRedirectUrlParams' method is called.
      * @param {Object} location
      * @return {Boolean}
      */
@@ -197,13 +197,13 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      * @param {Object} location
      * @return {Object} search params
      */
-    parseRedirectUrl: (location) => {
+    parseRedirectUrlParams: (location) => {
         // Implementation of this function:
         // src/sagas/utilities/getSearchParams.js
     },
 
     /**
-     * This method is called after 'parseRedirectUrl',
+     * This method is called after 'parseRedirectUrlParams',
      * But only if those search params don't include entry with `accessToken` key.
      * Returns object with following required properties: `accessToken`, `expiresIn`, `refreshToken`
      * @param {Object} searchParams - search params from the redirect URL
@@ -218,7 +218,7 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      * @param {Object} searchParams
      * @return {Object}
      */
-    enforeAccessTokenScheme(searchParams) {
+    enforceAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
         const expirationDate = new Date(Date.now() + Number.parseFloat(expiresIn));
 
@@ -235,7 +235,7 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      * @param {Object} searchParams
      * @return {Object}
      */
-    enforeRefreshTokenScheme(searchParams) {
+    enforceRefreshTokenScheme(searchParams) {
         const { refreshToken } = searchParams;
 
         return {

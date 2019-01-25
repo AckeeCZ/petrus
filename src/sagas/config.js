@@ -7,7 +7,7 @@ const oAuth = {
     validateRedirectUrl(oAuthConfig, location) {
         return location.origin === oAuthConfig.origin && location.pathname === oAuthConfig.redirectPathname;
     },
-    parseRedirectUrl: getSearchParams,
+    parseRedirectUrlParams: getSearchParams,
     fetchAccessToken() {},
     enforeAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
