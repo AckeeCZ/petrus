@@ -1,12 +1,4 @@
-function toCapitalize(string) {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function fromSnakeToCamelCase(string) {
-    const chunks = string.split('_');
-
-    return chunks.slice(1).reduce((acc, chunk) => `${acc}${toCapitalize(chunk)}`, chunks[0]);
-}
+import camelCase from 'lodash/camelCase';
 
 function getSearchEntries(string) {
     // split string with '&' -> ['access_token=ABCDExyz123']
@@ -15,7 +7,7 @@ function getSearchEntries(string) {
     return string
         .split('&')
         .map(stringEntry => stringEntry.split('='))
-        .map(([key, value]) => [fromSnakeToCamelCase(key), value]);
+        .map(([key, value]) => [camelCase(key), value]);
 }
 
 export default function getUrlSearchParams(location) {

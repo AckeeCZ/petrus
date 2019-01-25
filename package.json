@@ -27,6 +27,7 @@
     "dependencies": {
         "@babel/runtime": "^7.2.0",
         "localforage": "^1.7.3",
+        "lodash": "^4.17.11",
         "react-display-name": "^0.2.4"
     },
     "peerDependencies": {
