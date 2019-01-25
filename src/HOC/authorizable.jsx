@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connectWorker } from '@ackee/redux-worker/main';
 import PropTypes from 'prop-types';
 import getDisplayName from 'react-display-name';
 
-import * as selectors from '../selectors';
+import { AUTHORIZABLE_BRIDGE_ID } from '../constants';
 
 const MockAppLoader = () => <div>Loading...</div>;
 
@@ -34,14 +34,7 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
         authUser: null,
     };
 
-    const mapStateToProps = state => ({
-        authUser: selectors.authUser(state),
-        triedToRetrieveTokens: selectors.triedToRetrieveTokens(state),
-        isLoggingIn: selectors.isLoggingIn(state),
-        isUserFetching: selectors.isUserFetching(state),
-    });
-
-    return connect(mapStateToProps)(AuthorizedComponent);
+    return connectWorker(AUTHORIZABLE_BRIDGE_ID)(AuthorizedComponent);
 };
 
 export default authorizable;
