@@ -17,8 +17,7 @@ function* tokenAvailabilityCircuit() {
         {
             pattern: types.SET_AUTH_TOKENS,
             *task(action) {
-                const { token } = action.tokens.accessToken;
-                yield put(accessTokenAvailable(token));
+                yield put(accessTokenAvailable(action.tokens.accessToken));
             },
         },
         {

@@ -5,7 +5,10 @@ import { refreshTokens, setTokens, fetchAuthUserRequest, triedToRetrieveTokens }
 import * as Consts from '../../constants';
 import { tokensPersistence } from '../../selectors';
 
+import config from '../config';
+
 import { retrieveTokens, clearTokens } from './storageHandlers';
+import { getOAuthTokens } from './oAuth';
 import { isAnyTokenExpired } from './utilities';
 
 function* tokensRetrieval() {
@@ -16,10 +19,14 @@ function* tokensRetrieval() {
         return;
     }
 
-    const { tokens } = yield race({
+    let { tokens } = yield race({
         tokens: retrieveTokens(),
         loginSuccess: take(AUTH_LOGIN_SUCCESS),
     });
+
+    if (!tokens && config.oAuth.enabled) {
+        tokens = yield getOAuthTokens();
+    }
 
     if (!tokens) {
         return;
