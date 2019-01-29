@@ -311,11 +311,7 @@ The `credentials` object is passed to `authenticate(credentials)` method you've 
 
 Triggers a user logout. This clears the state of any auth data (tokens from local storage included).
 
-#### `setTokensPersistence(persistence: String)`
-
-Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
-
-#### Example
+##### Example
 
 ```js
 import { put } from 'redux-saga/effects';
@@ -325,6 +321,40 @@ function* logout() {
     yield put(actions.logout());
 }
 ```
+
+#### `setTokensPersistence(persistence: String)`
+
+Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+
+#### `setUserWithTokens(user: Object, tokens: Object)`
+
+If you have available both an authorized user and tokens, this action will store those data and switch `isLoggedIn` flag to `true`.
+
+This is useful when a user has been signed up and you want to take an advantage of those available data in the response (if the response include an authorized `user` and `tokens`).
+
+##### Example
+
+```js
+import { put } from 'redux-saga/effects';
+import { actions } from '@ackee/petrus';
+
+function* signUp({ email, password }) {
+    const response = yield api.post('/auth/sign-up', {
+        email,
+        password,
+    });
+    const { user, tokens } = response;
+
+    yield put(actions.setUserWithTokens(user, tokens));
+}
+```
+
+##### Notes
+
+If you dispatch this action when a user is already logged in:
+
+-   the `logout` action will be dispatched - therefore the auth session will ended (`AUTH_SESSION_END`)
+-   only then the `setUserWithTokens` action will be processed as usual
 
 ---
 

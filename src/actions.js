@@ -19,6 +19,7 @@ import {
     ACCESS_TOKEN_UNAVAILABLE,
     TRIED_TO_RETRIEVE_TOKENS,
     SET_TOKENS_PERSISTENCE,
+    SET_USER_WITH_TOKENS,
 } from './actionType';
 
 export const login = credentials => {
@@ -119,4 +120,10 @@ export const triedToRetrieveTokens = () => ({
 export const setTokensPersistence = persistence => ({
     type: SET_TOKENS_PERSISTENCE,
     persistence,
+});
+
+export const setUserWithTokens = (user, tokens) => ({
+    type: SET_USER_WITH_TOKENS,
+    user,
+    tokens,
 });
