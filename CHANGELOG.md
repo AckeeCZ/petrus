@@ -9,4 +9,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+-   [BREAKING]: upgraded to `redux-saga@1.0.0`
 -   `setUserWithTokens(user, tokens)` Redux action
