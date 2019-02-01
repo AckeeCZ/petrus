@@ -8,7 +8,7 @@ export default function validateOAuth(oAuth) {
     const {
         redirectPathname,
         validateRedirectUrl,
-        parseRedirectUrl,
+        parseRedirectUrlParams,
         fetchAccessToken,
         enforeAccessTokenScheme,
         enforeRefreshTokenScheme,
@@ -22,7 +22,7 @@ export default function validateOAuth(oAuth) {
 
     Object.entries({
         validateRedirectUrl,
-        parseRedirectUrl,
+        parseRedirectUrlParams,
         fetchAccessToken,
         enforeAccessTokenScheme,
         enforeRefreshTokenScheme,
