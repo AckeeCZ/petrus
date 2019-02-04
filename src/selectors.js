@@ -24,3 +24,5 @@ export const isUserFetching = state => state[config.options.reducerKey].isUserFe
 export const triedToRetrieveTokens = state => state[config.options.reducerKey].triedToRetrieveTokens;
 
 export const tokensPersistence = state => state[config.options.reducerKey].tokensPersistence;
+
+export const isRetrievingTokens = state => state[config.options.reducerKey].isRetrievingTokens;

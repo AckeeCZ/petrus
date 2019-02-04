@@ -10,8 +10,9 @@ import {
     FETCH_AUTH_USER_REQUEST,
     FETCH_AUTH_USER_SUCCESS,
     FETCH_AUTH_USER_FAILURE,
-    TRIED_TO_RETRIEVE_TOKENS,
     SET_TOKENS_PERSISTENCE,
+    RETRIEVE_TOKENS_REQUEST,
+    RETRIEVE_TOKENS_RESOLVE,
 } from './actionType';
 
 export const factoryReducer = customInitialState => {
@@ -24,6 +25,7 @@ export const factoryReducer = customInitialState => {
         isRefreshing: false,
         isUserFetching: false,
         triedToRetrieveTokens: false,
+        isRetrievingTokens: false,
         ...customInitialState,
     };
 
@@ -117,9 +119,17 @@ export const factoryReducer = customInitialState => {
                     isUserFetching: false,
                 };
 
-            case TRIED_TO_RETRIEVE_TOKENS:
+            case RETRIEVE_TOKENS_REQUEST:
                 return {
                     ...state,
+                    isRetrievingTokens: true,
+                    triedToRetrieveTokens: false,
+                };
+
+            case RETRIEVE_TOKENS_RESOLVE:
+                return {
+                    ...state,
+                    isRetrievingTokens: false,
                     triedToRetrieveTokens: true,
                 };
 

@@ -20,6 +20,8 @@ import {
     TRIED_TO_RETRIEVE_TOKENS,
     SET_TOKENS_PERSISTENCE,
     SET_USER_WITH_TOKENS,
+    RETRIEVE_TOKENS_RESOLVE,
+    RETRIEVE_TOKENS_REQUEST,
 } from './actionType';
 
 export const login = credentials => {
@@ -113,10 +115,6 @@ export const authSessionResume = () => ({
     type: AUTH_SESSION_RESUME,
 });
 
-export const triedToRetrieveTokens = () => ({
-    type: TRIED_TO_RETRIEVE_TOKENS,
-});
-
 export const setTokensPersistence = persistence => ({
     type: SET_TOKENS_PERSISTENCE,
     persistence,
@@ -126,4 +124,13 @@ export const setUserWithTokens = (user, tokens) => ({
     type: SET_USER_WITH_TOKENS,
     user,
     tokens,
+});
+
+export const retrieveTokensRequest = () => ({
+    type: RETRIEVE_TOKENS_REQUEST,
+});
+
+export const retrieveTokensResolve = tokensRetrieved => ({
+    type: RETRIEVE_TOKENS_RESOLVE,
+    tokensRetrieved,
 });
