@@ -1,4 +1,5 @@
 import getSearchParams from './utilities/getSearchParams';
+import parseExpirationDate from './utilities/parseExpirationDate';
 
 const oAuth = {
     enabled: false,
@@ -11,19 +12,18 @@ const oAuth = {
     fetchAccessToken() {},
     enforceAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
-        const expirationDate = new Date(Date.now() + Number.parseFloat(expiresIn));
 
         return {
             ...rest,
             token: accessToken,
-            expiration: expirationDate.toISOString(),
+            expiration: parseExpirationDate(expiresIn),
         };
     },
     enforceRefreshTokenScheme(searchParams) {
         const { refreshToken } = searchParams;
 
         return {
-            refreshToken,
+            token: refreshToken,
         };
     },
 };

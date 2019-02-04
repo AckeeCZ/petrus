@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 -   [oAuth] Fix method names in oAuth default configuration and oAuth validation
+-   [oAuth] `enforceAccessTokenScheme` method - parse and validate `accessToken` value
 
 ### Fixed
 
