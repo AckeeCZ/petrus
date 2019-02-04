@@ -10,8 +10,8 @@ export default function validateOAuth(oAuth) {
         validateRedirectUrl,
         parseRedirectUrlParams,
         fetchAccessToken,
-        enforeAccessTokenScheme,
-        enforeRefreshTokenScheme,
+        enforceAccessTokenScheme,
+        enforceRefreshTokenScheme,
     } = oAuth;
 
     if (!isNonEmptyStr(redirectPathname)) {
@@ -24,8 +24,8 @@ export default function validateOAuth(oAuth) {
         validateRedirectUrl,
         parseRedirectUrlParams,
         fetchAccessToken,
-        enforeAccessTokenScheme,
-        enforeRefreshTokenScheme,
+        enforceAccessTokenScheme,
+        enforceRefreshTokenScheme,
     }).forEach(([fnName, fnValue]) => {
         if (!isFn(fnValue)) {
             throw new TypeError(
