@@ -360,6 +360,16 @@ If you dispatch this action when a user is already logged in:
 
 ### <a name="action-types"></a>Action types
 
+#### Access token retrieval from a persistent storage
+
+##### `RETRIEVE_TOKENS_REQUEST`
+
+An attempt to retrieve tokens has begun. This action is dispatched immediately after @ackee/petrus saga was initialized.
+
+##### `RETRIEVE_TOKENS_RESOLVE`
+
+An attempt to retrieve tokens has been made. The action contains `tokensRetrieved` boolean property with is equal to the result.
+
 #### Access token flow
 
 ##### `ACCESS_TOKEN_AVAILABLE`
@@ -468,6 +478,8 @@ Returns `true` whether the login process is taking place, `false` otherwise.
 #### `tokensPersistence(state: Object) => String`
 
 Get current tokens persistence value, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+
+#### `isRetrievingTokens(state: Object) => Boolean`
 
 #### Example
 

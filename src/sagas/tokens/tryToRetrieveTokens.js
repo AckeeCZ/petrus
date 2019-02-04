@@ -1,7 +1,13 @@
 import { take, race, put, call, select } from 'redux-saga/effects';
 
 import { AUTH_LOGIN_SUCCESS } from '../../actionType';
-import { refreshTokens, setTokens, fetchAuthUserRequest, triedToRetrieveTokens } from '../../actions';
+import {
+    refreshTokens,
+    setTokens,
+    fetchAuthUserRequest,
+    retrieveTokensRequest,
+    retrieveTokensResolve,
+} from '../../actions';
 import * as Consts from '../../constants';
 import { tokensPersistence } from '../../selectors';
 
@@ -16,7 +22,7 @@ function* tokensRetrieval() {
 
     if (persistence === Consts.tokens.persistence.NONE) {
         yield clearTokens();
-        return;
+        return false;
     }
 
     let { tokens } = yield race({
@@ -29,7 +35,7 @@ function* tokensRetrieval() {
     }
 
     if (!tokens) {
-        return;
+        return false;
     }
 
     if (isAnyTokenExpired(tokens)) {
@@ -38,10 +44,14 @@ function* tokensRetrieval() {
         yield put(setTokens(tokens));
         yield put(fetchAuthUserRequest());
     }
+
+    return true;
 }
 
 export default function* tryToRetrieveTokens() {
-    yield call(tokensRetrieval);
+    yield put(retrieveTokensRequest());
 
-    yield put(triedToRetrieveTokens());
+    const tokensRetrieved = yield call(tokensRetrieval);
+
+    yield put(retrieveTokensResolve(tokensRetrieved));
 }
