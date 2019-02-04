@@ -9,7 +9,7 @@ const oAuth = {
     },
     parseRedirectUrlParams: getSearchParams,
     fetchAccessToken() {},
-    enforeAccessTokenScheme(searchParams) {
+    enforceAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
         const expirationDate = new Date(Date.now() + Number.parseFloat(expiresIn));
 
@@ -19,7 +19,7 @@ const oAuth = {
             expiration: expirationDate.toISOString(),
         };
     },
-    enforeRefreshTokenScheme(searchParams) {
+    enforceRefreshTokenScheme(searchParams) {
         const { refreshToken } = searchParams;
 
         return {

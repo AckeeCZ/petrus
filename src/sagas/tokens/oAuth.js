@@ -1,6 +1,5 @@
 import config from '../config';
 
-// eslint-disable-next-line
 export function* getOAuthTokens() {
     const {
         validateRedirectUrl,
