@@ -220,12 +220,12 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      */
     enforceAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
-        const expirationDate = new Date(Date.now() + Number.parseFloat(expiresIn));
 
         return {
             ...rest,
             token: accessToken,
-            expiration: expirationDate.toISOString(),
+            // implementation in src/sagas/utilities/parseExpirationDate.js
+            expiration: parseExpirationDate(expiresIn),
         };
     },
 
