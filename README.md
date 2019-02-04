@@ -167,6 +167,10 @@ const rootReducer = combineReducers({
 -   [Web application flow](https://docs.gitlab.com/ee/api/oauth2.html#web-application-flow)
     -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method.
 
+> ### Redirection to an authentization service
+>
+> A developer has to **manually redirect user to an authentization service** (e.g. `gitlab.com`). `@ackee/petrus` won't handle this for you!
+
 ### Available configuration options
 
 The defaults, you can see bellow, are configurated to handle the [Implicit grant flow](https://docs.gitlab.com/ee/api/oauth2.html#implicit-grant-flow).
