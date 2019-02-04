@@ -12,8 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   [oAuth] Fix method names in oAuth default configuration and oAuth validation
 -   [oAuth] `enforceAccessTokenScheme` method - parse and validate `accessToken` value
 
-### Fixed
-
 ## 3.2.1 - 2019-01-02
 
 ### Fixed
