@@ -1,4 +1,4 @@
-import { login, stopLogin, logout, setTokens, refreshTokens, setTokensPersistence } from './actions';
+import { login, stopLogin, logout, setTokens, refreshTokens, setTokensPersistence, setUserWithTokens } from './actions';
 import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './selectors';
 
 export const actions = {
@@ -8,6 +8,7 @@ export const actions = {
     setTokens,
     refreshTokens,
     setTokensPersistence,
+    setUserWithTokens,
 };
 
 export const selectors = {
