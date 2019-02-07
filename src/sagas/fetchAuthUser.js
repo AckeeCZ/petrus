@@ -1,14 +1,16 @@
-import { take, put } from 'redux-saga/effects';
+import { take, put, select } from 'redux-saga/effects';
 
 import { FETCH_AUTH_USER_REQUEST } from '../actionType';
 import { fetchAuthUserFailure, fetchAuthUserSuccess } from '../actions';
+import { authTokens } from '../selectors';
 import { logger } from '../config';
 
 import config from './config';
 
 function* fetchAuthUser() {
     try {
-        const user = yield config.remoteGetAuthUser();
+        const tokens = yield select(authTokens);
+        const user = yield config.remoteGetAuthUser(tokens);
 
         yield put(fetchAuthUserSuccess(user));
     } catch (e) {
