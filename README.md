@@ -24,7 +24,7 @@ The library aims to handle authentication logic with token based flow.
 -   [Installing](#installing)
 -   [Initialization](#initialization)
 -   [Usage with OAuth2](./docs/oAuth.md)
--   [API](./docs/api.md#api)
+-   [API Reference](./docs/api.md#api)
     -   [Action creators](./docs/api.md#action-creators)
     -   [Action types](./docs/api.md#action-types)
     -   [Constants](./docs/api.md#constants)
