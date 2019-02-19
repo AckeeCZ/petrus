@@ -260,6 +260,44 @@ function* logOutEveryAuthStateStep() {
 }
 ```
 
+#### <a name="create-expiration-date"></a>`createExpirationDate(expiresIn: Number) => date string`
+
+Creates an access token expiration date from expiration timeout value.
+A expiration date is equal to `Date.now() + expiresIn`.
+
+> Note that `expiresIn` must be in **miliseconds**.
+
+If invalid value is passed to the function, an type error is thrown.
+
+##### Paramaters
+
+-   `expiresIn: Number|null|undefined` in ms
+
+##### Returns
+
+-   `ISOStringDate|null`
+
+##### Examples
+
+Convert `3600` in seconds as `expiresIn` property to `expiration` date.
+
+```js
+import { createExpirationDate } from '@ackee/petrus';
+
+const expiresIn = 3600;
+const expirationDate = createExpirationDate(3600 * 1000);
+// expiratioDate will be in following format: "2019-02-19T21:02:57.970Z"
+
+// valid:
+createExpirationDate('3600000');
+createExpirationDate(null);
+createExpirationDate(undefined);
+
+// invalid:
+createExpirationDate('foo');
+createExpirationDate('foo123');
+```
+
 ### <a name="hoc"></a>HOC
 
 #### `authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`
