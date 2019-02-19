@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unrelease
 
+### Fixed
+
+-   retrieve tokens with enabled OAuth: take fresh tokens always first
+
+### Added
+
+-   `createExpirationDate` utility - create expiration date from timeout value
+-   validate tokens returned by `refreshTokens` and `authenticate` (must be object including at least `accessToken` object with `token` property).
+
 ### Updated
 
 -   move API reference and OAuth section to their own files
