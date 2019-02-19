@@ -30,8 +30,13 @@ function* tokensRetrieval() {
         loginSuccess: take(AUTH_LOGIN_SUCCESS),
     });
 
-    if (!tokens && config.oAuth.enabled) {
-        tokens = yield getOAuthTokens();
+    if (config.oAuth.enabled) {
+        // get the fresh tokens always first
+        const tokensFromOAuth = yield getOAuthTokens();
+
+        if (tokensFromOAuth) {
+            tokens = tokensFromOAuth;
+        }
     }
 
     if (!tokens) {
