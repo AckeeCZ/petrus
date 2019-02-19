@@ -5,10 +5,13 @@ import { AUTH_LOGIN } from '../actionType';
 import { logger } from '../config';
 
 import config from './config';
+import validateTokens from './utilities/validateTokens';
 
 const handleLogin = function*(action) {
     try {
         const { user, tokens } = yield call(() => config.remoteLogin(action.credentials));
+
+        validateTokens(tokens);
 
         yield put(stopLogin(null, user));
         yield put(setTokens(tokens));

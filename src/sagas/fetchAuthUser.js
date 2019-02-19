@@ -12,6 +12,10 @@ function* fetchAuthUser() {
         const tokens = yield select(authTokens);
         const user = yield config.remoteGetAuthUser(tokens);
 
+        if (!user) {
+            throw new Error(`'getAuthUser' method must return authorized user object, not: '${user}'.`);
+        }
+
         yield put(fetchAuthUserSuccess(user));
     } catch (e) {
         yield put(fetchAuthUserFailure(e));
