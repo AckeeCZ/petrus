@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unrelease
+## 3.4.0 - 2019-02-20
+
+### Fixed
+
+-   retrieve tokens with enabled OAuth: take fresh tokens always first
+
+### Added
+
+-   `createExpirationDate` utility - create expiration date from timeout value
+-   validate tokens returned by `refreshTokens` and `authenticate` (must be object including at least `accessToken` object with `token` property).
 
 ### Updated
 

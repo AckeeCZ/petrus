@@ -1,13 +1,13 @@
 const isTokenExpired = token => {
-    return token.expiration && new Date(token.expiration) <= new Date();
+    return token.expiration && Date.parse(token.expiration) <= Date.now();
 };
 
 export const isAnyTokenExpired = ({ refreshToken, ...tokens }) => {
     return Object.values(tokens).some(isTokenExpired);
 };
 
-export const hasExpirationProperty = ({ refreshTokens, ...tokens }) => {
-    return Object.values(tokens).some(token => Boolean(token.expiration));
+export const hasExpirationProperty = ({ refreshToken, ...tokens }) => {
+    return Object.values(tokens).some(token => token.expiration !== undefined);
 };
 
 /**

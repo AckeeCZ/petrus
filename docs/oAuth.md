@@ -63,12 +63,12 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      * @param {Object} searchParams - search params from the redirect URL
      * @return {Object}
      */
-    async fetchAccessToken(searchParams) {},
+    *fetchAccessToken(searchParams) {},
 
     /**
      * The method must return object with the scheme below (`token`, `expiration` properties are required).
      * This method is called when access token is available.
-     * NOTE: 'expiration' must be a valid date string!!!
+     * NOTE: 'expiration' must be a valid date string or undefined!!!
      * @param {Object} searchParams
      * @return {Object}
      */
@@ -129,25 +129,25 @@ import * as Petrus from '@ackee/petrus';
 const { saga, reducer } = Petrus.configure({
     oAuth: {
         origin: 'http://myapp.com',
-        fetchAccessToken(searchParams) {
+        *fetchAccessToken(searchParams) {
             const { code } = searchParams;
 
             // the actuall API request:
-            const { accessToken, refreshToken, expiresIn } = await api.get('...')
+            const { accessToken, refreshToken, expiresIn } = yield api.get('...');
 
             return {
                 accessToken,
                 refreshToken,
-                expiresIn
-            }
-        }
+                expiresIn,
+            };
+        },
     },
     handlers: {
         refreshTokens,
         getAuthUser,
     },
     options: {},
-    initialState: {}
+    initialState: {},
 });
 ```
 
