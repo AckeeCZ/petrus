@@ -21,7 +21,7 @@ export const selectors = {
 
 export * as actionTypes from './actionType';
 
-export { configure, withAuthSession, getAuthStateChannel } from './sagas';
+export { configure, withAuthSession, getAuthStateChannel, createExpirationDate } from './sagas';
 
 export * as constants from './constants';
 
