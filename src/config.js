@@ -2,8 +2,20 @@ import localStorageMock from './serverMocks/localStorageMock';
 import sessionStorageMock from './serverMocks/sessionStorageMock';
 
 export const logger = console;
+
 // this is convenient for apps SSR apps
+const getGlobalEnv = () => {
+    if (typeof window !== 'undefined') {
+        return window;
+    }
+    if (typeof global !== 'undefined') {
+        return global;
+    }
+    return {};
+};
+
+export const globalEnv = getGlobalEnv();
 export const storage = {
-    local: typeof window !== 'undefined' ? window.localStorage : localStorageMock,
-    session: typeof window !== 'undefined' ? window.sessionStorage : sessionStorageMock,
+    local: globalEnv.localStorage || localStorageMock,
+    session: globalEnv.sessionStorage || sessionStorageMock,
 };

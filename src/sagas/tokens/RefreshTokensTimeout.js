@@ -1,5 +1,6 @@
 import { eventChannel } from 'redux-saga';
 import { findMinExpiration, calcTimeout, validateTimeoutValue } from './utilities';
+import { globalEnv } from '../../config';
 
 export default class RefreshTokensTimeout {
     static options = {
@@ -26,14 +27,14 @@ export default class RefreshTokensTimeout {
 
     clearTimeout() {
         if (this.timerId) {
-            window.clearTimeout(this.timerId);
+            globalEnv.clearTimeout(this.timerId);
             this.timerId = null;
         }
     }
 
     makeTimeoutChannel(timeout) {
         const timeoutChannel = eventChannel(emitter => {
-            this.timerId = window.setTimeout(() => {
+            this.timerId = globalEnv.setTimeout(() => {
                 // emitter callback must be provided
                 // with an argument
                 emitter(timeout);
