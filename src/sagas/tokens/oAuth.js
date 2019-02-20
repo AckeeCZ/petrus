@@ -9,7 +9,12 @@ export function* getOAuthTokens() {
         enforceRefreshTokenScheme,
     } = config.oAuth;
 
-    if (!validateRedirectUrl(config.oAuth, window.location)) {
+    // handle server side use
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    if (!location || !validateRedirectUrl(config.oAuth, window.location)) {
         return;
     }
 
