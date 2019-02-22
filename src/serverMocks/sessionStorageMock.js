@@ -1,7 +1,7 @@
+import { noop } from 'lodash';
+
 export default {
-    removeItem: key => null,
-    removeItem: key => null,
-    setItem: (key, value) => null,
-    removeItem: key => null,
-    getItem: key => null,
+    removeItem: noop,
+    setItem: noop,
+    getItem: noop,
 };

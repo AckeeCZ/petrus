@@ -2,10 +2,9 @@ import { take, put, cancel, fork, takeEvery, all } from 'redux-saga/effects';
 
 import { refreshTokens } from '../../actions';
 import { ACCESS_TOKEN_UNAVAILABLE, SET_AUTH_TOKENS, AUTH_REFRESH_TOKEN_FAILURE } from '../../actionType';
-import { logger } from '../../config';
 
 import config from '../config';
-import { storage } from '../../config';
+import { storage, logger } from '../../config';
 
 import RefreshTokensTimeout from './RefreshTokensTimeout';
 import { storeTokens, clearTokens } from './storageHandlers';
