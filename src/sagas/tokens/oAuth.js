@@ -1,4 +1,5 @@
 import config from '../config';
+import { globalEnv } from '../../config';
 
 export function* getOAuthTokens() {
     const {
@@ -8,6 +9,11 @@ export function* getOAuthTokens() {
         enforceAccessTokenScheme,
         enforceRefreshTokenScheme,
     } = config.oAuth;
+
+    // handle SSR use
+    if (!globalEnv.location) {
+        return;
+    }
 
     if (!validateRedirectUrl(config.oAuth, window.location)) {
         return;

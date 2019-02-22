@@ -2,9 +2,9 @@ import { take, put, cancel, fork, takeEvery, all } from 'redux-saga/effects';
 
 import { refreshTokens } from '../../actions';
 import { ACCESS_TOKEN_UNAVAILABLE, SET_AUTH_TOKENS, AUTH_REFRESH_TOKEN_FAILURE } from '../../actionType';
-import { logger } from '../../config';
 
 import config from '../config';
+import { storage, logger } from '../../config';
 
 import RefreshTokensTimeout from './RefreshTokensTimeout';
 import { storeTokens, clearTokens } from './storageHandlers';
@@ -36,7 +36,7 @@ function clearLocaleStorageTokens() {
     // Previously tokens were stored in locale storage,
     // instead of IndexedDB as it it now.
     // So we need to delete them.
-    window.localStorage.removeItem('tokens');
+    storage.local.removeItem('tokens');
 }
 
 function* setTokensHandler(refreshTokensTimeout, { tokens }) {
