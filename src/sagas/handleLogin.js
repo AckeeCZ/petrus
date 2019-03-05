@@ -13,8 +13,8 @@ const handleLogin = function*(action) {
 
         validateTokens(tokens);
 
-        yield put(stopLogin(null, user));
         yield put(setTokens(tokens));
+        yield put(stopLogin(null, user));
     } catch (e) {
         yield put(stopLogin(e));
         logger.warn(`Failed to login user: ${e.message}`);
