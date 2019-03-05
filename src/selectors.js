@@ -26,3 +26,9 @@ export const triedToRetrieveTokens = state => state[config.options.reducerKey].t
 export const tokensPersistence = state => state[config.options.reducerKey].tokensPersistence;
 
 export const isRetrievingTokens = state => state[config.options.reducerKey].isRetrievingTokens;
+
+export const accessTokenIsAvailable = state => {
+    const { tokens } = state[config.options.reducerKey];
+
+    return Boolean(tokens && tokens.accessToken && tokens.accessToken.token);
+};
