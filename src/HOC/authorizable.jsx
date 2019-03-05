@@ -9,8 +9,8 @@ const MockAppLoader = () => <div>Loading...</div>;
 
 const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
     const AuthorizedComponent = props => {
-        const { authUser, triedToRetrieveTokens, isLoggingIn, isUserFetching } = props;
-        if (authUser) {
+        const { authUser, accessTokenIsAvailable, triedToRetrieveTokens, isLoggingIn, isUserFetching } = props;
+        if (authUser && accessTokenIsAvailable) {
             return <AuthorizableComponent {...props} />;
         }
 
@@ -28,6 +28,7 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
         triedToRetrieveTokens: PropTypes.bool.isRequired,
         isUserFetching: PropTypes.bool.isRequired,
         isLoggingIn: PropTypes.bool.isRequired,
+        accessTokenIsAvailable: PropTypes.bool.isRequired,
     };
 
     AuthorizedComponent.defaultProps = {
@@ -39,6 +40,7 @@ const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) =
         triedToRetrieveTokens: selectors.triedToRetrieveTokens(state),
         isLoggingIn: selectors.isLoggingIn(state),
         isUserFetching: selectors.isUserFetching(state),
+        accessTokenIsAvailable: selectors.accessTokenIsAvailable(state),
     });
 
     return connect(mapStateToProps)(AuthorizedComponent);
