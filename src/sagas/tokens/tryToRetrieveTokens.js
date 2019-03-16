@@ -1,6 +1,6 @@
 import { take, race, put, call, select } from 'redux-saga/effects';
 
-import { AUTH_LOGIN_SUCCESS } from '../../actionType';
+import { AUTH_LOGIN_SUCCESS, AUTH_REFRESH_TOKEN_SUCCESS, AUTH_REFRESH_TOKEN_FAILURE } from '../../actionType';
 import {
     refreshTokens,
     setTokens,
@@ -45,10 +45,14 @@ function* tokensRetrieval() {
 
     if (isAnyTokenExpired(tokens)) {
         yield put(refreshTokens(tokens));
+        // 'retrieveTokensResolve' action must be dispatched when tokens has been refreshed
+        // otherwise authorizable HOC will render <Firewall/> which is wrong.
+        yield take([AUTH_REFRESH_TOKEN_SUCCESS, AUTH_REFRESH_TOKEN_FAILURE]);
     } else {
         yield put(setTokens(tokens));
-        yield put(fetchAuthUserRequest());
     }
+
+    yield put(fetchAuthUserRequest());
 
     return true;
 }
