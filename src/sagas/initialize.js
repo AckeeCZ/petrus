@@ -6,6 +6,7 @@ import processTokenRefresh from './processTokenRefresh';
 import fetchAuthUser from './fetchAuthUser';
 import { authState } from './authState';
 import handleDirectLogin from './handleDirectLogin';
+import documentVisibility from './documentVisibility';
 
 export default function* saga() {
     yield all([
@@ -15,6 +16,7 @@ export default function* saga() {
         handleDirectLogin(),
         processTokenRefresh(),
         fetchAuthUser(),
+        documentVisibility(),
         tryToRetrieveTokens(),
         setTokensPersistence(),
     ]);
