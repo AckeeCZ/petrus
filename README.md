@@ -90,7 +90,11 @@ Sets the package configuration with an config object. Following config propertie
         tokens: {
             requestDurationEstimate: 500,
             minRequiredExpiration: 1000 * 60,
-        }
+        },
+
+        // Check if access token is expired when document visibility changes
+        // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
+        verifyTokenExpirationOnTabFocus: true
     }
     ```
 
@@ -108,6 +112,7 @@ Sets the package configuration with an config object. Following config propertie
         isRefreshing: false,
         isUserFetching: false,
         triedToRetrieveTokens: false,
+        isRetrievingTokens: false,
         tokensPersistence: 'LOCAL',
     }
     ```

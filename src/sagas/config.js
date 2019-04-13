@@ -39,6 +39,7 @@ const config = {
     options: {
         reducerKey: 'auth',
         tokens: {},
+        verifyTokenExpirationOnTabFocus: true,
     },
 
     oAuth,
