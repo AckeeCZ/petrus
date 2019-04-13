@@ -1,5 +1,20 @@
-import { login, stopLogin, logout, setTokens, refreshTokens, setTokensPersistence, setUserWithTokens } from './actions';
+import * as actionTypes from './actionType';
+import * as constants from './constants';
+import * as HOC from './HOC';
+
+import {
+    login,
+    stopLogin,
+    logout,
+    setTokens,
+    refreshTokens,
+    setTokensPersistence,
+    setUserWithTokens,
+    verifyAccessTokenAvailability,
+} from './actions';
 import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './selectors';
+
+export { actionTypes, constants, HOC };
 
 export const actions = {
     login,
@@ -9,6 +24,7 @@ export const actions = {
     refreshTokens,
     setTokensPersistence,
     setUserWithTokens,
+    verifyAccessTokenAvailability,
 };
 
 export const selectors = {
@@ -19,10 +35,4 @@ export const selectors = {
     tokensPersistence,
 };
 
-export * as actionTypes from './actionType';
-
 export { configure, withAuthSession, getAuthStateChannel, createExpirationDate } from './sagas';
-
-export * as constants from './constants';
-
-export * as HOC from './HOC';

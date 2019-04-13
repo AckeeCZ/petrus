@@ -1,11 +1,9 @@
 import { eventChannel } from 'redux-saga';
-import { take, put, select } from 'redux-saga/effects';
+import { take, put } from 'redux-saga/effects';
 
 import { globalEnv } from '../config';
-import { authTokens as authTokensSelector } from '../selectors';
-import { refreshTokens } from '../actions';
-import { isAnyTokenExpired } from './tokens/utilities';
 import config from './config';
+import { verifyAccessTokenAvailability } from '../actions';
 
 function createVisibilityChangeChannel() {
     return eventChannel(emit => {
@@ -35,15 +33,9 @@ export default function* watchDocumentVisibilityChange() {
         const visibilityState = yield take(channel);
 
         switch (visibilityState) {
-            case visibilityStates.VISIBLE: {
-                const tokens = yield select(authTokensSelector);
-
-                if (isAnyTokenExpired(tokens)) {
-                    yield put(refreshTokens(tokens));
-                }
-
+            case visibilityStates.VISIBLE:
+                yield put(verifyAccessTokenAvailability());
                 break;
-            }
 
             case visibilityStates.HIDDEN:
                 // NOTE: consider to give developer an option to pause auto. refreshing (switch petrus to 'hibernate mode')
