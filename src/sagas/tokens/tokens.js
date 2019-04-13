@@ -54,7 +54,7 @@ function* setTokensHandler(refreshTokensTimeout, { tokens }) {
                 Date.now() + min,
             )}).`;
             const cantSet = `Access token expiration at ${tokens.accessToken.expiration} it too low.`;
-            logger.warn(`${minRequired}\n${cantSet}`);
+            logger().warn(`${minRequired}\n${cantSet}`);
             return;
         }
 

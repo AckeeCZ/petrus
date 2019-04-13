@@ -19,7 +19,7 @@ function* fetchAuthUser() {
         yield put(fetchAuthUserSuccess(user));
     } catch (e) {
         yield put(fetchAuthUserFailure(e));
-        logger.error(`Failed to fetch auth user:\n`, e);
+        logger().error(`Failed to fetch auth user:\n`, e);
     }
 }
 

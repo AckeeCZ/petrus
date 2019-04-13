@@ -1,7 +1,9 @@
+import config from './sagas/config';
+
 import localStorageMock from './serverMocks/localStorageMock';
 import sessionStorageMock from './serverMocks/sessionStorageMock';
 
-export const logger = console;
+export const logger = () => config.logger;
 
 // this is convenient for apps SSR apps
 const getGlobalEnv = () => {

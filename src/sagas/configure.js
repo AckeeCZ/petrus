@@ -15,6 +15,8 @@ export default function configure(customParams) {
         ...customParams,
     };
 
+    config.logger = customParams.logger || config.logger;
+
     config.oAuth = {
         ...config.oAuth,
         ...customParams.oAuth,
