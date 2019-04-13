@@ -66,6 +66,10 @@ If you dispatch this action when a user is already logged in:
 -   the `logout` action will be dispatched - therefore the auth session will ended (`AUTH_SESSION_END`)
 -   only then the `setUserWithTokens` action will be processed as usual
 
+#### `verifyAccessTokenAvailability(void)`
+
+This action will trigger a saga that checks if access token is expired. If so, the token will be refreshed.
+
 ---
 
 ## <a name="action-types"></a>Action types

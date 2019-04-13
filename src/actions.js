@@ -21,6 +21,7 @@ import {
     SET_USER_WITH_TOKENS,
     RETRIEVE_TOKENS_RESOLVE,
     RETRIEVE_TOKENS_REQUEST,
+    VERIFY_ACCESS_TOKEN_AVAILABILITY,
 } from './actionType';
 
 export const login = credentials => {
@@ -132,4 +133,8 @@ export const retrieveTokensRequest = () => ({
 export const retrieveTokensResolve = tokensRetrieved => ({
     type: RETRIEVE_TOKENS_RESOLVE,
     tokensRetrieved,
+});
+
+export const verifyAccessTokenAvailability = () => ({
+    type: VERIFY_ACCESS_TOKEN_AVAILABILITY,
 });
