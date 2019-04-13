@@ -32,6 +32,8 @@ const config = {
     // key for a local storage
     tokensKey: 'tokens',
 
+    logger: console,
+
     remoteLogin: null,
     remoteRefreshTokens: null,
     remoteGetAuthUser: null,

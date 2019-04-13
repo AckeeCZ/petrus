@@ -23,7 +23,7 @@ export function* tryToRefreshTokens(action) {
         yield put(setTokens(refreshedTokens));
         yield put(stopTokenRefresh(null, refreshedTokens));
     } catch (refreshError) {
-        logger.error(refreshError);
+        logger().error(refreshError);
         yield put(stopTokenRefresh(refreshError));
         yield put(logout());
     }

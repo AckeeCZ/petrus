@@ -19,7 +19,7 @@ const handleSetUserWithTokens = function*(action) {
         yield put(stopLogin(null, user));
     } catch (e) {
         yield put(stopLogin(e));
-        logger.error(`Failed to set user with tokens: ${e.message}.\n`, e);
+        logger().error(`Failed to set user with tokens: ${e.message}.\n`, e);
     }
 };
 

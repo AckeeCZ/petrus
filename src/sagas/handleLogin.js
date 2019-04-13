@@ -17,7 +17,7 @@ const handleLogin = function*(action) {
         yield put(stopLogin(null, user));
     } catch (e) {
         yield put(stopLogin(e));
-        logger.warn(`Failed to login user: ${e.message}`);
+        logger().warn(`Failed to login user: ${e.message}`);
     }
 };
 

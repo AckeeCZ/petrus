@@ -94,7 +94,9 @@ Sets the package configuration with an config object. Following config propertie
 
         // Check if access token is expired when document visibility changes
         // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
-        verifyTokenExpirationOnTabFocus: true
+        verifyTokenExpirationOnTabFocus: true,
+
+        logger: console,
     }
     ```
 

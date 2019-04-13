@@ -31,7 +31,7 @@ function* setTokensPersistence(action) {
     try {
         yield applyTokensPersistence(action.persistence);
     } catch (error) {
-        logger.error(error);
+        logger().error(error);
     }
 }
 
