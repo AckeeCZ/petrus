@@ -48,12 +48,6 @@ Using npm:
 $ npm i -S @ackee/petrus
 ```
 
-> ### Note `@ackee/petrus` requires following peer dependencies:
->
-> `localforage`, `lodash`, `react`, `react-redux`, `redux` and `redux-saga`
-
----
-
 ## <a name="initialization"></a>Initialization
 
 #### <a name="configure"></a>`configure(config: Object) => Object`
