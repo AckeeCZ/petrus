@@ -1,5 +1,5 @@
 import { select } from 'redux-saga/effects';
-import localforage from 'localforage';
+import { removeItem, setItem, getItem } from 'localforage';
 
 import * as Consts from '../../constants';
 import { tokensPersistence } from '../../selectors';
@@ -11,7 +11,7 @@ const { LOCAL, SESSION } = Consts.tokens.persistence;
 
 export function* clearTokens() {
     storage.session.removeItem(config.tokensKey);
-    yield localforage.removeItem(config.tokensKey);
+    yield removeItem(config.tokensKey);
 }
 
 export function* storeTokens(tokens, forcedPersistence) {
@@ -20,11 +20,11 @@ export function* storeTokens(tokens, forcedPersistence) {
     switch (forcedPersistence || persistence) {
         case LOCAL:
             storage.session.removeItem(config.tokensKey);
-            yield localforage.setItem(config.tokensKey, tokens);
+            yield setItem(config.tokensKey, tokens);
             break;
 
         case SESSION:
-            yield localforage.removeItem(config.tokensKey);
+            yield removeItem(config.tokensKey);
             storage.session.setItem(config.tokensKey, JSON.stringify(tokens));
             break;
 
@@ -38,10 +38,10 @@ export function* retrieveTokens(forcedPersistence) {
     switch (forcedPersistence || persistence) {
         case LOCAL:
             storage.session.removeItem(config.tokensKey);
-            return yield localforage.getItem(config.tokensKey);
+            return yield getItem(config.tokensKey);
 
         case SESSION: {
-            yield localforage.removeItem(config.tokensKey);
+            yield removeItem(config.tokensKey);
             const stringifiedTokens = storage.session.getItem(config.tokensKey);
             return JSON.parse(stringifiedTokens);
         }

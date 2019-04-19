@@ -1,4 +1,4 @@
-import { isNil } from 'lodash';
+import isNil from 'lodash/isNil';
 
 /**
  * creates an access token expiration date from expiration timeout value

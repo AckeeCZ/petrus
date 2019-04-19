@@ -26,11 +26,11 @@
     },
     "dependencies": {
         "@babel/runtime": "^7.4.3",
-        "react-display-name": "^0.2.4"
+        "react-display-name": "^0.2.4",
+        "localforage": "1.7.x",
+        "lodash": "4.17.x"
     },
     "peerDependencies": {
-        "localforage": "1.7.x",
-        "lodash": "4.17.x",
         "react": "16.x",
         "react-redux": "7.x.x",
         "redux": "4.x.x",
