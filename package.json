@@ -1,6 +1,6 @@
 {
     "name": "@ackee/petrus",
-    "version": "3.7.0",
+    "version": "3.7.1",
     "description": "The library aims to handle authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
