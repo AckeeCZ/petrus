@@ -26,6 +26,7 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
+        "@ackee/redux-utils": "^1.0.0-beta.4",
         "@babel/runtime": "7.4",
         "idb": "4.0",
         "lodash": "4.17",
