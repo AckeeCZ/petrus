@@ -1,4 +1,4 @@
-import camelCase from 'lodash/camelCase';
+import { camelCase } from 'lodash';
 
 function getSearchEntries(string) {
     // split string with '&' -> ['access_token=ABCDExyz123']

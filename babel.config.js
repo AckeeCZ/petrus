@@ -4,6 +4,16 @@ module.exports = function(api) {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-proposal-export-namespace-from',
         '@babel/plugin-transform-runtime',
+        [
+            'babel-plugin-transform-imports',
+            {
+                lodash: {
+                    // eslint-disable-next-line
+                    transform: 'lodash/${member}',
+                    preventFullImport: true,
+                },
+            },
+        ],
     ];
 
     const presets = {

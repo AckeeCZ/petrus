@@ -25,16 +25,16 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@babel/runtime": "7.4.x",
-        "idb": "4.0.x",
-        "lodash": "4.17.x",
-        "react-display-name": "0.2.x"
+        "@babel/runtime": "7.4",
+        "idb": "4.0",
+        "lodash": "4.17",
+        "react-display-name": "0.2"
     },
     "peerDependencies": {
         "react": "16.x",
-        "react-redux": "7.x.x",
-        "redux": "4.x.x",
-        "redux-saga": "0.x.x"
+        "react-redux": "7.x",
+        "redux": "4.x",
+        "redux-saga": "0.x"
     },
     "devDependencies": {
         "@babel/cli": "7.x",
@@ -46,6 +46,7 @@
         "@babel/preset-env": "7.x",
         "@babel/preset-react": "7.x",
         "babel-eslint": "10.x",
+        "babel-plugin-transform-imports": "^1.5.1",
         "cross-env": "5.x",
         "eslint": "5.16.x",
         "eslint-config-ackee": "0.9.x",
@@ -54,6 +55,7 @@
         "lint-staged": "8.1.x",
         "lodash": "4.17.x",
         "onchange": "5.2.x",
+        "package-size": "^2.3.0",
         "prettier": "1.17.x",
         "prettier-config-ackee": "0.0.x",
         "react": "16.8.x",

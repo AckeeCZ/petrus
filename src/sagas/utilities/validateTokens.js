@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash/isPlainObject';
+import { isPlainObject } from 'lodash';
 
 export default function validateTokens(tokens) {
     if (!isPlainObject(tokens)) {
