@@ -11,7 +11,8 @@
         "build": "yarn run build:es && npm run build:lib",
         "prepare": "npm run build",
         "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
-        "lint": "eslint 'src/**/*.{js,jsx}'"
+        "lint": "eslint 'src/**/*.{js,jsx}'",
+        "size": "package-size ./lib --no-cache"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
