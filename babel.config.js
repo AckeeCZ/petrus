@@ -1,3 +1,6 @@
+const paths = require('./config/paths');
+const { babelAliases } = require('./config/aliases');
+
 module.exports = function(api) {
     const plugins = [
         require.resolve('@babel/plugin-proposal-object-rest-spread'),
@@ -11,6 +14,12 @@ module.exports = function(api) {
                     transform: 'lodash/${member}',
                     preventFullImport: true,
                 },
+            },
+        ],
+        [
+            require.resolve('babel-plugin-module-resolver'),
+            {
+                alias: babelAliases,
             },
         ],
     ];
