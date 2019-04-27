@@ -12,7 +12,8 @@
         "prepare": "npm run build",
         "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
         "lint": "eslint 'src/**/*.{js,jsx}'",
-        "size": "package-size ./lib --no-cache"
+        "size": "package-size ./lib --no-cache",
+        "test": "BABEL_ENV=test jest"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
@@ -26,11 +27,11 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "^1.0.0-beta.4",
-        "@babel/runtime": "7.4",
-        "idb": "4.0",
-        "lodash": "4.17",
-        "react-display-name": "0.2"
+        "@ackee/redux-utils": "^1.0.0-beta.5",
+        "@babel/runtime": "7.4.x",
+        "idb": "4.0.x",
+        "lodash": "4.17.x",
+        "react-display-name": "0.2.x"
     },
     "peerDependencies": {
         "react": "16.x",
@@ -40,7 +41,7 @@
     },
     "devDependencies": {
         "@babel/cli": "7.x",
-        "@babel/core": "7.x",
+        "@babel/core": "^7.4.4",
         "@babel/plugin-proposal-class-properties": "7.x",
         "@babel/plugin-proposal-export-namespace-from": "7.x",
         "@babel/plugin-proposal-object-rest-spread": "7.x",
@@ -48,12 +49,18 @@
         "@babel/preset-env": "7.x",
         "@babel/preset-react": "7.x",
         "babel-eslint": "10.x",
+        "babel-jest": "24.x",
         "babel-plugin-transform-imports": "^1.5.1",
         "cross-env": "5.x",
+        "enzyme": "^3.9.0",
+        "enzyme-adapter-react-16": "^1.12.1",
         "eslint": "5.16.x",
         "eslint-config-ackee": "0.9.x",
         "eslint-config-prettier": "4.1.x",
+        "eslint-plugin-import": "^2.17.2",
+        "eslint-plugin-jest": "22.5.x",
         "husky": "1.3.x",
+        "jest": "24.7.x",
         "lint-staged": "8.1.x",
         "lodash": "4.17.x",
         "onchange": "5.2.x",
@@ -74,7 +81,8 @@
     ],
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged",
+            "pre-push": "yarn lint && yarn test"
         }
     },
     "lint-staged": {

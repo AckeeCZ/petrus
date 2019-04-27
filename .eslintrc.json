@@ -1,6 +1,7 @@
 {
     "env": {
-        "browser": true
+        "browser": true,
+        "jest/globals": true
     },
     "extends": ["ackee", "prettier"],
     "parser": "babel-eslint",
@@ -10,5 +11,6 @@
             "jsx": true
         },
         "sourceType": "module"
-    }
+    },
+    "plugins": ["jest"]
 }

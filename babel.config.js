@@ -1,14 +1,13 @@
 module.exports = function(api) {
     const plugins = [
-        '@babel/plugin-proposal-object-rest-spread',
-        '@babel/plugin-proposal-class-properties',
-        '@babel/plugin-proposal-export-namespace-from',
-        '@babel/plugin-transform-runtime',
+        require.resolve('@babel/plugin-proposal-object-rest-spread'),
+        require.resolve('@babel/plugin-proposal-class-properties'),
+        require.resolve('@babel/plugin-proposal-export-namespace-from'),
+        require.resolve('@babel/plugin-transform-runtime'),
         [
-            'babel-plugin-transform-imports',
+            require.resolve('babel-plugin-transform-imports'),
             {
                 lodash: {
-                    // eslint-disable-next-line
                     transform: 'lodash/${member}',
                     preventFullImport: true,
                 },
@@ -17,20 +16,22 @@ module.exports = function(api) {
     ];
 
     const presets = {
-        lib: ['@babel/preset-env', '@babel/preset-react'],
+        lib: ['@babel/env', '@babel/react'],
         es: [
             [
-                '@babel/preset-env',
+                '@babel/env',
                 {
                     modules: false,
                 },
             ],
-            '@babel/preset-react',
+            '@babel/react',
         ],
+        test: ['@babel/env', '@babel/react'],
     };
 
     return {
         plugins,
         presets: presets[api.env()],
+        ignore: ['**/__tests__/'],
     };
 };
