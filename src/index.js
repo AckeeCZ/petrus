@@ -1,30 +1,47 @@
-import * as actionTypes from './actionType';
-import * as constants from './constants';
+import {
+    loginRequest,
+    loginSuccess,
+    loginFailure,
+    logoutRequest,
+    setUserWithTokens,
+    types as authSessionTypes,
+} from 'Modules/auth-session';
+import {
+    refreshTokensRequest,
+    checkAccessTokenExpiration,
+    tokensPersistence as TokensPersistence,
+} from 'Modules/tokens';
+
+import { setTokens, types } from './services/actions';
+import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './services/selectors';
+
 import * as HOC from './HOC';
 
-import {
-    login,
-    stopLogin,
-    logout,
-    setTokens,
-    refreshTokens,
-    setTokensPersistence,
-    setUserWithTokens,
-    verifyAccessTokenAvailability,
-} from './actions';
-import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './selectors';
+export { HOC };
 
-export { actionTypes, constants, HOC };
+export { configure } from './configure';
+
+// TODO: export only selected action types
+export const actionTypes = {
+    ...types,
+    ...authSessionTypes,
+};
 
 export const actions = {
-    login,
-    stopLogin,
-    logout,
+    loginRequest,
+    loginSuccess,
+    loginFailure,
+    logoutRequest,
     setTokens,
-    refreshTokens,
-    setTokensPersistence,
+    refreshTokensRequest,
     setUserWithTokens,
-    verifyAccessTokenAvailability,
+    checkAccessTokenExpiration,
+};
+
+export const constants = {
+    tokens: {
+        persistence: TokensPersistence,
+    },
 };
 
 export const selectors = {
@@ -35,4 +52,4 @@ export const selectors = {
     tokensPersistence,
 };
 
-export { configure, withAuthSession, getAuthStateChannel, createExpirationDate } from './sagas';
+export { withAuthSession, getAuthStateChannel } from './services/sagas';

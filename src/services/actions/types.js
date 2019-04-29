@@ -1,41 +1,19 @@
-import { createAsyncType } from '@ackee/redux-utils';
+import { createAsyncType, strictObjectAccess } from '@ackee/redux-utils';
 
 const asyncType = createAsyncType({
     modulePrefix: '@@petrus',
-    defaultTypes: ['REQUEST', 'SUCCESS', 'FAILURE'],
 });
 
-export default {
+export default strictObjectAccess({
     ...asyncType({
-        typePrefix: 'LOGIN',
+        types: ['SET_TOKENS', 'DELETE_TOKENS'],
     }),
     ...asyncType({
-        typePrefix: 'LOGOUT',
-    }),
-    ...asyncType({
-        typePrefix: 'REFRESH_TOKEN',
-    }),
-    ...asyncType({
-        typePrefix: 'FETCH_USER',
-    }),
-    ...asyncType({
-        typePrefix: 'RETRIEVE_TOKENS',
-        types: ['REQUEST', 'RESOLVE'],
-    }),
-    ...asyncType({
-        typePrefix: 'AUTH_SESSION',
+        typePrefix: 'AUTH_SESSION_',
         types: ['START', 'END', 'PAUSE', 'RESUME'],
     }),
     ...asyncType({
-        typePrefix: 'ACCESS_TOKEN',
+        typePrefix: 'ACCESS_TOKEN_',
         types: ['AVAILABLE', 'UNAVAILABLE'],
     }),
-    ...asyncType({
-        types: [
-            'SET_AUTH_TOKENS',
-            'SET_TOKENS_PERSISTENCE',
-            'SET_USER_WITH_TOKENS',
-            'VERIFY_ACCESS_TOKEN_AVAILABILITY',
-        ],
-    }),
-};
+});

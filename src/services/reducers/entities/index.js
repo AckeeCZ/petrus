@@ -1,11 +1,16 @@
-import user from './user';
-import tokens from './tokens';
-import tokensPersistence from './tokensPersistence';
+import { entitiesReducers as authSessionReducers } from 'Modules/auth-session';
+import { entitiesReducers as tokensReducers } from 'Modules/tokens';
+import sessionState from './sessionState';
 
 const chooseState = (state, initialState) => (state === undefined ? initialState : state);
 
 export default function createEntitiesReducer(initialState) {
-    return function entitiesReducer(state, action) {
+    const { user, tokens, tokensPersistence } = {
+        ...authSessionReducers,
+        ...tokensReducers,
+    };
+
+    return function entitiesReducer(state = {}, action) {
         return {
             user: user(chooseState(state.user, initialState.user), action),
             tokens: tokens(chooseState(state.tokens, initialState.tokens), action),
@@ -13,6 +18,7 @@ export default function createEntitiesReducer(initialState) {
                 chooseState(state.tokensPersistence, initialState.tokensPersistence),
                 action,
             ),
+            sessionState: sessionState(chooseState(state.sessionState, initialState.sessionState), action),
         };
     };
 }
