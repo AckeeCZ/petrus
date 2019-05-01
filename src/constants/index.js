@@ -1,2 +1,15 @@
-export * from './apiKeys';
-export * from './authState';
+import { strictObjectAccess } from '@ackee/redux-utils';
+
+export const authSession = strictObjectAccess({
+    ACTIVE: 'ACTIVE',
+    PAUSED: 'PAUSED',
+    INACTIVE: 'INACTIVE',
+});
+
+export const apiKeys = strictObjectAccess({
+    FETCH_USER: 'fetchUser',
+    LOGIN: 'login',
+    LOGOUT: 'logout',
+    REFRESH_TOKENS: 'refreshTokens',
+    RETRIEVE_TOKENS: 'retrieveTokens',
+});

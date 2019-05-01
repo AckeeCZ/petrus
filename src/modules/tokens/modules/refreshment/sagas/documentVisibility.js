@@ -17,7 +17,7 @@ function createVisibilityChangeChannel() {
 }
 
 export default function* watchDocumentVisibilityChange() {
-    if (!globalEnv.document || !config.options.verifyTokenExpirationOnTabFocus) {
+    if (!globalEnv.document || !config.tokens.checkTokenExpirationOnTabFocus) {
         return;
     }
 

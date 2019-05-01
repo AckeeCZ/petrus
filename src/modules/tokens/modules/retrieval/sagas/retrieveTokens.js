@@ -8,7 +8,7 @@ import { getOAuthTokens } from 'Modules/oAuth';
 import { fetchUserRequest } from 'Modules/auth-session';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
-import { refreshTokensRequest, types as refreshTokensTypes, isAnyTokenExpired } from '../../refreshment';
+import { refreshTokensRequest, types as refreshTokensTypes, isTokenExpired } from '../../refreshment';
 
 import { retrieveTokensRequest, retrieveTokensResolve } from '../actions';
 
@@ -35,14 +35,20 @@ function* tokensRetrieval() {
         return false;
     }
 
-    yield put(setTokens(tokens));
-
-    if (isAnyTokenExpired(tokens)) {
-        // TODO: check flow when retrieved tokens are expired
-        yield put(refreshTokensRequest());
+    if (isTokenExpired(tokens.accessToken)) {
+        yield put(refreshTokensRequest(tokens));
         // 'retrieveTokensResolve' action must be dispatched when tokens has been refreshed
         // otherwise authorizable HOC will render <Firewall/> which is wrong.
-        yield take([refreshTokensTypes.REFRESH_TOKENS_SUCCESS, refreshTokensTypes.REFRESH_TOKENS_FAILURE]);
+        const result = yield take([
+            refreshTokensTypes.REFRESH_TOKENS_SUCCESS,
+            refreshTokensTypes.REFRESH_TOKENS_FAILURE,
+        ]);
+
+        if (result.type === refreshTokensTypes.REFRESH_TOKENS_FAILURE) {
+            return false;
+        }
+    } else {
+        yield put(setTokens(tokens));
     }
 
     yield put(fetchUserRequest());

@@ -6,7 +6,7 @@ import { tokensPersistence } from '../modules/storage';
 
 export const handlers = ({ refreshTokens } = {}) => {
     if (!isFn(refreshTokens)) {
-        throw new PetrusError(`'refreshTokens' is not a function: Received argument: ${refreshTokens}`);
+        throw new PetrusError(`'refreshTokens' is not a function: Received argument: ${refreshTokens}.`);
     }
 
     return {

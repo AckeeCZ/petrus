@@ -1,18 +1,18 @@
 {
     "name": "@ackee/petrus",
     "version": "3.7.11",
-    "description": "The library aims to handle authentication logic with token based flow.",
+    "description": "A module that handles authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
     "scripts": {
         "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
-        "build": "yarn run build:es && npm run build:lib",
-        "prepare": "npm run build",
+        "build": "yarn build:es && yarn build:lib",
+        "prepare": "yarn build",
         "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
         "lint": "eslint 'src/**/*.{js,jsx}'",
-        "size": "package-size ./lib --no-cache",
+        "size": "package-size ./lib ./es --no-cache",
         "test": "BABEL_ENV=test jest"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",

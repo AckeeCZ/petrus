@@ -1,17 +1,17 @@
 import { put, select, takeEvery } from 'redux-saga/effects';
 
 import { config } from 'Config';
-import { setTokens } from 'Services/actions';
+import { setTokens, deleteTokens } from 'Services/actions';
 import { tokensSelector } from 'Services/selectors';
 import { validateTokens } from 'Services/utils';
 
 import { refreshTokensSuccess, refreshTokensFailure, types } from '../actions';
 
-function* refreshTokens() {
+function* refreshTokens(action) {
     try {
         const tokens = yield select(tokensSelector);
 
-        const refreshedTokens = yield config.remoteHandlers.refreshTokens(tokens);
+        const refreshedTokens = yield config.remoteHandlers.refreshTokens(action.payload || tokens);
 
         validateTokens(refreshedTokens);
 
@@ -21,6 +21,7 @@ function* refreshTokens() {
     } catch (e) {
         config.logger.error(e);
         yield put(refreshTokensFailure(e.message));
+        yield put(deleteTokens());
     }
 }
 

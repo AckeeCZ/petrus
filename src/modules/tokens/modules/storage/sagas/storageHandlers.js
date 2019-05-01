@@ -1,15 +1,16 @@
 import { select } from 'redux-saga/effects';
 
-import { config, storage } from 'Config';
+import { storage } from 'Config';
 import { tokensPersistenceSelector } from 'Services/selectors';
 
+import { TOKENS_KEY } from '../config';
 import { tokensPersistence } from '../constants';
 
 const { LOCAL, SESSION } = tokensPersistence;
 
 export function* clearTokens() {
-    storage.session.removeItem(config.tokensKey);
-    yield storage.indexedDB.remove(config.tokensKey);
+    storage.session.removeItem(TOKENS_KEY);
+    yield storage.indexedDB.remove(TOKENS_KEY);
 }
 
 export function* storeTokens(tokens, forcedPersistence) {
@@ -17,13 +18,13 @@ export function* storeTokens(tokens, forcedPersistence) {
 
     switch (forcedPersistence || persistence) {
         case LOCAL:
-            storage.session.removeItem(config.tokensKey);
-            yield storage.indexedDB.set(config.tokensKey, tokens);
+            storage.session.removeItem(TOKENS_KEY);
+            yield storage.indexedDB.set(TOKENS_KEY, tokens);
             break;
 
         case SESSION:
-            yield storage.indexedDB.remove(config.tokensKey);
-            storage.session.setItem(config.tokensKey, JSON.stringify(tokens));
+            yield storage.indexedDB.remove(TOKENS_KEY);
+            storage.session.setItem(TOKENS_KEY, JSON.stringify(tokens));
             break;
 
         default:
@@ -35,12 +36,12 @@ export function* retrieveTokens(forcedPersistence) {
 
     switch (forcedPersistence || persistence) {
         case LOCAL:
-            storage.session.removeItem(config.tokensKey);
-            return yield storage.indexedDB.get(config.tokensKey);
+            storage.session.removeItem(TOKENS_KEY);
+            return yield storage.indexedDB.get(TOKENS_KEY);
 
         case SESSION: {
-            yield storage.indexedDB.remove(config.tokensKey);
-            const stringifiedTokens = storage.session.getItem(config.tokensKey);
+            yield storage.indexedDB.remove(TOKENS_KEY);
+            const stringifiedTokens = storage.session.getItem(TOKENS_KEY);
             return JSON.parse(stringifiedTokens);
         }
 

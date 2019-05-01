@@ -1,55 +1,41 @@
-import {
+import { loginRequest, logoutRequest, setUserWithTokens, types as authSessionTypes } from 'Modules/auth-session';
+import { checkAccessTokenExpiration, tokensPersistence as TokensPersistence } from 'Modules/tokens';
+
+import { types } from './services/actions';
+
+const {
+    AUTH_SESSION_START,
+    AUTH_SESSION_END,
+    AUTH_SESSION_PAUSE,
+    AUTH_SESSION_RESUME,
+    ACCESS_TOKEN_AVAILABLE,
+    ACCESS_TOKEN_UNAVAILABLE,
+} = types;
+
+const { LOGIN_SUCCESS, LOGIN_FAILURE } = authSessionTypes;
+
+export {
+    // actions
     loginRequest,
-    loginSuccess,
-    loginFailure,
     logoutRequest,
     setUserWithTokens,
-    types as authSessionTypes,
-} from 'Modules/auth-session';
-import {
-    refreshTokensRequest,
     checkAccessTokenExpiration,
-    tokensPersistence as TokensPersistence,
-} from 'Modules/tokens';
-
-import { setTokens, types } from './services/actions';
-import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './services/selectors';
-
-import * as HOC from './HOC';
-
-export { HOC };
-
-export { configure } from './configure';
-
-// TODO: export only selected action types
-export const actionTypes = {
-    ...types,
-    ...authSessionTypes,
+    //
+    // action types types
+    AUTH_SESSION_START,
+    AUTH_SESSION_END,
+    AUTH_SESSION_PAUSE,
+    AUTH_SESSION_RESUME,
+    ACCESS_TOKEN_AVAILABLE,
+    ACCESS_TOKEN_UNAVAILABLE,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    //
+    // constants
+    TokensPersistence,
 };
 
-export const actions = {
-    loginRequest,
-    loginSuccess,
-    loginFailure,
-    logoutRequest,
-    setTokens,
-    refreshTokensRequest,
-    setUserWithTokens,
-    checkAccessTokenExpiration,
-};
-
-export const constants = {
-    tokens: {
-        persistence: TokensPersistence,
-    },
-};
-
-export const selectors = {
-    authUser,
-    isLoggedIn,
-    isLoggingIn,
-    loginErrors,
-    tokensPersistence,
-};
-
+export { default as configure } from './configure';
+export { default as authorizable } from './HOC/authorizable';
 export { withAuthSession, getAuthStateChannel } from './services/sagas';
+export { entitiesSelector, apiSelector } from './services/selectors';

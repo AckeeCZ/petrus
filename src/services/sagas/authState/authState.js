@@ -20,7 +20,7 @@ import { simpleCircuit, deepCircuit } from '../circuits';
 function* tokenAvailabilityCircuit() {
     const tokenAvailabilityUnits = [
         {
-            pattern: authSessionTypes.LOGIN_SUCCESS,
+            pattern: [authSessionTypes.LOGIN_SUCCESS, refreshmentTypes.REFRESH_TOKENS_SUCCESS],
             *task() {
                 const tokens = yield select(tokensSelector);
                 yield put(accessTokenAvailable(tokens.accessToken));
@@ -30,7 +30,6 @@ function* tokenAvailabilityCircuit() {
             pattern: [
                 refreshmentTypes.REFRESH_TOKENS_REQUEST,
                 authSessionTypes.LOGOUT_SUCCESS,
-                authSessionTypes.LOGIN_FAILURE,
                 authSessionTypes.FETCH_USER_FAILURE,
             ],
             *task() {
@@ -53,8 +52,8 @@ function* authSessionCircuit() {
         {
             pattern: [
                 authSessionTypes.LOGOUT_SUCCESS,
-                authSessionTypes.LOGIN_FAILURE,
                 authSessionTypes.FETCH_USER_FAILURE,
+                refreshmentTypes.REFRESH_TOKENS_FAILURE,
             ],
             *task() {
                 yield put(authSessionEnd());

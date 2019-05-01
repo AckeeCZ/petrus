@@ -1,7 +1,8 @@
 import types from './types';
 
-export const refreshTokensRequest = () => ({
+export const refreshTokensRequest = expiredTokens => ({
     type: types.REFRESH_TOKENS_REQUEST,
+    payload: expiredTokens,
 });
 
 export const refreshTokensSuccess = () => ({

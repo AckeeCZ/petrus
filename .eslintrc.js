@@ -1,7 +1,3 @@
-const path = require('path');
-
-const pathToSrc = path.resolve(__dirname, './src');
-
 module.exports = {
     env: {
         browser: true,

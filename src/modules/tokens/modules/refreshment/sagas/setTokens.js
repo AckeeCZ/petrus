@@ -1,51 +1,33 @@
-import { takeEvery, cancel, take, put, fork } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 
 import { config } from 'Config';
 import { types } from 'Services/actions';
 import { refreshTokensRequest } from '../actions';
 
-import { TokensExpirationTimer, hasExpirationProperty } from '../utils';
-
-function* handleTimeoutChannel(timeoutChannel) {
-    while (true) {
-        yield take(timeoutChannel);
-        yield put(refreshTokensRequest());
-    }
-}
-
-let timeoutChannelTask = null;
-
-function* cancelTimeoutChannnelTask() {
-    if (timeoutChannelTask) {
-        yield cancel(timeoutChannelTask);
-        timeoutChannelTask = null;
-    }
-}
+import { setTimer, cancelTimer } from './tokensExpirationTimer';
+import { validateExpiration } from './utils';
 
 function* handleSetTokens(action) {
-    const tokens = action.payload;
+    const { expiration } = action.payload.accessToken;
 
-    if (hasExpirationProperty(tokens)) {
-        if (!TokensExpirationTimer.validateExpiration(tokens)) {
-            const min = config.options.tokens.minRequiredExpiration;
+    if (expiration !== undefined) {
+        if (!validateExpiration(expiration)) {
+            const min = config.tokens.minRequiredExpiration;
             const minRequired = `Minimal required access token expiration is ${min}ms (at ${new Date(
                 Date.now() + min,
             )}).`;
-            const cantSet = `Access token expiration at ${tokens.accessToken.expiration} it too low.`;
+            const cantSet = `Access token expiration at ${expiration} it too low.`;
             config.logger.error(`${minRequired}\n${cantSet}`);
             return;
         }
 
-        // cancel any previous timeout
-        yield cancelTimeoutChannnelTask();
+        yield cancelTimer();
 
-        // create new timeout for refreshing tokens
-        const channel = TokensExpirationTimer.setTimer(tokens);
-
-        // and wait for token to expire
-        timeoutChannelTask = yield fork(handleTimeoutChannel, channel);
+        yield setTimer(expiration, function*() {
+            yield put(refreshTokensRequest());
+        });
     } else {
-        yield cancelTimeoutChannnelTask();
+        yield cancelTimer();
     }
 }
 

@@ -1,4 +1,3 @@
-const paths = require('./config/paths');
 const { babelAliases } = require('./config/aliases');
 
 module.exports = function(api) {
@@ -41,6 +40,6 @@ module.exports = function(api) {
     return {
         plugins,
         presets: presets[api.env()],
-        ignore: ['**/__tests__/'],
+        ignore: ['**/__tests__/', '**/*.test.js'],
     };
 };
