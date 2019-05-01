@@ -1,12 +1,10 @@
-import { isNil } from 'lodash';
-
 /**
  * creates an access token expiration date from expiration timeout value
  * @param {Number|null|undefined} expiresIn - **value** in **ms** when access token expires
  * @returns {Number} - access token expiration **date** in ISO string format
  */
 export default function createExpirationDate(expiresIn) {
-    if (isNil(expiresIn)) {
+    if (expiresIn === null || expiresIn === undefined) {
         return null;
     }
 

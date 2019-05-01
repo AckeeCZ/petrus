@@ -1,5 +1,3 @@
-import { noop } from 'lodash';
-
 import validateRedirectUrl from './validateRedirectUrl';
 import getSearchParams from './getSearchParams';
 import enforceAccessTokenScheme from './enforceAccessTokenScheme';
@@ -10,7 +8,7 @@ export default {
     redirectPathname: '/oauth/redirect',
     validateRedirectUrl,
     parseRedirectUrlParams: getSearchParams,
-    fetchAccessToken: noop,
+    fetchAccessToken() {},
     enforceAccessTokenScheme,
     enforceRefreshTokenScheme,
 };

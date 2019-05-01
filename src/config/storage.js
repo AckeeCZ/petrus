@@ -1,7 +1,8 @@
-import { noop } from 'lodash';
 import { openDB } from 'idb';
 
 import { globalEnv } from './global';
+
+const noop = () => {};
 
 const sessionStorageMock = {
     removeItem: noop,

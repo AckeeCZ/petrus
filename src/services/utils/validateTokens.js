@@ -1,6 +1,8 @@
-import { isPlainObject } from 'lodash';
-
 import { PetrusError } from 'Config';
+
+function isPlainObject(o) {
+    return typeof o === 'object' && o.constructor === Object;
+}
 
 export default function validateTokens(tokens) {
     if (!isPlainObject(tokens)) {
