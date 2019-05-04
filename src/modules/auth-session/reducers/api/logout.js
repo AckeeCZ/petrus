@@ -1,7 +1,7 @@
-import { reducers } from '@ackee/redux-utils';
+import { basicApiReducer } from '@ackee/redux-utils';
 import { types } from '../../actions';
 
-export default reducers.api.basic({
+export default basicApiReducer({
     actionTypes: {
         REQUEST: types.LOGOUT_REQUEST,
         SUCCESS: types.LOGOUT_SUCCESS,

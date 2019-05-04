@@ -1,7 +1,7 @@
-import { reducers } from '@ackee/redux-utils';
+import { basicApiReducer } from '@ackee/redux-utils';
 import { types } from '../../actions';
 
-export default reducers.api.basic({
+export default basicApiReducer({
     actionTypes: {
         REQUEST: types.FETCH_USER_REQUEST,
         SUCCESS: types.FETCH_USER_SUCCESS,

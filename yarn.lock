@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ackee/redux-utils@^1.0.0-beta.6":
-  version "1.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@ackee/redux-utils/-/redux-utils-1.0.0-beta.6.tgz#de65568cb60e86cffe5e5021efac61e7b0e42ba1"
-  integrity sha512-vHR9zaafRWEUJfJDaJBdu6j7ik7QLkYDK+mS3BeNtrI9NpgonH3DtOMSdvode5H91ZRvo40Qa1Fj07hxhuUDOg==
+"@ackee/redux-utils@^2.0.0-alpha.0":
+  version "2.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@ackee/redux-utils/-/redux-utils-2.0.0-alpha.0.tgz#8f8376100d0c041f99c439bf776c8493ad6b0e0f"
+  integrity sha512-o/CtV5aY3uZJ9KANYnuGJz2zaMzpxxkZ6up7TLCX96PYfysaQNzI9dMmsdy6GeZCrObDhnfELajaH/Mm0Nu+PA==
 
 "@babel/cli@7.x":
   version "7.4.3"

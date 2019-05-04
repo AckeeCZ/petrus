@@ -4,6 +4,7 @@
     "description": "A module that handles authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
+    "sideEffects": false,
     "scripts": {
         "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
@@ -27,7 +28,7 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "^1.0.0-beta.6",
+        "@ackee/redux-utils": "^2.0.0-alpha.0",
         "@babel/runtime": "7.4.x",
         "idb": "4.0.x",
         "react-display-name": "0.2.x"
