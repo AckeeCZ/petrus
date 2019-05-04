@@ -1,4 +1,4 @@
-import { takeEvery, put, select, call } from 'redux-saga/effects';
+import { put, select, call, takeLeading } from 'redux-saga/effects';
 
 import { PetrusError, config } from 'Config';
 import { tokensSelector } from 'Services/selectors';
@@ -25,6 +25,5 @@ function* fetchUser() {
 }
 
 export default function*() {
-    // TODO: takeLeading
-    yield takeEvery(types.FETCH_USER_REQUEST, fetchUser);
+    yield takeLeading(types.FETCH_USER_REQUEST, fetchUser);
 }

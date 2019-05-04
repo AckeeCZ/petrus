@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga';
-import { cancel, fork, call } from 'redux-saga/effects';
+import { cancel, fork, call, delay } from 'redux-saga/effects';
 
 import { config } from 'Config';
 

@@ -1,4 +1,4 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeLeading, put } from 'redux-saga/effects';
 
 import { config } from 'Config';
 import { deleteTokens } from 'Services/actions';
@@ -16,6 +16,5 @@ function* logout() {
 }
 
 export default function*() {
-    // takeLeading
-    yield takeEvery(types.LOGOUT_REQUEST, logout);
+    yield takeLeading(types.LOGOUT_REQUEST, logout);
 }

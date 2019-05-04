@@ -1,4 +1,4 @@
-import { put, takeEvery, select, take } from 'redux-saga/effects';
+import { put, takeLeading, select, take } from 'redux-saga/effects';
 
 import { config } from 'Config';
 import { setTokens } from 'Services/actions';
@@ -31,6 +31,5 @@ const handleSetUserWithTokens = function*(action) {
 };
 
 export default function*() {
-    yield takeEvery(types.SET_USER_WITH_TOKENS, handleSetUserWithTokens);
-    // yield takeLeading(types.SET_USER_WITH_TOKENS, handleSetUserWithTokens);
+    yield takeLeading(types.SET_USER_WITH_TOKENS, handleSetUserWithTokens);
 }

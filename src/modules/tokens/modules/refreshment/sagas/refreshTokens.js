@@ -1,4 +1,4 @@
-import { put, select, takeEvery } from 'redux-saga/effects';
+import { put, select, takeLeading } from 'redux-saga/effects';
 
 import { config } from 'Config';
 import { setTokens, deleteTokens } from 'Services/actions';
@@ -26,6 +26,5 @@ function* refreshTokens(action) {
 }
 
 export default function*() {
-    // yield takeLeading(types.REFRESH_TOKENS_REQUEST, refreshTokens);
-    yield takeEvery(types.REFRESH_TOKENS_REQUEST, refreshTokens);
+    yield takeLeading(types.REFRESH_TOKENS_REQUEST, refreshTokens);
 }

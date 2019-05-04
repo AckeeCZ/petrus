@@ -13,7 +13,7 @@
         "prepare": "yarn build",
         "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
         "lint": "eslint 'src/**/*.{js,jsx}'",
-        "size": "package-size ./lib ./es --no-cache",
+        "size": "package-size ./es --no-cache",
         "test": "BABEL_ENV=test jest"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
@@ -28,7 +28,7 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "^2.0.0-alpha.0",
+        "@ackee/redux-utils": "2.0.0-alpha.1",
         "@babel/runtime": "7.4.x",
         "idb": "4.0.x",
         "react-display-name": "0.2.x"
@@ -72,7 +72,7 @@
         "react": "16.8.x",
         "react-redux": "7.0.x",
         "redux": "4.0.x",
-        "redux-saga": "0.16",
+        "redux-saga": "^1.0.2",
         "reselect": "4.0.x",
         "webpack": "4.30.x"
     },

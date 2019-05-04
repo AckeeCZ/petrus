@@ -1,4 +1,4 @@
-import { put, call, takeEvery } from 'redux-saga/effects';
+import { put, call, takeLeading } from 'redux-saga/effects';
 
 import { config, PetrusError } from 'Config';
 import { setTokens } from 'Services/actions';
@@ -29,6 +29,5 @@ const handleLogin = function*(action) {
 };
 
 export default function*() {
-    // yield takeLeading(types.LOGIN_REQUEST, handleLogin);
-    yield takeEvery(types.LOGIN_REQUEST, handleLogin);
+    yield takeLeading(types.LOGIN_REQUEST, handleLogin);
 }
