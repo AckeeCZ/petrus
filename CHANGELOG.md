@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.0.0 - Unreleased
 
--   Reduced namespace for public **all** exports:
+-   Reduced namespace for **all** public exports:
 
     ```js
     // before
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Rename `verifyAccessTokenAvailability` action to `checkAccessTokenExpiration`.
 -   The `authorizable` HOC doesn't pass any own props to the `AuthorizableComponent` component.
--   Reducer state is now look like this:
+-   Reducer state is now looks like this:
     ```js
     {
         entities: {
@@ -39,11 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         }
     }
     ```
-    The `api` object is build from `basicApiReducer`s from `@ackee/redux-utils` package.
+    The `api` object is build from so called api reducers created by `basicApiReducer` reducer factory from `@ackee/redux-utils` package.
 -   All selectors were removed and replaced with `entitiesSelector` and `apiSelector`.
 -   **The whole package is rewritten to the module/sub-module structure to be more organized and readable.**
--   Upgrade `@ackee/redux-utils` to version `2.0.x`.
--   Upgrade `redux-saga` to version `1.0.x`.
+-   Upgrade `@ackee/redux-utils` to version **`2.0.x`**.
+-   Upgrade `redux-saga` to version **`1.0.x`**.
 -   Add aliases.
 -   Add jest environment.
 -   Add `sideEffects` flag to `package.json`.
