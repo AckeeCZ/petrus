@@ -13,10 +13,9 @@ function* handleSetTokens(action) {
     if (expiration !== undefined) {
         if (!validateExpiration(expiration)) {
             const min = config.tokens.minRequiredExpiration;
-            const minRequired = `Minimal required access token expiration is ${min}ms (at ${new Date(
-                Date.now() + min,
-            )}).`;
-            const cantSet = `Access token expiration at ${expiration} it too low.`;
+            const minDate = new Date(Date.now() + min);
+            const minRequired = `Minimal required access token expiration is ${min}ms (at ${minDate.toISOString()}).`;
+            const cantSet = `Expiration at ${expiration} it too low.`;
             config.logger.error(`${minRequired}\n${cantSet}`);
             return;
         }

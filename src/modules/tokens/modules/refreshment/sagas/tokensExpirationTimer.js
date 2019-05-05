@@ -14,7 +14,7 @@ export function* cancelTimer() {
 }
 
 function* startTimer(timeout, callbackSaga) {
-    yield call(delay, timeout);
+    yield delay(timeout);
     yield call(callbackSaga);
 }
 

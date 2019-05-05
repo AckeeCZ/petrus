@@ -28,7 +28,7 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "2.0.0-alpha.1",
+        "@ackee/redux-utils": "2.0.0-alpha.2",
         "@babel/runtime": "7.4.x",
         "idb": "4.0.x",
         "react-display-name": "0.2.x"

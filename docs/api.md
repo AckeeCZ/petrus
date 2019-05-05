@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+-   [configure(config)](#configure)
 -   [Action creators](#action-creators)
 -   [Action types](#action-types)
 -   [Constants](#constants)
@@ -11,42 +12,186 @@
 
 ---
 
-## <a name="action-creators"></a>Action creators
+## <a name="configure"></a>`configure(config: Object) => Object`
 
-#### `login(credentials: Object)`
+This method must be always called exactly once. It returns `saga` and `reducer`. When the saga is connected among your other sagas, then `@ackee/petrus` starts to work.
 
-The `credentials` object is passed to `authenticate(credentials)` method you've provided in the [`configure`](../README.md#configure) method.
-
-#### `logout()`
-
-Triggers a user logout. This clears the state of any auth data (tokens from local storage included).
-
-##### Example
+### Defaults
 
 ```js
-import { put } from 'redux-saga/effects';
-import { actions } from '@ackee/petrus';
+{
+    handlers: {},
 
-function* logout() {
-    yield put(actions.logout());
+    reducerKey: 'auth',
+
+    tokens: {
+        requestDurationEstimate: 500,
+        minRequiredExpiration: 1000 * 60,
+    },
+
+    // Check if access token is expired when document visibility changes
+    // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
+    verifyTokenExpirationOnTabFocus: true,
+
+    // Default value is window.console
+    logger: console,
+
+    // Initial state for entities reducer.
+    // Mostly useful for changing 'tokensPersistence'.
+    initialState: {
+        user: null,
+        tokens: {},
+        tokensPersistence: 'LOCAL',
+    },
+
+    oAuth: {
+        // For oAuth defaults see note below.
+    }
 }
 ```
 
-#### `setTokensPersistence(persistence: String)`
+> OAuth2 authentication is also supported, even with different flows. See more at ["Usage with OAuth"](./oAuth.md).
 
-Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+### Minimal required configuration
 
-#### `setUserWithTokens(user: Object, tokens: Object)`
+For classic (non-OAuth) flow you need to provide the following handlers:
 
-If you have available both an authorized user and tokens, this action will store those data and switch `isLoggedIn` flag to `true`.
+```js
+import { configure } from '@ackee/petrus';
 
-This is useful when a user has been signed up and you want to take an advantage of those available data in the response (if the response include an authorized `user` and `tokens`).
+const { saga, reducer } = configure({
+    handlers: {
+        authenticate: authenticateHandler,
+        refreshTokens: refreshTokensHandler,
+        getAuthUser: getAuthUserHandler,
+    },
+});
+```
+
+> **Do NOT forget to connect the `saga` and `reducer`!**
+>
+> The reducer must be connected under `reducerKey` (`auth` by default).
+
+#### Handlers
+
+1. `authenticate(credentials: any) => { user: any, tokens: TokensShape }`
+
+    This method is called when the `loginRequest(credentials)` action is dispatched. The credentials object is passed to `authenticate` method where you handles the authentication and returns object with `user` and `tokens`.
+
+    #### Example
+
+    ```js
+    import { createExpirationDate } from '@ackee/petrus';
+
+    function* authenticateHandler(credentials) {
+        const { email, password } = credentials;
+        const response = yield api.post('/auth/sign-in', {
+            email,
+            password,
+        });
+        const { user, tokens } = response.data;
+        const { accessToken, expiresIn, refreshToken } = credentials;
+
+        // Following scheme is required:
+        return {
+            user,
+            tokens: {
+                accessToken: {
+                    token: accessToken,
+                    userId: user.id,
+
+                    // (optional) To enable auto tokens refreshing, you need to provided access token `expiration` date.
+                    expiration: createExpirationDate(expiresIn * 1000),
+                },
+                refreshToken: {
+                    token: refreshToken,
+                },
+            },
+        };
+    }
+    ```
+
+2. `refreshTokens(tokens: Object) => tokens:Object`
+
+    This method is called anytime when access token is expired, that is when:
+
+    - timeout for refreshing tokens is fired
+    - or tokens are expired after retrieval from a local storage
+    - or the `checkAccessTokenExpiration` action is dispatched and access token is expired
+
+    Function is expected to return/or resolve with an tokens Object: (`{ [tokenName: string]: token }`)
+
+    #### Example
+
+    ```js
+    function* refreshTokensHandler(tokens) {
+        const response = yield api.post('/auth/refresh', null, {
+            params: {
+                token: refreshToken.token,
+            },
+        });
+
+        return response.data;
+    }
+    ```
+
+3. `getAuthUser(tokens: Object) => user:any`
+
+    This method is called when tokens are successfully retrieved from a local storage.
+
+    The function is expected to return/or resolve with a user object.
+
+    #### Example
+
+    ```js
+    function* getAuthUserHandler(tokens) {
+        const { userId } = tokens.accessToken;
+        const response = yield authApi.get(config.api.user, {
+            uriParams: {
+                userId,
+            },
+        });
+
+        return response.data;
+    }
+    ```
+
+---
+
+## <a name="action-creators"></a>Action creators
+
+#### `loginRequest(credentials: Object)`
+
+The `credentials` object is passed to `authenticate(credentials)` method you've provided in the [`configure`](../README.md#configure) method.
+
+#### `logoutRequest()`
+
+Triggers a user logout. This deletes tokens from a local storage and any auth. data from the reducer.
 
 ##### Example
 
 ```js
 import { put } from 'redux-saga/effects';
-import { actions } from '@ackee/petrus';
+import { logoutRequest } from '@ackee/petrus';
+
+function* logout() {
+    yield put(logoutRequest());
+}
+```
+
+#### `setTokensPersistence(persistence: TokensPersistence)`
+
+Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
+
+#### `setUserWithTokens(user: any, tokens: Object)`
+
+If there is available an authorized `user` and `tokens` (e.g. from a user sign up), this action will store these data as they would come from the `authenticate` method. Thus, the user is signed in without an additional API request required.
+
+##### Example
+
+```js
+import { put } from 'redux-saga/effects';
+import { setUserWithTokens } from '@ackee/petrus';
 
 function* signUp({ email, password }) {
     const response = yield api.post('/auth/sign-up', {
@@ -55,20 +200,17 @@ function* signUp({ email, password }) {
     });
     const { user, tokens } = response;
 
-    yield put(actions.setUserWithTokens(user, tokens));
+    yield put(setUserWithTokens(user, tokens));
 }
 ```
 
 ##### Notes
 
-If you dispatch this action when a user is already logged in:
+If you dispatch this action when a user is already logged in, the `logoutRequest` action will be first dispatched and then the flow will continue as usual.
 
--   the `logout` action will be dispatched - therefore the auth session will ended (`AUTH_SESSION_END`)
--   only then the `setUserWithTokens` action will be processed as usual
+#### `checkAccessTokenExpiration()`
 
-#### `verifyAccessTokenAvailability(void)`
-
-This action will trigger a saga that checks if access token is expired. If so, the token will be refreshed.
+This action will trigger a saga that checks if the access token is expired. If so, tokens are going to be refreshed.
 
 ---
 
@@ -78,32 +220,33 @@ This action will trigger a saga that checks if access token is expired. If so, t
 
 ##### `RETRIEVE_TOKENS_REQUEST`
 
-An attempt to retrieve tokens has begun. This action is dispatched immediately after @ackee/petrus saga was initialized.
+This action is triggered right before tokens retrieval from a local storage begins.
 
 ##### `RETRIEVE_TOKENS_RESOLVE`
 
-An attempt to retrieve tokens has been made. The action contains `tokensRetrieved` boolean property with is equal to the result.
+This action contains `payload.tokensRetrieved` flag with the tokens retrieval result.
 
 #### Access token flow
 
 ##### `ACCESS_TOKEN_AVAILABLE`
 
-Access token becomes available when one of following events successfully finished: login, local tokens retrieval or tokens refreshment.
-It's guaranteed that `ACCESS_TOKEN_UNAVAILABLE` action will be dispatched first, before another trigger of `ACCESS_TOKEN_AVAILABLE`.
+When the access token becomes available, this action is dispatched (on `LOGIN_SUCCESS` and `REFRESH_TOKENS_SUCCESS`).
 
 ##### `ACCESS_TOKEN_UNAVAILABLE`
 
-Access token becomes unavailable on logout or when tokens refreshment start. It's also guaranteed that `ACCESS_TOKEN_AVAILABLE` action will be dispatched first, before another trigger of `ACCESS_TOKEN_UNAVAILABLE`.
+Access token becomes unavailable on logout or when tokens refreshment start.
+
+It's guaranteed that the `ACCESS_TOKEN_UNAVAILABLE` action will be dispatched only once after `ACCESS_TOKEN_AVAILABLE`.
 
 #### Authentication session flow
 
 ##### `AUTH_SESSION_START`
 
-Once the application has available valid access token, this action is dispatched. It's guaranteed that `AUTH_SESSION_END` must be triggered first before another trigger.
+Once a user has been successfully logged in, this action is dispatched. It's guaranteed that `AUTH_SESSION_END` must be triggered first before another `AUTH_SESSION_START` trigger.
 
 ##### `AUTH_SESSION_PAUSE`
 
-The action is triggered on start of access token refreshment.
+This action is triggered on the access token refreshment start.
 
 ##### `AUTH_SESSION_RESUME`
 
@@ -111,18 +254,42 @@ If access token refreshment was successful, `AUTH_SESSION_RESUME` is triggered. 
 
 ##### `AUTH_SESSION_END`
 
-If access token refreshment fails or `AUTH_LOGOUT` action§ is triggered, `AUTH_SESSION_END` is triggered.
+The `AUTH_SESSION_END` action is triggered on `AUTH_LOGOUT_SUCCESS` or `REFRESH_TOKENS_FAILURE`.
 
 #### Example
 
 ```js
 import { put } from 'redux-saga/effects';
-import { actionTypes } from '@ackee/petrus';
+import { AUTH_SESSION_START } from '@ackee/petrus';
 
 function* watchAuthSession() {
-    yield takeEvery(actionTypes.AUTH_SESSION_START, function*(action) {
+    yield takeEvery(AUTH_SESSION_START, function*(action) {
         // ...
     });
+}
+```
+
+#### Login
+
+##### `LOGIN_SUCCESS`
+
+Triggered on successful login.
+
+##### `LOGIN_FAILURE`
+
+Triggered on failed login.
+
+##### Example
+
+```js
+function* handleLogin(action) {
+    // dispatch login request to @ackee/petrus
+    yield put(loginRequest(action.data));
+
+    // wait for the request to resolve
+    const result = yield take([LOGIN_SUCCESS, LOGIN_FAILURE]);
+
+    // and then do something (e.g. display login error, redirect user to auth. content)
 }
 ```
 
@@ -130,79 +297,70 @@ function* watchAuthSession() {
 
 ## <a name="constants"></a>Constants
 
-#### `tokens`
+#### `TokensPersistence`
 
--   <a name="constants-tokens-persistence"></a>`persistence`
+Tokens persistence defines how and where will be tokens stored and when they will be cleared:
 
-    Tokens persistence defines how and where will be tokens stored and when they will be cleared:
+-   `LOCAL` (default) - Tokens are stored in `IndexedDB` data storage. The state will be persisted even when the browser window is closed. An explicit action (e.g. successful sign out) is required in order to clear that state.
+-   `SESSION` - Tokens are stored in `SessionStorage`.
+-   `NONE` - Tokens will only be stored in Redux Store and will be cleared when the window or activity is refreshed.
 
-    -   `LOCAL` (default) - Tokens are stored in `IndexedDB`. The state will be persisted even when the browser window is closed. An explicit sign out is needed to clear that state.
-    -   `SESSION` - Tokens are stored in `SessionStorage`.
-    -   `NONE` - Tokens will only be stored in Redux Store and will be cleared when the window or activity is refreshed.
+##### Example - override the default `tokensPersistence` value
 
-        Example - overide default `tokensPersistence`
+```js
+import { configure, TokensPersistence } from '@ackee/petrus';
 
-        ```js
-        import * as Petrus from '@ackee/petrus';
+const { saga, reducer } = configure({
+    // ...
+    initialState: {
+        tokensPersistence: TokensPersistence.NONE,
+    },
+});
+```
 
-        Petrus.configure({
-            // ...
-            initialState: {
-                tokensPersistence: Petrus.constants.tokens.persistence.NONE,
-            },
-        });
-        ```
+##### Example - set tokens persistence dynamically
 
-        Example - set tokens persistence dynamically
+```js
+import { put } from 'redux-saga/effects';
+import { setTokensPersistence, TokensPersistence } from '@ackee/petrus';
 
-        ```js
-        import { put } from 'redux-saga/effects';
-        import * as Petrus from '@ackee/petrus';
+function* disableTokensPersistence() {
+    yield put(setTokensPersistence(TokensPersistence.NONE));
+}
 
-        const { setTokensPersistence } = Petrus.actions;
-        const { NONE, LOCAL } = Petrus.constants.tokens;
-
-        function* disableTokensPersistence() {
-            yield put(setTokensPersistence(NONE));
-        }
-
-        function* enableTokensPersistence() {
-            yield put(setTokensPersistence(LOCAL));
-        }
-        ```
+function* enableTokensPersistence() {
+    yield put(setTokensPersistence(TokensPersistence.LOCAL));
+}
+```
 
 ---
 
 ### <a name="selectors"></a>Selectors
 
-#### `authUser(state: Object) => user:any`
-
-Gets the user returned from `authenticate` method.
-
-#### `isLoggedIn(state: Object) => Boolean`
-
-Returns `true` whether user is logged in, `false` otherwise.
-
-#### `isLoggingIn(state: Object) => Boolean`
-
-Returns `true` whether the login process is taking place, `false` otherwise.
-
-#### `isUserFetching(state: Object) => Boolean`
-
-#### `tokensPersistence(state: Object) => String`
-
-Get current tokens persistence value, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
-
-#### `isRetrievingTokens(state: Object) => Boolean`
+#### `entitiesSelector(state: Object) => entities:object`
 
 #### Example
 
 ```js
 import { select } from 'redux-saga/effects';
-import * as Petrus from '@ackee/petrus';
+import { entitiesSelector } from '@ackee/petrus';
 
 function* selectAuthUser() {
-    const authUser = yield select(Petrus.selectors.authUser);
+    const authUser = yield select(entitiesSelector, entities => entities.user);
+    // ...
+}
+```
+
+#### `apiSelector(state: Object, apiKey: String) => basicApiReducer:object`
+
+#### Example
+
+```js
+import { select } from 'redux-saga/effects';
+import { apiSelector } from '@ackee/petrus';
+
+function* selectFetchUser() {
+    const { inProgress, success, error } = yield select(apiSelector, api => api.fetchUser);
     // ...
 }
 ```
@@ -244,20 +402,20 @@ A generator function that returns [action channel](https://github.com/redux-saga
 
 ```js
 import { takeEvery } from 'redux-saga/effects';
-import { getAuthStateChannel, actionTypes } from '@ackee/petrus';
+import { getAuthStateChannel, ACCESS_TOKEN_AVAILABLE, ACCESS_TOKEN_UNAVAILABLE } from '@ackee/petrus';
 
 function* logOutEveryAuthStateStep() {
     const authStateChannel = yield getAuthStateChannel();
 
     yield takeEvery(authStateChannel, function*(action) {
         switch (action.type) {
-            case actionTypes.ACCESS_TOKEN_AVAILABLE: {
+            case ACCESS_TOKEN_AVAILABLE: {
                 const accessToken = action.payload;
                 // do something with accessToken
                 break;
             }
 
-            case actionTypes.ACCESS_TOKEN_UNAVAILABLE:
+            case ACCESS_TOKEN_UNAVAILABLE:
                 break;
         }
     });
@@ -316,9 +474,7 @@ High order component that based on current state of the `auth` reducer renders o
 
 ```js
 import React from 'react';
-import { authorizable } from '@ackee/petrus/lib/HOC';
-// or import { HOC } from '@ackee/petrus';
-// and then HOC.authorizable(...);
+import { authorizable } from '@ackee/petrus';
 
 const AuthContent = <div>User is logged in</div>;
 const Firewall = <div>Please login</div>;
@@ -328,9 +484,3 @@ const AuthorizedComponent = authorizable(AuthContent, Firewall, Loader);
 
 export default AuthorizedComponent;
 ```
-
----
-
-> ### Tokens management logic
->
-> More detail description of the [Tokens management logic](../src/sagas/tokens/tokens.md).
