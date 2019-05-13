@@ -343,10 +343,16 @@ function* enableTokensPersistence() {
 
 ```js
 import { select } from 'redux-saga/effects';
+import { createSelector } from 'reselect';
 import { entitiesSelector } from '@ackee/petrus';
 
+const authUserSelector = createSelector(
+    entitiesSelector,
+    entities => entities.user,
+);
+
 function* selectAuthUser() {
-    const authUser = yield select(entitiesSelector, entities => entities.user);
+    const authUser = yield select(authUserSelector);
     // ...
 }
 ```
@@ -357,10 +363,16 @@ function* selectAuthUser() {
 
 ```js
 import { select } from 'redux-saga/effects';
+import { createSelector } from 'reselect';
 import { apiSelector } from '@ackee/petrus';
 
+const fetchUserSelector = createSelector(
+    apiSelector,
+    api => api.fetchUser,
+);
+
 function* selectFetchUser() {
-    const { inProgress, success, error } = yield select(apiSelector, api => api.fetchUser);
+    const { inProgress, success, error } = yield select(fetchUserSelector);
     // ...
 }
 ```
