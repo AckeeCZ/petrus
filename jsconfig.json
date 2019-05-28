@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "jsx": "preserve",
+        "baseUrl": "./src",
+        "paths": {
+            "Consts/*": ["constants/*"],
+            "Modules/*": ["modules/*"],
+            "Config/*": ["config/*"],
+            "Services/*": ["services/*"]
+        }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+}

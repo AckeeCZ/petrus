@@ -1,38 +1,52 @@
-import * as actionTypes from './actionType';
-import * as constants from './constants';
-import * as HOC from './HOC';
-
+import { loginRequest, logoutRequest, setUserWithTokens, types as authSessionTypes } from 'Modules/auth-session';
 import {
-    login,
-    stopLogin,
-    logout,
-    setTokens,
-    refreshTokens,
+    checkAccessTokenExpiration,
+    tokensPersistence as TokensPersistence,
     setTokensPersistence,
+    retrievalTypes,
+} from 'Modules/tokens';
+
+import { types } from './services/actions';
+
+const {
+    AUTH_SESSION_START,
+    AUTH_SESSION_END,
+    AUTH_SESSION_PAUSE,
+    AUTH_SESSION_RESUME,
+    ACCESS_TOKEN_AVAILABLE,
+    ACCESS_TOKEN_UNAVAILABLE,
+} = types;
+
+const { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } = retrievalTypes;
+
+const { LOGIN_SUCCESS, LOGIN_FAILURE } = authSessionTypes;
+
+export {
+    // actions
+    loginRequest,
+    logoutRequest,
     setUserWithTokens,
-    verifyAccessTokenAvailability,
-} from './actions';
-import { authUser, isLoggedIn, isLoggingIn, loginErrors, tokensPersistence } from './selectors';
-
-export { actionTypes, constants, HOC };
-
-export const actions = {
-    login,
-    stopLogin,
-    logout,
-    setTokens,
-    refreshTokens,
+    checkAccessTokenExpiration,
     setTokensPersistence,
-    setUserWithTokens,
-    verifyAccessTokenAvailability,
+    //
+    // action types types
+    AUTH_SESSION_START,
+    AUTH_SESSION_END,
+    AUTH_SESSION_PAUSE,
+    AUTH_SESSION_RESUME,
+    ACCESS_TOKEN_AVAILABLE,
+    ACCESS_TOKEN_UNAVAILABLE,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    RETRIEVE_TOKENS_REQUEST,
+    RETRIEVE_TOKENS_RESOLVE,
+    //
+    // constants
+    TokensPersistence,
 };
 
-export const selectors = {
-    authUser,
-    isLoggedIn,
-    isLoggingIn,
-    loginErrors,
-    tokensPersistence,
-};
-
-export { configure, withAuthSession, getAuthStateChannel, createExpirationDate } from './sagas';
+export { default as configure } from './configure';
+export { default as authorizable } from './HOC/authorizable';
+export { withAuthSession, getAuthStateChannel } from './services/sagas';
+export { entitiesSelector, apiSelector } from './services/selectors';
+export { createExpirationDate } from './modules/oAuth';

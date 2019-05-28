@@ -1,6 +1,6 @@
 # <a name="usage-with-oauth2"></a>Usage with OAuth2
 
-`@ackee/petrus` supports OAuth2 with following supported flows:
+`@ackee/petrus` supports following OAuth2 flows:
 
 -   [Implicit grant flow](https://docs.gitlab.com/ee/api/oauth2.html#implicit-grant-flow)
     -   Matches with the default configuration.

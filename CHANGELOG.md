@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.0.0 - Unreleased
+
+-   Reduced namespace for **all** public exports:
+
+    ```js
+    // before
+    import { HOC } from '@ackee/petrus';
+    // -> HOC.authorizable
+
+    // after
+    import { authorizable } '@ackee/petrus';
+    ```
+
+-   Rename `verifyAccessTokenAvailability` action to `checkAccessTokenExpiration`.
+-   The `authorizable` HOC doesn't pass any own props to the `AuthorizableComponent` component.
+-   Reducer state is now looks like this:
+    ```js
+    {
+        entities: {
+            user: null,
+            tokens: {},
+            // ...
+        },
+        api: {
+            fetchUser: {
+                inProgress: false,
+                success: false,
+                error: '',
+                cancelled: false
+            },
+            // ...
+        }
+    }
+    ```
+    The `api` object is build from so called api reducers created by `basicApiReducer` reducer factory from `@ackee/redux-utils` package.
+-   All selectors were removed and replaced with `entitiesSelector` and `apiSelector`.
+-   **The whole package is rewritten to the module/sub-module structure to be more organized and readable.**
+-   Upgrade `@ackee/redux-utils` to version **`2.0.x`**.
+-   Upgrade `redux-saga` to version **`1.0.x`**.
+-   Add aliases.
+-   Add jest environment.
+-   Add `sideEffects` flag to `package.json`.
+
 ## 3.7.0 - 2019-04-13
 
 ### Added

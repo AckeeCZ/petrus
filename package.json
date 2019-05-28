@@ -1,18 +1,20 @@
 {
     "name": "@ackee/petrus",
-    "version": "3.7.11",
-    "description": "The library aims to handle authentication logic with token based flow.",
+    "version": "4.0.0-alpha.2",
+    "description": "A module that handles authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
+    "sideEffects": false,
     "scripts": {
         "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
-        "build": "yarn run build:es && npm run build:lib",
-        "prepare": "npm run build",
+        "build": "yarn build:es && yarn build:lib",
+        "prepare": "yarn build",
         "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
         "lint": "eslint 'src/**/*.{js,jsx}'",
-        "size": "package-size ./lib --no-cache"
+        "size": "package-size ./es --no-cache",
+        "test": "BABEL_ENV=test jest"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
@@ -26,20 +28,21 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@babel/runtime": "7.4",
-        "idb": "4.0",
-        "lodash": "4.17",
-        "react-display-name": "0.2"
+        "@ackee/redux-utils": "2.0.0-alpha.2",
+        "@babel/runtime": "7.4.x",
+        "idb": "4.0.x",
+        "react-display-name": "0.2.x"
     },
     "peerDependencies": {
         "react": "16.x",
         "react-redux": "7.x",
         "redux": "4.x",
-        "redux-saga": "0.x"
+        "redux-saga": "0.x",
+        "reselect": "4.x"
     },
     "devDependencies": {
         "@babel/cli": "7.x",
-        "@babel/core": "7.x",
+        "@babel/core": "7.4.x",
         "@babel/plugin-proposal-class-properties": "7.x",
         "@babel/plugin-proposal-export-namespace-from": "7.x",
         "@babel/plugin-proposal-object-rest-spread": "7.x",
@@ -47,14 +50,21 @@
         "@babel/preset-env": "7.x",
         "@babel/preset-react": "7.x",
         "babel-eslint": "10.x",
-        "babel-plugin-transform-imports": "^1.5.1",
+        "babel-jest": "24.x",
+        "babel-plugin-module-resolver": "^3.2.0",
+        "babel-plugin-transform-imports": "1.5.x",
         "cross-env": "5.x",
+        "enzyme": "3.9.x",
+        "enzyme-adapter-react-16": "1.12.x",
         "eslint": "5.16.x",
         "eslint-config-ackee": "0.9.x",
         "eslint-config-prettier": "4.1.x",
+        "eslint-import-resolver-webpack": "0.11.x",
+        "eslint-plugin-import": "2.17.x",
+        "eslint-plugin-jest": "22.5.x",
         "husky": "1.3.x",
+        "jest": "24.7.x",
         "lint-staged": "8.1.x",
-        "lodash": "4.17.x",
         "onchange": "5.2.x",
         "package-size": "^2.3.0",
         "prettier": "1.17.x",
@@ -62,7 +72,9 @@
         "react": "16.8.x",
         "react-redux": "7.0.x",
         "redux": "4.0.x",
-        "redux-saga": "0.16.x"
+        "redux-saga": "^1.0.2",
+        "reselect": "4.0.x",
+        "webpack": "4.30.x"
     },
     "browserslist": [
         "last 2 version",
@@ -73,7 +85,8 @@
     ],
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged",
+            "pre-push": "yarn lint"
         }
     },
     "lint-staged": {

@@ -3,47 +3,33 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getDisplayName from 'react-display-name';
 
-import * as selectors from '../selectors';
+import { authorizableSelector } from 'Services/selectors';
 
 const MockAppLoader = () => <div>Loading...</div>;
 
-const authorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
-    const AuthorizedComponent = props => {
-        const { authUser, accessTokenIsAvailable, triedToRetrieveTokens, isLoggingIn, isUserFetching } = props;
-        if (authUser && accessTokenIsAvailable) {
+const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
+    const AuthorizedComponent = ({ authorizable, ...props }) => {
+        if (authorizable.authorizableComponent) {
             return <AuthorizableComponent {...props} />;
         }
 
-        if (!triedToRetrieveTokens || isLoggingIn || isUserFetching) {
-            return <Loader />;
-        }
-
-        return <Firewall />;
+        return authorizable.firewall ? <Firewall /> : <Loader />;
     };
 
     AuthorizedComponent.displayName = `Authorizable(${getDisplayName(AuthorizableComponent)})`;
 
     AuthorizedComponent.propTypes = {
-        authUser: PropTypes.shape(),
-        triedToRetrieveTokens: PropTypes.bool.isRequired,
-        isUserFetching: PropTypes.bool.isRequired,
-        isLoggingIn: PropTypes.bool.isRequired,
-        accessTokenIsAvailable: PropTypes.bool.isRequired,
-    };
-
-    AuthorizedComponent.defaultProps = {
-        authUser: null,
+        authorizable: PropTypes.shape({
+            firewall: PropTypes.bool.isRequired,
+            authorizableComponent: PropTypes.bool.isRequired,
+        }).isRequired,
     };
 
     const mapStateToProps = state => ({
-        authUser: selectors.authUser(state),
-        triedToRetrieveTokens: selectors.triedToRetrieveTokens(state),
-        isLoggingIn: selectors.isLoggingIn(state),
-        isUserFetching: selectors.isUserFetching(state),
-        accessTokenIsAvailable: selectors.accessTokenIsAvailable(state),
+        authorizable: authorizableSelector(state),
     });
 
     return connect(mapStateToProps)(AuthorizedComponent);
 };
 
-export default authorizable;
+export default withAuthorizable;
