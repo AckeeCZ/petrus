@@ -1,10 +1,18 @@
 const { babelAliases } = require('./config/aliases');
 
-module.exports = function(api) {
-    const plugins = [
+module.exports = {
+    presets: [
+        [
+            '@babel/env',
+            {
+                modules: process.env.BABEL_ENV === 'es' ? false : 'auto',
+            },
+        ],
+        '@babel/react',
+    ],
+    plugins: [
         require.resolve('@babel/plugin-proposal-object-rest-spread'),
         require.resolve('@babel/plugin-proposal-class-properties'),
-        require.resolve('@babel/plugin-proposal-export-namespace-from'),
         require.resolve('@babel/plugin-transform-runtime'),
         [
             require.resolve('babel-plugin-transform-imports'),
@@ -21,25 +29,6 @@ module.exports = function(api) {
                 alias: babelAliases,
             },
         ],
-    ];
-
-    const presets = {
-        lib: ['@babel/env', '@babel/react'],
-        es: [
-            [
-                '@babel/env',
-                {
-                    modules: false,
-                },
-            ],
-            '@babel/react',
-        ],
-        test: ['@babel/env', '@babel/react'],
-    };
-
-    return {
-        plugins,
-        presets: presets[api.env()],
-        ignore: ['**/__tests__/', '**/*.test.js'],
-    };
+    ],
+    ignore: ['**/__tests__/', '**/*.test.js'],
 };
