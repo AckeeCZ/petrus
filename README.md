@@ -77,6 +77,36 @@ function*() {
 
 > To see defaults and available configurations with examples, go [here](./docs/api.md#configure).
 
+### Usage with [`@ackee/antonio`](https://github.com/AckeeCZ/antonio)
+
+Minimal required configuration with HTTP client `@ackee/antonio` requires additionally to set `applyAccessTokenExternally` option to `true`. Otherwise `Authorization` header won't be set and thus every auth. request will result in `401` error.
+
+```js
+import { configure } from '@ackee/petrus';
+
+// 1. Provide authenticate, refreshTokens and getAuthUser methods
+const { saga, reducer } = configure({
+    handlers: {
+        authenticate,
+        refreshTokens,
+        getAuthUser,
+    },
+    tokens: {
+        applyAccessTokenExternally: true,
+    },
+});
+
+// 2. Add auth reducer
+const rootReducer = combineReducers({
+    auth: reducer
+});
+
+// 3. And launch the saga
+function*() {
+    yield all([saga()])
+}
+```
+
 ### With OAuth2
 
 `@ackee/petrus` supports following OAuth2 flows:

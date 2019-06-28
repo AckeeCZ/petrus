@@ -15,6 +15,7 @@ export const handlers = ({ refreshTokens } = {}) => {
 };
 
 export const options = (customOptions = {}) => ({
+    applyAccessTokenExternally: false,
     ...refreshmentConfig.options,
     ...customOptions,
 });

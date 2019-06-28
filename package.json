@@ -11,7 +11,8 @@
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
         "build": "yarn build:es && yarn build:lib",
         "prepare": "yarn build",
-        "start": "yarn install && yarn lint && yarn build && onchange 'src/**/*.{js,jsx}' -- yarn build",
+        "push": "yarn build && yalc push",
+        "start": "yarn build && onchange 'src/**/*.{js,jsx}' -- yarn push",
         "lint": "eslint 'src/**/*.{js,jsx}'",
         "size": "package-size ./es --no-cache",
         "test": "BABEL_ENV=test jest"

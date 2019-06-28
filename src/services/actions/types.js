@@ -1,8 +1,5 @@
-import { createAsyncType, strictObjectAccess } from '@ackee/redux-utils';
-
-const asyncType = createAsyncType({
-    modulePrefix: '@@petrus',
-});
+import { strictObjectAccess } from '@ackee/redux-utils';
+import { asyncType } from 'Services/utils';
 
 export default strictObjectAccess({
     ...asyncType({
