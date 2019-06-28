@@ -3,6 +3,7 @@ import { put, call, takeLeading } from 'redux-saga/effects';
 import { config, PetrusError } from 'Config';
 import { setTokens } from 'Services/actions';
 import { validateTokens } from 'Services/utils';
+import { applyAccessTokenExternally } from 'Modules/tokens';
 
 import { types, loginSuccess, loginFailure, fetchUserSuccess } from '../actions';
 
@@ -20,6 +21,8 @@ const handleLogin = function*(action) {
 
         yield put(fetchUserSuccess(user));
         yield put(setTokens(tokens));
+
+        yield applyAccessTokenExternally(tokens);
 
         yield put(loginSuccess());
     } catch (e) {

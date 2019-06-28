@@ -2,6 +2,7 @@ import { put, takeLeading, select, take } from 'redux-saga/effects';
 
 import { config } from 'Config';
 import { setTokens } from 'Services/actions';
+import { applyAccessTokenExternally } from 'Modules/tokens';
 
 import { loginSuccess, loginFailure, logoutRequest, types, fetchUserSuccess } from '../actions';
 import { loginSelector } from '../selectors';
@@ -22,6 +23,8 @@ const handleSetUserWithTokens = function*(action) {
 
         yield put(fetchUserSuccess(user));
         yield put(setTokens(tokens));
+
+        yield applyAccessTokenExternally(tokens);
 
         yield put(loginSuccess());
     } catch (e) {

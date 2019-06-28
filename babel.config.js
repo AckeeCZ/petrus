@@ -6,6 +6,9 @@ module.exports = {
             '@babel/env',
             {
                 modules: process.env.BABEL_ENV === 'es' ? false : 'auto',
+                targets: {
+                    esmodules: true,
+                },
             },
         ],
         '@babel/react',

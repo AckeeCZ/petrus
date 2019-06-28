@@ -6,6 +6,7 @@ import { tokensPersistenceSelector } from 'Services/selectors';
 
 import { getOAuthTokens } from 'Modules/oAuth';
 import { fetchUserRequest } from 'Modules/auth-session';
+import { applyAccessTokenExternally } from 'Modules/tokens';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
 import { refreshTokensRequest, types as refreshTokensTypes, isTokenExpired } from '../../refreshment';
@@ -49,6 +50,8 @@ function* tokensRetrieval() {
         }
     } else {
         yield put(setTokens(tokens));
+
+        yield applyAccessTokenExternally(tokens);
     }
 
     yield put(fetchUserRequest());

@@ -4,6 +4,9 @@ import {
     tokensPersistence as TokensPersistence,
     setTokensPersistence,
     retrievalTypes,
+    applyAccessTokenResolve,
+    unapplyAccessTokenResolve,
+    types as tokensTypes,
 } from 'Modules/tokens';
 
 import { types } from './services/actions';
@@ -21,6 +24,8 @@ const { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } = retrievalTypes;
 
 const { LOGIN_SUCCESS, LOGIN_FAILURE } = authSessionTypes;
 
+const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = tokensTypes;
+
 export {
     // actions
     loginRequest,
@@ -28,6 +33,8 @@ export {
     setUserWithTokens,
     checkAccessTokenExpiration,
     setTokensPersistence,
+    applyAccessTokenResolve,
+    unapplyAccessTokenResolve,
     //
     // action types types
     AUTH_SESSION_START,
@@ -40,6 +47,8 @@ export {
     LOGIN_FAILURE,
     RETRIEVE_TOKENS_REQUEST,
     RETRIEVE_TOKENS_RESOLVE,
+    APPLY_ACCESS_TOKEN_REQUEST,
+    UNAPPLY_ACCESS_TOKEN_REQUEST,
     //
     // constants
     TokensPersistence,
