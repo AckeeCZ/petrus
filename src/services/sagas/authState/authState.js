@@ -1,9 +1,9 @@
-import { put, call, all, actionChannel, select, take } from 'redux-saga/effects';
+import { put, call, all, actionChannel, select } from 'redux-saga/effects';
 
 import { config } from 'Config';
 
 import { types as refreshmentTypes } from 'Modules/tokens/modules/refreshment';
-import { types as tokensTypes, unapplyAccessTokenRequest } from 'Modules/tokens';
+import { types as externalTypes, unapplyAccessTokenExternally } from 'Modules/tokens/modules/external';
 import { types as authSessionTypes } from 'Modules/auth-session';
 
 import { tokensSelector } from 'Services/selectors';
@@ -26,7 +26,7 @@ function* tokenAvailabilityCircuit() {
     const tokenAvailabilityUnits = [
         {
             pattern: applyAccessTokenExternally
-                ? tokensTypes.APPLY_ACCESS_TOKEN_RESOLVE
+                ? externalTypes.APPLY_ACCESS_TOKEN_RESOLVE
                 : [authSessionTypes.LOGIN_SUCCESS, refreshmentTypes.REFRESH_TOKENS_SUCCESS],
             *task() {
                 const tokens = yield select(tokensSelector);
@@ -41,8 +41,7 @@ function* tokenAvailabilityCircuit() {
             ],
             *task() {
                 if (applyAccessTokenExternally) {
-                    yield put(unapplyAccessTokenRequest());
-                    yield take(tokensTypes.UNAPPLY_ACCESS_TOKEN_RESOLVE);
+                    yield unapplyAccessTokenExternally();
                 }
 
                 yield put(accessTokenUnavailable());

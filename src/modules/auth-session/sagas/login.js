@@ -3,7 +3,7 @@ import { put, call, takeLeading } from 'redux-saga/effects';
 import { config, PetrusError } from 'Config';
 import { setTokens } from 'Services/actions';
 import { validateTokens } from 'Services/utils';
-import { applyAccessTokenExternally } from 'Modules/tokens';
+import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
 
 import { types, loginSuccess, loginFailure, fetchUserSuccess } from '../actions';
 

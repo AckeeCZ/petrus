@@ -6,7 +6,7 @@ import {
     retrievalTypes,
     applyAccessTokenResolve,
     unapplyAccessTokenResolve,
-    types as tokensTypes,
+    externalTypes,
 } from 'Modules/tokens';
 
 import { types } from './services/actions';
@@ -24,7 +24,7 @@ const { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } = retrievalTypes;
 
 const { LOGIN_SUCCESS, LOGIN_FAILURE } = authSessionTypes;
 
-const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = tokensTypes;
+const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = externalTypes;
 
 export {
     // actions

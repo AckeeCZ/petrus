@@ -2,7 +2,7 @@ import { put, takeLeading, select, take } from 'redux-saga/effects';
 
 import { config } from 'Config';
 import { setTokens } from 'Services/actions';
-import { applyAccessTokenExternally } from 'Modules/tokens';
+import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
 
 import { loginSuccess, loginFailure, logoutRequest, types, fetchUserSuccess } from '../actions';
 import { loginSelector } from '../selectors';

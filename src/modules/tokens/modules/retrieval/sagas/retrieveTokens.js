@@ -6,7 +6,7 @@ import { tokensPersistenceSelector } from 'Services/selectors';
 
 import { getOAuthTokens } from 'Modules/oAuth';
 import { fetchUserRequest } from 'Modules/auth-session';
-import { applyAccessTokenExternally } from 'Modules/tokens';
+import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
 import { refreshTokensRequest, types as refreshTokensTypes, isTokenExpired } from '../../refreshment';

@@ -4,7 +4,7 @@ import { config } from 'Config';
 import { setTokens, deleteTokens } from 'Services/actions';
 import { tokensSelector } from 'Services/selectors';
 import { validateTokens } from 'Services/utils';
-import { applyAccessTokenExternally } from 'Modules/tokens';
+import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
 
 import { refreshTokensSuccess, refreshTokensFailure, types } from '../actions';
 
