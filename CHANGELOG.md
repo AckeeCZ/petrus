@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.0.0-beta.2 - Unreleased
+
+### Added
+
+#### New public API:
+
+-   `options.applyAccessTokenExternally: boolean` (`false` by default)
+-   `APPLY_ACCESS_TOKEN_REQUEST`
+-   `UNAPPLY_ACCESS_TOKEN_REQUEST`
+-   `applyAccessTokenResolve(accessToken)`
+-   `unapplyAccessTokenResolve()`
+
+For more information, please checkout the [#39](https://github.com/AckeeCZ/petrus/pull/39) PR and the [docs](docs/api.md#configure).
+
 ## 4.0.0-beta.1 - 2019-06-24
 
 -   Reduced namespace for **all** public exports:

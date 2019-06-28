@@ -27,6 +27,11 @@ This method must be always called exactly once. It returns `saga` and `reducer`.
     tokens: {
         requestDurationEstimate: 500,
         minRequiredExpiration: 1000 * 60,
+
+        // If true, anytime valid non-expired tokens becomes available
+        // the `APPLY_ACCESS_TOKEN_REQUEST` is dispatch. Until the `applyAccessTokenResolve` is dispatched by any external service, the auth. flow is paused.
+        // This gives you the power to do something with access token externally (e.g. `@ackee/antonio` uses this for injecting access tokne to the `Authorization` header).
+        applyAccessTokenExternally: false,
     },
 
     // Check if access token is expired when document visibility changes
@@ -212,6 +217,18 @@ If you dispatch this action when a user is already logged in, the `logoutRequest
 
 This action will trigger a saga that checks if the access token is expired. If so, tokens are going to be refreshed.
 
+### Apply access token externally
+
+**These actions are handled only if the `tokens.applyAccessTokenExternally` option is `true`.**
+
+#### `applyAccessTokenResolve()`
+
+`@ackee/petrus` dispatches `applyAccessTokenRequest(accessToken)` action when access token becomes available (during retrieval from persistent storage, tokens refreshment or login). Until `applyAccessTokenResolve` action is dispatched, the auth. flow is paused and any external service can do something the the `accessToken`.
+
+#### `unapplyAccessTokenResolve()`
+
+When access token becomes unavailable, `@ackee/petrus` dispatches `applyAccessTokenRequest()` action. Now the auth. flow is still in authorized state, until any external service dispatches the `unapplyAccessTokenResolve` action.
+
 ---
 
 ## <a name="action-types"></a>Action types
@@ -225,6 +242,18 @@ This action is triggered right before tokens retrieval from a local storage begi
 ##### `RETRIEVE_TOKENS_RESOLVE`
 
 This action contains `payload.tokensRetrieved` flag with the tokens retrieval result.
+
+### Apply access token externally
+
+**These actions are dispatched only if the `tokens.applyAccessTokenExternally` option is `true`.**
+
+##### `APPLY_ACCESS_TOKEN_REQUEST`
+
+See `applyAccessTokenResolve` action.
+
+##### `UNAPPLY_ACCESS_TOKEN_REQUEST`
+
+See `unapplyAccessTokenResolve` action.
 
 #### Access token flow
 
