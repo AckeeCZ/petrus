@@ -10,15 +10,15 @@ import { refreshTokensSuccess, refreshTokensFailure, types } from '../actions';
 
 function* refreshTokens(action) {
     try {
-        const tokens = yield select(tokensSelector);
+        const tokens = action.payload ? action.payload : yield select(tokensSelector);
 
-        const refreshedTokens = yield config.remoteHandlers.refreshTokens(action.payload || tokens);
+        const refreshedTokens = yield config.remoteHandlers.refreshTokens(tokens);
 
         validateTokens(refreshedTokens);
 
-        yield put(setTokens(refreshedTokens));
+        yield select(tokensSelector);
 
-        yield applyAccessTokenExternally(tokens);
+        yield applyAccessTokenExternally(refreshedTokens);
 
         yield put(refreshTokensSuccess());
     } catch (e) {
