@@ -16,7 +16,7 @@ function* refreshTokens(action) {
 
         validateTokens(refreshedTokens);
 
-        yield setTokens(refreshedTokens);
+        yield put(setTokens(refreshedTokens));
 
         yield applyAccessTokenExternally(refreshedTokens);
 
