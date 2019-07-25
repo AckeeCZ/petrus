@@ -1,8 +1,12 @@
-import { PetrusError, config } from 'Config';
+import { PetrusError, config, StorageDrivers } from 'Config';
 
 import { configure as oAuth } from 'Modules/oAuth';
 import { configure as authSession } from 'Modules/auth-session';
-import { configure as tokens, tokensPersistenceInitialState } from 'Modules/tokens';
+import {
+    configure as tokens,
+    tokensPersistenceInitialState,
+    tokensPersistence as TokensPersistence,
+} from 'Modules/tokens';
 
 import createRootReducer from 'Services/reducers';
 import rootSaga from 'Services/sagas';
@@ -36,6 +40,12 @@ export default function configure(customConfig = {}) {
                 tokensPersistence,
             }),
             ...tokens.handlers(customConfig.handlers),
+        },
+
+        mapStorageDriverToTokensPersistence: {
+            [TokensPersistence.SESSION]: StorageDrivers.sessionStorage,
+            [TokensPersistence.LOCAL]: StorageDrivers.indexedDB,
+            ...customConfig.mapStorageDriverToTokensPersistence,
         },
     });
 
