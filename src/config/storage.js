@@ -14,11 +14,17 @@ const DATABASE_NAME = '@ackee/petrus';
 const DATABASE_VERSION = 1;
 const DATABASE_STORE_NAME = 'keyvaluepairs';
 
-const db = openDB(DATABASE_NAME, DATABASE_VERSION, {
-    upgrade(nextDb) {
-        nextDb.createObjectStore(DATABASE_STORE_NAME);
-    },
-});
+const db = globalEnv.indexedDB
+    ? openDB(DATABASE_NAME, DATABASE_VERSION, {
+          upgrade(nextDb) {
+              nextDb.createObjectStore(DATABASE_STORE_NAME);
+          },
+      })
+    : {
+          get: noop,
+          put: noop,
+          delete: noop,
+      };
 
 export const storage = {
     session: globalEnv.sessionStorage || sessionStorageMock,
