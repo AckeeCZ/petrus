@@ -10,17 +10,17 @@ export const storageDriver = persistence => config.mapStorageDriverToTokensPersi
 export function* clearTokens(forcedPersistence) {
     const persistence = yield select(tokensPersistenceSelector);
 
-    yield storageDriver(persistence || forcedPersistence).remove(TOKENS_KEY);
+    yield storageDriver(forcedPersistence || persistence).remove(TOKENS_KEY);
 }
 
 export function* storeTokens(tokens, forcedPersistence) {
     const persistence = yield select(tokensPersistenceSelector);
 
-    yield storageDriver(persistence || forcedPersistence).set(TOKENS_KEY, tokens);
+    yield storageDriver(forcedPersistence || persistence).set(TOKENS_KEY, tokens);
 }
 
 export function* retrieveTokens(forcedPersistence) {
     const persistence = yield select(tokensPersistenceSelector);
 
-    return yield storageDriver(persistence || forcedPersistence).get(TOKENS_KEY);
+    return yield storageDriver(forcedPersistence || persistence).get(TOKENS_KEY);
 }

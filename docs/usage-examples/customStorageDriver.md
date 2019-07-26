@@ -50,7 +50,7 @@ const localStorageDriver = {
 ### 2. Pass the custom driver to config
 
 ```js
-import { configure, TokensPersistence, StorageDrivers } from '@ackee/petrus';
+import { configure, TokensPersistence } from '@ackee/petrus';
 
 const { LOCAL, SESSION } = TokensPersistence;
 
