@@ -1,6 +1,6 @@
 # Custom Storage Drive
 
-Each tokens persistence value (e.g. `TokensPersistence.LOCAL`) is mapped to a storage driver that you may override by your own. See the default config below.
+Each tokens persistence (e.g. `TokensPersistence.LOCAL`) has its own a storage driver that you may override by your own. See the default config below.
 
 ## Default configuration
 
