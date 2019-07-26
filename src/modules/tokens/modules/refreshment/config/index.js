@@ -3,5 +3,5 @@ export const options = {
     requestDurationEstimate: 500, // 0.5s
     minRequiredExpiration: 1000 * 60, // 1m
 
-    checkTokenExpirationOnTabFocus: true,
+    checkTokenExpirationOnTabFocus: false,
 };
