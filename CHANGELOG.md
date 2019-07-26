@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.0.0-beta.7 - 2019-07-26
+
+### Added
+
+-   Support for overriding storage drivers for specific tokens persistence. For example, you can now replace indexedDB for `LOCAL` tokens persistence by your own storage driver.
+
 ## 4.0.0-beta.6 - 2019-07-25
 
 ### Fixed
