@@ -32,11 +32,11 @@ This method must be always called exactly once. It returns `saga` and `reducer`.
         // the `APPLY_ACCESS_TOKEN_REQUEST` is dispatch. Until the `applyAccessTokenResolve` is dispatched by any external service, the auth. flow is paused.
         // This gives you the power to do something with access token externally (e.g. `@ackee/antonio` uses this for injecting access tokne to the `Authorization` header).
         applyAccessTokenExternally: false,
-    },
 
-    // Check if access token is expired when document visibility changes
-    // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
-    verifyTokenExpirationOnTabFocus: true,
+        // Check if access token is expired when document visibility changes
+        // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
+        checkTokenExpirationOnTabFocus: false,
+    },
 
     // Default value is window.console
     logger: console,
@@ -51,7 +51,14 @@ This method must be always called exactly once. It returns `saga` and `reducer`.
 
     oAuth: {
         // For oAuth defaults see note below.
-    }
+    },
+
+    // Set special storage drive (an object containing 3 async. methods: set, get and remove)
+    // for each tokens persistence.
+    mapStorageDriverToTokensPersistence: {
+        [TokensPersistence.SESSION]: StorageDrivers.sessionStorage,
+        [TokensPersistence.LOCAL]: StorageDrivers.indexedDB,
+    },
 }
 ```
 
@@ -184,7 +191,7 @@ function* logout() {
 }
 ```
 
-#### `setTokensPersistence(persistence: TokensPersistence)`
+#### `setTokensPersistence(persistence: TokensPersistence.SESSION)`
 
 Change tokens persistence, see [constants/tokens-persistence](#constants-tokens-persistence) for more details.
 
@@ -326,7 +333,7 @@ function* handleLogin(action) {
 
 ## <a name="constants"></a>Constants
 
-#### `TokensPersistence`
+#### `TokensPersistence.SESSION`
 
 Tokens persistence defines how and where will be tokens stored and when they will be cleared:
 
@@ -337,12 +344,12 @@ Tokens persistence defines how and where will be tokens stored and when they wil
 ##### Example - override the default `tokensPersistence` value
 
 ```js
-import { configure, TokensPersistence } from '@ackee/petrus';
+import { configure, TokensPersistence.SESSION } from '@ackee/petrus';
 
 const { saga, reducer } = configure({
     // ...
     initialState: {
-        tokensPersistence: TokensPersistence.NONE,
+        tokensPersistence: TokensPersistence.SESSION.NONE,
     },
 });
 ```
@@ -351,14 +358,14 @@ const { saga, reducer } = configure({
 
 ```js
 import { put } from 'redux-saga/effects';
-import { setTokensPersistence, TokensPersistence } from '@ackee/petrus';
+import { setTokensPersistence, TokensPersistence.SESSION } from '@ackee/petrus';
 
 function* disableTokensPersistence() {
-    yield put(setTokensPersistence(TokensPersistence.NONE));
+    yield put(setTokensPersistence(TokensPersistence.SESSION.NONE));
 }
 
 function* enableTokensPersistence() {
-    yield put(setTokensPersistence(TokensPersistence.LOCAL));
+    yield put(setTokensPersistence(TokensPersistence.SESSION.LOCAL));
 }
 ```
 
