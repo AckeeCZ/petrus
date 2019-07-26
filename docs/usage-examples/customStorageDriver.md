@@ -68,4 +68,4 @@ Now the `localStorageDriver` will be used for `LOCAL` tokens peristence instead 
 
 ---
 
-Back to [Usage Examples]('./index.md).
+Back to [Usage Examples](index.md).
