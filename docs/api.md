@@ -236,6 +236,10 @@ This action will trigger a saga that checks if the access token is expired. If s
 
 When access token becomes unavailable, `@ackee/petrus` dispatches `applyAccessTokenRequest()` action. Now the auth. flow is still in authorized state, until any external service dispatches the `unapplyAccessTokenResolve` action.
 
+#### `terminate()`
+
+Calls `cancel` redux saga effect on root Petrus saga and therefore end all infinite loops within.
+
 ---
 
 ## <a name="action-types"></a>Action types
