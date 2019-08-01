@@ -13,4 +13,7 @@ export default strictObjectAccess({
         typePrefix: 'ACCESS_TOKEN_',
         types: ['AVAILABLE', 'UNAVAILABLE'],
     }),
+    ...asyncType({
+        types: ['TERMINATE'],
+    }),
 });

@@ -9,7 +9,7 @@ import {
     externalTypes,
 } from 'Modules/tokens';
 
-import { types } from './services/actions';
+import { types, terminate } from './services/actions';
 
 const {
     AUTH_SESSION_START,
@@ -35,6 +35,7 @@ export {
     setTokensPersistence,
     applyAccessTokenResolve,
     unapplyAccessTokenResolve,
+    terminate,
     //
     // action types types
     AUTH_SESSION_START,

@@ -15,7 +15,7 @@ function* runUnit({ pattern, task }) {
  */
 function* runUnits(units = []) {
     for (const unit of units) {
-        yield call(runUnit, unit);
+        yield runUnit(unit);
     }
 }
 
