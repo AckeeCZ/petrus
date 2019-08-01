@@ -2,7 +2,6 @@ import { eventChannel } from 'redux-saga';
 import { take, put } from 'redux-saga/effects';
 
 import { globalEnv, config } from 'Config';
-import { raceWithTerminate } from 'Services/sagas/helpers';
 import { checkAccessTokenExpiration } from '../actions';
 
 function createVisibilityChangeChannel() {
@@ -29,21 +28,19 @@ export default function* watchDocumentVisibilityChange() {
         HIDDEN: 'hidden',
     };
 
-    yield raceWithTerminate(function*() {
-        while (true) {
-            const visibilityState = yield take(channel);
+    while (true) {
+        const visibilityState = yield take(channel);
 
-            switch (visibilityState) {
-                case visibilityStates.VISIBLE:
-                    yield put(checkAccessTokenExpiration());
-                    break;
+        switch (visibilityState) {
+            case visibilityStates.VISIBLE:
+                yield put(checkAccessTokenExpiration());
+                break;
 
-                case visibilityStates.HIDDEN:
-                    // TODO: consider to give developer an option to pause auto. refreshing (switch petrus to 'hibernate mode')
-                    break;
+            case visibilityStates.HIDDEN:
+                // TODO: consider to give developer an option to pause auto. refreshing (switch petrus to 'hibernate mode')
+                break;
 
-                default:
-            }
+            default:
         }
-    });
+    }
 }
