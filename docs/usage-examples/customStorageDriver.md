@@ -30,6 +30,10 @@ First, let's create custom storage driver for `localStorage` and use it instead 
 
 The storage driver object must contain `get`, `set` and `remove` methods (they'll be resolved as asynchronous methods).
 
+> ### Handlers might be **async or generator functions**
+>
+> `get`, `set` and `remove` methods are part of `redux-saga` context, therefore they might be generator functions as well.
+
 ```js
 const localStorageDriver = {
     async set(key, values) {
