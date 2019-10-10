@@ -337,7 +337,7 @@ function* handleLogin(action) {
 
 ## <a name="constants"></a>Constants
 
-#### `TokensPersistence.SESSION`
+#### `TokensPersistence`
 
 Tokens persistence defines how and where will be tokens stored and when they will be cleared:
 
@@ -348,12 +348,12 @@ Tokens persistence defines how and where will be tokens stored and when they wil
 ##### Example - override the default `tokensPersistence` value
 
 ```js
-import { configure, TokensPersistence.SESSION } from '@ackee/petrus';
+import { configure, TokensPersistence } from '@ackee/petrus';
 
 const { saga, reducer } = configure({
     // ...
     initialState: {
-        tokensPersistence: TokensPersistence.SESSION.NONE,
+        tokensPersistence: TokensPersistence.NONE,
     },
 });
 ```
@@ -362,14 +362,70 @@ const { saga, reducer } = configure({
 
 ```js
 import { put } from 'redux-saga/effects';
-import { setTokensPersistence, TokensPersistence.SESSION } from '@ackee/petrus';
+import { setTokensPersistence, TokensPersistence } from '@ackee/petrus';
 
 function* disableTokensPersistence() {
-    yield put(setTokensPersistence(TokensPersistence.SESSION.NONE));
+    yield put(setTokensPersistence(TokensPersistence.NONE));
 }
 
 function* enableTokensPersistence() {
-    yield put(setTokensPersistence(TokensPersistence.SESSION.LOCAL));
+    yield put(setTokensPersistence(TokensPersistence.LOCAL));
+}
+```
+
+#### `SessionState`
+
+`SessionState` reflects current auth session state.
+
+-   It's initially set to `null`.
+-   Only `AUTH_SESSION_*` actions changes its value.
+
+Possible states:
+
+-   `null` - set initially
+-   `ACTIVE`
+    -   set by `AUTH_SESSION_START` (login is complete - access is avail. and auth. user is fetched) and `AUTH_SESSION_RESUME` (access token refreshment has been completed) actions
+    -   Access token is only valid in this state.
+-   `PAUSED` - set by `AUTH_SESSION_PAUSE` (access token refreshment has started)
+-   `INACTIVE` - set by `AUTH_SESSION_END` action (user logouts, token refreshment fails)
+
+##### Example
+
+```js
+import { select, takeEvery } from 'redux-saga/effects';
+import { createSelector } from 'reselect';
+import { SessionState, entitiesSelector, getAuthStateChannel } from '@ackee/petrus';
+
+const currenSessionStateSelector = createSelector(
+    entitiesSelector,
+    entities => entities.sessionState,
+);
+
+function* sessionStateChanged(action) {
+    const currentSessionState = yield select(currenSessionStateSelector);
+
+    switch (currentSessionState) {
+        case SessionState.ACTIVE:
+            console.log(`Auth session has started or was resumed after token refreshment.`);
+            break;
+
+        case SessionState.PAUSED:
+            console.log(`Auth session has been paused due to token refreshment.`);
+            break;
+
+        case SessionState.INACTIVE:
+            console.log(`Auth session has been ended for various reasons.`);
+            break;
+
+        default:
+            console.log(`Session state hasn't been set yet.`);
+    }
+}
+
+export default function*() {
+    const authStateChannel = yield getAuthStateChannel();
+
+    yield takeEvery(authStateChannel, sessionStateChanged);
 }
 ```
 
