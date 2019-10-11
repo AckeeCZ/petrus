@@ -576,7 +576,9 @@ You can call `getAccessToken` anytime and it always resolves as follow:
 
 ```
 - if sessionState is null
-    - wait for RETRIEVE_TOKENS_RESOLVE
+    if api.retrieveTokens.success
+        return null
+    wait for RETRIEVE_TOKENS_RESOLVE
         if action.payload.tokensRetrieved === false
             return null
         else
