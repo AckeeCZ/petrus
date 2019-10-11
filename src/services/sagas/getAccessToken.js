@@ -1,27 +1,22 @@
 import { select, take, race } from 'redux-saga/effects';
 
-import { AuthSession } from 'Consts/index';
-import { sessionStateSelector, accessTokenSelector } from 'Services/selectors/index';
+import { AuthSession, apiKeys } from 'Consts/index';
+import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'Services/selectors/index';
 import { types } from 'Services/actions';
 
 import { types as retrievalTypes } from 'Modules/tokens/modules/retrieval';
 import { types as refreshmentTypes } from 'Modules/tokens/modules/refreshment';
 import { types as authSessionTypes } from 'Modules/auth-session';
 
-/*
-    1. select sessionState
-        if sessionState == null 
-            wait for RETRIEVE_TOKENS_RESOLVE
-                if action.payload.tokensRetrieved == false
-                    -> application is NOT authorized
-                else
-                    result = race ACCESS_TOKEN_AVAILABLE with [FETCH_USER_FAILURE, SIGN_IN_FAILURE]
-                        if result ~ failure action
-                            -> application is NOT authorized
-                        else 
-                            -> application is authorized
-*/
+const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
+
 function* preSessionResolvement() {
+    const retriveTokensApi = yield select(retrieveTokensApiSelector);
+
+    if (retriveTokensApi.success) {
+        return null;
+    }
+
     const action = yield take(retrievalTypes.RETRIEVE_TOKENS_RESOLVE);
 
     if (!action.payload.tokensRetrieved) {
