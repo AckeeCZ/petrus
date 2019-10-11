@@ -57,7 +57,7 @@ export {
 
 export { default as configure } from './configure';
 export { default as authorizable } from './HOC/authorizable';
-export { withAuthSession, getAuthStateChannel } from './services/sagas';
+export { withAuthSession, getAuthStateChannel, getAccessToken } from './services/sagas';
 export { entitiesSelector, apiSelector } from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
 export { StorageDrivers } from './config';

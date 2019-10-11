@@ -568,6 +568,52 @@ createExpirationDate('foo');
 createExpirationDate('foo123');
 ```
 
+#### `getAccessToken(void): accessToken|null`
+
+Generator function returning `acccessToken` or `null`. The `accessToken` value is equal to that one you returned in `tokens` object from `authenticate` and `refreshTokens` methods.
+
+You can call `getAccessToken` anytime and it always resolves as follow:
+
+```
+- if sessionState is null
+    - wait for RETRIEVE_TOKENS_RESOLVE
+        if action.payload.tokensRetrieved === false
+            return null
+        else
+            result = race(ACCESS_TOKEN_AVAILABLE, [FETCH_USER_FAILURE, SIGN_IN_FAILURE])
+
+            if result === ACCESS_TOKEN_AVAILABLE
+                return accessToken
+            else
+                return null
+
+- else if sessionState is ACTIVE
+    return accessToken
+
+- else if sessionState is PAUSED
+    const result = race(REFRESH_TOKENS_SUCCESS, REFRESH_TOKENS_FAILURE)
+
+    if result === REFRESH_TOKENS_SUCCESS
+        return accessToken
+    else
+        return null
+
+- else
+    return null
+```
+
+##### Example
+
+```js
+import { getAccessToken } from '@ackee/petrus';
+
+function* mySaga {
+    const accessToken = yield getAccessToken();
+
+    console.log(accessToken);
+}
+```
+
 ### <a name="hoc"></a>HOC
 
 #### `authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`
