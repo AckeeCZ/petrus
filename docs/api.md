@@ -607,7 +607,7 @@ You can call `getAccessToken` anytime and it always resolves as follow:
 ```js
 import { getAccessToken } from '@ackee/petrus';
 
-function* mySaga {
+function* mySaga() {
     const accessToken = yield getAccessToken();
 
     console.log(accessToken);
