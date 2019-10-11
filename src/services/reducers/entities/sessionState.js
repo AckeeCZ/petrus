@@ -1,4 +1,4 @@
-import { authSession } from 'Consts';
+import { AuthSession } from 'Consts/index';
 
 import { types } from '../../actions';
 
@@ -7,16 +7,16 @@ const initialState = null;
 export default function authSessionState(state = initialState, action) {
     switch (action.type) {
         case types.AUTH_SESSION_START:
-            return authSession.ACTIVE;
+            return AuthSession.ACTIVE;
 
         case types.AUTH_SESSION_PAUSE:
-            return authSession.PAUSED;
+            return AuthSession.PAUSED;
 
         case types.AUTH_SESSION_RESUME:
-            return authSession.ACTIVE;
+            return AuthSession.ACTIVE;
 
         case types.AUTH_SESSION_END:
-            return authSession.INACTIVE;
+            return AuthSession.INACTIVE;
 
         default:
             return state;

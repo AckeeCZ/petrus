@@ -1,6 +1,6 @@
 import { strictObjectAccess } from '@ackee/redux-utils';
 
-export const authSession = strictObjectAccess({
+export const AuthSession = strictObjectAccess({
     ACTIVE: 'ACTIVE',
     PAUSED: 'PAUSED',
     INACTIVE: 'INACTIVE',

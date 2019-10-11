@@ -337,7 +337,7 @@ function* handleLogin(action) {
 
 ## <a name="constants"></a>Constants
 
-#### `TokensPersistence.SESSION`
+#### `TokensPersistence`
 
 Tokens persistence defines how and where will be tokens stored and when they will be cleared:
 
@@ -348,12 +348,12 @@ Tokens persistence defines how and where will be tokens stored and when they wil
 ##### Example - override the default `tokensPersistence` value
 
 ```js
-import { configure, TokensPersistence.SESSION } from '@ackee/petrus';
+import { configure, TokensPersistence } from '@ackee/petrus';
 
 const { saga, reducer } = configure({
     // ...
     initialState: {
-        tokensPersistence: TokensPersistence.SESSION.NONE,
+        tokensPersistence: TokensPersistence.NONE,
     },
 });
 ```
@@ -362,14 +362,70 @@ const { saga, reducer } = configure({
 
 ```js
 import { put } from 'redux-saga/effects';
-import { setTokensPersistence, TokensPersistence.SESSION } from '@ackee/petrus';
+import { setTokensPersistence, TokensPersistence } from '@ackee/petrus';
 
 function* disableTokensPersistence() {
-    yield put(setTokensPersistence(TokensPersistence.SESSION.NONE));
+    yield put(setTokensPersistence(TokensPersistence.NONE));
 }
 
 function* enableTokensPersistence() {
-    yield put(setTokensPersistence(TokensPersistence.SESSION.LOCAL));
+    yield put(setTokensPersistence(TokensPersistence.LOCAL));
+}
+```
+
+#### `SessionState`
+
+`SessionState` reflects current auth session state.
+
+-   It's initially set to `null`.
+-   Only `AUTH_SESSION_*` actions changes its value.
+
+Possible states:
+
+-   `null` - set initially
+-   `ACTIVE`
+    -   set by `AUTH_SESSION_START` (login is complete - access is avail. and auth. user is fetched) and `AUTH_SESSION_RESUME` (access token refreshment has been completed) actions
+    -   Access token is only valid in this state.
+-   `PAUSED` - set by `AUTH_SESSION_PAUSE` (access token refreshment has started)
+-   `INACTIVE` - set by `AUTH_SESSION_END` action (user logouts, token refreshment fails)
+
+##### Example
+
+```js
+import { select, takeEvery } from 'redux-saga/effects';
+import { createSelector } from 'reselect';
+import { SessionState, entitiesSelector, getAuthStateChannel } from '@ackee/petrus';
+
+const currenSessionStateSelector = createSelector(
+    entitiesSelector,
+    entities => entities.sessionState,
+);
+
+function* sessionStateChanged(action) {
+    const currentSessionState = yield select(currenSessionStateSelector);
+
+    switch (currentSessionState) {
+        case SessionState.ACTIVE:
+            console.log(`Auth session has started or was resumed after token refreshment.`);
+            break;
+
+        case SessionState.PAUSED:
+            console.log(`Auth session has been paused due to token refreshment.`);
+            break;
+
+        case SessionState.INACTIVE:
+            console.log(`Auth session has been ended for various reasons.`);
+            break;
+
+        default:
+            console.log(`Session state hasn't been set yet.`);
+    }
+}
+
+export default function*() {
+    const authStateChannel = yield getAuthStateChannel();
+
+    yield takeEvery(authStateChannel, sessionStateChanged);
 }
 ```
 
@@ -510,6 +566,52 @@ createExpirationDate(undefined);
 // invalid:
 createExpirationDate('foo');
 createExpirationDate('foo123');
+```
+
+#### `getAccessToken(void): accessToken|null`
+
+Generator function returning `acccessToken` or `null`. The `accessToken` value is equal to that one you returned in `tokens` object from `authenticate` and `refreshTokens` methods.
+
+You can call `getAccessToken` anytime and it always resolves as follow:
+
+```
+- if sessionState is null
+    - wait for RETRIEVE_TOKENS_RESOLVE
+        if action.payload.tokensRetrieved === false
+            return null
+        else
+            result = race(ACCESS_TOKEN_AVAILABLE, [FETCH_USER_FAILURE, SIGN_IN_FAILURE])
+
+            if result === ACCESS_TOKEN_AVAILABLE
+                return accessToken
+            else
+                return null
+
+- else if sessionState is ACTIVE
+    return accessToken
+
+- else if sessionState is PAUSED
+    const result = race(REFRESH_TOKENS_SUCCESS, REFRESH_TOKENS_FAILURE)
+
+    if result === REFRESH_TOKENS_SUCCESS
+        return accessToken
+    else
+        return null
+
+- else
+    return null
+```
+
+##### Example
+
+```js
+import { getAccessToken } from '@ackee/petrus';
+
+function* mySaga {
+    const accessToken = yield getAccessToken();
+
+    console.log(accessToken);
+}
 ```
 
 ### <a name="hoc"></a>HOC
