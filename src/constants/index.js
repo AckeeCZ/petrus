@@ -13,3 +13,9 @@ export const apiKeys = strictObjectAccess({
     REFRESH_TOKENS: 'refreshTokens',
     RETRIEVE_TOKENS: 'retrieveTokens',
 });
+
+export const FlowType = strictObjectAccess({
+    INDETERMINATE: 'indeterminate',
+    ANONYMOUS: 'anonymous',
+    AUTHENTICATED: 'authenticated',
+});

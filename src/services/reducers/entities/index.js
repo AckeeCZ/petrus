@@ -1,6 +1,7 @@
 import { entitiesReducers as authSessionReducers } from 'Modules/auth-session';
 import { entitiesReducers as tokensReducers } from 'Modules/tokens';
 import sessionState from './sessionState';
+import flowType from './flowType';
 
 const chooseState = (state, initialState) => (state === undefined ? initialState : state);
 
@@ -19,6 +20,7 @@ export default function createEntitiesReducer(initialState) {
                 action,
             ),
             sessionState: sessionState(chooseState(state.sessionState, initialState.sessionState), action),
+            flowType: flowType(chooseState(state.flowType, initialState.flowType), action),
         };
     };
 }
