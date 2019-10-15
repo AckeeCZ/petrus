@@ -46,7 +46,9 @@ This method must be always called exactly once. It returns `saga` and `reducer`.
     initialState: {
         user: null,
         tokens: {},
-        tokensPersistence: 'LOCAL',
+        tokensPersistence: TokensPersistence.LOCAL,
+        sessionState: null,
+        flowType: FlowType.INDETERMINATE,
     },
 
     oAuth: {
@@ -375,7 +377,7 @@ function* enableTokensPersistence() {
 
 #### `SessionState`
 
-`SessionState` reflects current auth session state.
+`SessionState` reflects current **auth** session state.
 
 -   It's initially set to `null`.
 -   Only `AUTH_SESSION_*` actions changes its value.
@@ -428,6 +430,18 @@ export default function*() {
     yield takeEvery(authStateChannel, sessionStateChanged);
 }
 ```
+
+#### `FlowType`
+
+`FlowType` gives you current high-level auth. state.
+
+-   `FlowType.INDETERMINATE` - Flow type hasn't been determined yet. Tokens retrieval is in process.
+-   `FlowType.ANONYMOUS`
+    -   Tokens retrieval was completed, but no tokens has been found.
+    -   Or auth session ended - `AUTH_SESSION_END` action was dispatched.
+-   `FlowType.AUTHENTICATED` - `AUTH_SESSION_START` action was dispatched, so valid tokens are available, authorized user successfully fetched.
+
+> **Such a variable is incredibly useful for deciding between auth. and non-auth. endpoints.**
 
 ---
 

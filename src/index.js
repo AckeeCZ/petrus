@@ -61,4 +61,4 @@ export { withAuthSession, getAuthStateChannel, getAccessToken } from './services
 export { entitiesSelector, apiSelector } from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
 export { StorageDrivers } from './config';
-export { AuthSession as SessionState } from './constants';
+export { AuthSession as SessionState, FlowType } from './constants';
