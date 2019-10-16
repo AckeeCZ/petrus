@@ -9,13 +9,8 @@ export default function* getOAuthTokens() {
         enforceRefreshTokenScheme,
     } = config.oAuth;
 
-    // handle SSR use
-    if (!globalEnv.location) {
-        return {};
-    }
-
-    if (!validateRedirectUrl(config.oAuth, window.location)) {
-        return {};
+    if (!globalEnv.location || !validateRedirectUrl(config.oAuth, window.location)) {
+        return null;
     }
 
     const searchParams = parseRedirectUrlParams(window.location);

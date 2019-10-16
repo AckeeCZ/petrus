@@ -22,7 +22,7 @@ export default function configure(customConfig = {}) {
     const initialState = tokens.initialState(customConfig.initialState);
     const tokensPersistence = initialState.tokensPersistence || tokensPersistenceInitialState;
 
-    const oAuthEnabled = customConfig.oAuth && customConfig.oAuth.enabled;
+    const oAuthConfig = oAuth(customConfig.oAuth);
 
     Object.assign(config, {
         initialized: true,
@@ -30,13 +30,13 @@ export default function configure(customConfig = {}) {
         logger: customConfig.logger || console,
         reducerKey: customConfig.reducerKey || 'auth',
 
-        oAuth: oAuth(customConfig.oAuth),
+        oAuth: oAuthConfig,
 
         tokens: tokens.options(customConfig.tokens),
 
         remoteHandlers: {
             ...authSession.handlers(customConfig.handlers, {
-                oAuthEnabled,
+                oAuthEnabled: oAuthConfig.enabled,
                 tokensPersistence,
             }),
             ...tokens.handlers(customConfig.handlers),
