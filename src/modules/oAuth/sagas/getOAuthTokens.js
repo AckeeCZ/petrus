@@ -7,13 +7,14 @@ export default function* getOAuthTokens() {
         fetchAccessToken,
         enforceAccessTokenScheme,
         enforceRefreshTokenScheme,
+        processTokens,
     } = config.oAuth;
 
     if (!globalEnv.location || !validateRedirectUrl(config.oAuth, window.location)) {
         return null;
     }
 
-    const searchParams = parseRedirectUrlParams(window.location);
+    const searchParams = yield parseRedirectUrlParams(window.location);
 
     if (!searchParams.accessToken) {
         const result = yield fetchAccessToken(searchParams);
@@ -21,15 +22,10 @@ export default function* getOAuthTokens() {
         Object.assign(searchParams, result);
     }
 
-    const accessToken = enforceAccessTokenScheme(searchParams);
-    const refreshToken = enforceRefreshTokenScheme(searchParams);
+    const accessToken = yield enforceAccessTokenScheme(searchParams);
+    const refreshToken = yield enforceRefreshTokenScheme(searchParams);
 
-    if (!accessToken) {
-        return null;
-    }
+    const tokens = yield processTokens(accessToken, refreshToken);
 
-    return {
-        accessToken,
-        refreshToken,
-    };
+    return tokens;
 }

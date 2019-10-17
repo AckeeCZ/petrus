@@ -70,7 +70,7 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      * This method is called when access token is available.
      * NOTE: 'expiration' must be a valid date string or undefined!!!
      * @param {Object} searchParams
-     * @return {Object}
+     * @return {Object|null}
      */
     enforceAccessTokenScheme(searchParams) {
         const { accessToken, expiresIn, ...rest } = searchParams;
@@ -87,7 +87,7 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
      * The method must return object with the scheme below (`token` property is required).
      * This method is called when access token is available.
      * @param {Object} searchParams
-     * @return {Object}
+     * @return {Object|null}
      */
     enforceRefreshTokenScheme(searchParams) {
         const { refreshToken } = searchParams;
@@ -95,6 +95,26 @@ The defaults, you can see bellow, are configurated to handle the [Implicit grant
         return {
             token: refreshToken,
         };
+    },
+
+    /**
+     *  This is final OAuth method in this custom flow that combines result of enforceAccessTokenScheme and   enforceRefreshTokenScheme to one object (tokens) or null if accessToken isn't available (for example due to authentication error).
+     *  It may be generator function as well.
+     *  @param {Object|null} - any value returned by enforceAccessTokenScheme
+     *  @param {Object|null} - any value returned by enforceRefreshTokenScheme
+     *  @return {Object|null} - shape with accessToken and refreshToken
+     */
+    processTokens(accessToken, refreshToken) {
+        if (!accessToken) {
+            return null;
+        }
+
+        const tokens = {
+            accessToken,
+            refreshToken,
+        };
+
+        return tokens;
     },
  }
 ```

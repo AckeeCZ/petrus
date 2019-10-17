@@ -9,6 +9,7 @@ export default function validateOAuth(oAuth) {
         fetchAccessToken,
         enforceAccessTokenScheme,
         enforceRefreshTokenScheme,
+        processTokens,
     } = oAuth;
 
     if (isEmptyStr(redirectPathname)) {
@@ -23,6 +24,7 @@ export default function validateOAuth(oAuth) {
         fetchAccessToken,
         enforceAccessTokenScheme,
         enforceRefreshTokenScheme,
+        processTokens,
     }).forEach(([fnName, fnValue]) => {
         if (!isFn(fnValue)) {
             throw new PetrusError(

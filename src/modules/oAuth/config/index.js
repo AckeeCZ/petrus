@@ -2,6 +2,7 @@ import validateRedirectUrl from './validateRedirectUrl';
 import getSearchParams from './getSearchParams';
 import enforceAccessTokenScheme from './enforceAccessTokenScheme';
 import enforceRefreshTokenScheme from './enforceRefreshTokenScheme';
+import processTokens from './processTokens';
 
 export default {
     origin: '',
@@ -11,4 +12,5 @@ export default {
     fetchAccessToken() {},
     enforceAccessTokenScheme,
     enforceRefreshTokenScheme,
+    processTokens,
 };
