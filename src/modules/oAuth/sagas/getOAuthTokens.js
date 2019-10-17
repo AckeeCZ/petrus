@@ -24,6 +24,10 @@ export default function* getOAuthTokens() {
     const accessToken = enforceAccessTokenScheme(searchParams);
     const refreshToken = enforceRefreshTokenScheme(searchParams);
 
+    if (!accessToken) {
+        return null;
+    }
+
     return {
         accessToken,
         refreshToken,
