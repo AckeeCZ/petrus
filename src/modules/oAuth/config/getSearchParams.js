@@ -1,10 +1,16 @@
-const fromSnakeToCamelCase = (src = '') =>
-    src.split('_').reduce((result, chunk) => {
+const fromSnakeToCamelCase = (src = '') => {
+    const chunks = src.split('_');
+
+    const part1 = chunks.slice(0, 1);
+    const part2 = chunks.slice(1).reduce((result, chunk) => {
         if (!chunk.length) {
             return result;
         }
         return result + chunk[0].toUpperCase() + chunk.slice(1);
     }, '');
+
+    return `${part1}${part2}`;
+};
 
 function getSearchEntries(string) {
     // split string with '&' -> ['access_token=ABCDExyz123']

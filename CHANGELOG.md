@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.0.0-beta.17 - 2019-10-17
+
+### Fixed
+
+-   OAuth flow
+    -   If `enforceAccessTokenScheme` returns `null`, `getOAuthTokens` returns `null`, therefore tokens won't be retrieved. This may occured when user declines permission and error is returned in redirect URI.
+    -   `fromSnakeToCamelCase` util now returns 1st letter lowercased, not uppercased.
+
 ## 4.0.0-beta.16 - 2019-10-17
 
 ### Fixed
