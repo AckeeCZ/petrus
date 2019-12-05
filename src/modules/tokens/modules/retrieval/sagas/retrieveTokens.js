@@ -1,7 +1,7 @@
 import { take, put, call, select } from 'redux-saga/effects';
 
 import { config } from 'Config';
-import { setTokens } from 'Services/actions';
+import { setTokens, deleteTokens } from 'Services/actions';
 import { tokensPersistenceSelector } from 'Services/selectors';
 
 import { getOAuthTokens } from 'Modules/oAuth';
@@ -17,7 +17,7 @@ function* tokensRetrieval() {
     const tokensPersistence = yield select(tokensPersistenceSelector);
 
     if (tokensPersistence === TokensPersistence.NONE) {
-        yield call(storageHandlers.clearTokens);
+        yield put(deleteTokens());
         return false;
     }
 
@@ -56,9 +56,16 @@ function* tokensRetrieval() {
 
     yield put(fetchUserRequest());
 
-    const fetchUserResult = yield take([authSessionTypes.FETCH_USER_SUCCESS, authSessionTypes.FETCH_USER_FAILURE]);
+    const fetchUserResultAction = yield take([
+        authSessionTypes.FETCH_USER_SUCCESS,
+        authSessionTypes.FETCH_USER_FAILURE,
+    ]);
 
-    return fetchUserResult === authSessionTypes.FETCH_USER_SUCCESS;
+    if (fetchUserResultAction.type === authSessionTypes.FETCH_USER_FAILURE) {
+        yield put(deleteTokens());
+    }
+
+    return fetchUserResultAction.type === authSessionTypes.FETCH_USER_SUCCESS;
 }
 
 export default function* tryToRetrieveTokens() {
