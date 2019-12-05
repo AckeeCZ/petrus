@@ -5,7 +5,7 @@ import { setTokens } from 'Services/actions';
 import { tokensPersistenceSelector } from 'Services/selectors';
 
 import { getOAuthTokens } from 'Modules/oAuth';
-import { fetchUserRequest } from 'Modules/auth-session';
+import { fetchUserRequest, types as authSessionTypes } from 'Modules/auth-session';
 import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
@@ -56,7 +56,9 @@ function* tokensRetrieval() {
 
     yield put(fetchUserRequest());
 
-    return true;
+    const fetchUserResult = yield take([authSessionTypes.FETCH_USER_SUCCESS, authSessionTypes.FETCH_USER_FAILURE]);
+
+    return fetchUserResult === authSessionTypes.FETCH_USER_SUCCESS;
 }
 
 export default function* tryToRetrieveTokens() {
