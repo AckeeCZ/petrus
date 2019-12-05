@@ -1,35 +1,34 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import getDisplayName from 'react-display-name';
 
-import { authorizableSelector } from 'Services/selectors';
+import { flowTypeSelector } from 'Services/selectors';
+import { FlowType } from 'Consts/index';
 
 const MockAppLoader = () => <div>Loading...</div>;
 
 const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
-    const AuthorizedComponent = ({ authorizable, ...props }) => {
-        if (authorizable.authorizableComponent) {
-            return <AuthorizableComponent {...props} />;
-        }
+    const AuthorizedComponent = props => {
+        const flowType = useSelector(flowTypeSelector);
 
-        return authorizable.firewall ? <Firewall /> : <Loader />;
+        switch (flowType) {
+            case FlowType.INDETERMINATE:
+                return <Loader />;
+
+            case FlowType.ANONYMOUS:
+                return <Firewall />;
+
+            case FlowType.AUTHENTICATED:
+                return <AuthorizableComponent {...props} />;
+
+            default:
+                return null;
+        }
     };
 
     AuthorizedComponent.displayName = `Authorizable(${getDisplayName(AuthorizableComponent)})`;
 
-    AuthorizedComponent.propTypes = {
-        authorizable: PropTypes.shape({
-            firewall: PropTypes.bool.isRequired,
-            authorizableComponent: PropTypes.bool.isRequired,
-        }).isRequired,
-    };
-
-    const mapStateToProps = state => ({
-        authorizable: authorizableSelector(state),
-    });
-
-    return connect(mapStateToProps)(AuthorizedComponent);
+    return AuthorizedComponent;
 };
 
 export default withAuthorizable;

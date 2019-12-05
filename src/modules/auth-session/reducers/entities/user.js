@@ -1,3 +1,5 @@
+import { types as globalTypes } from 'Services/actions';
+
 import { types } from '../../actions';
 
 const initialState = null;
@@ -7,7 +9,7 @@ export default function userReducer(state = initialState, action) {
         case types.FETCH_USER_SUCCESS:
             return action.payload;
 
-        case types.LOGOUT_SUCCESS:
+        case globalTypes.AUTH_SESSION_END:
             return initialState;
 
         default:
