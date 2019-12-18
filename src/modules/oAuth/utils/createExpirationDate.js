@@ -1,7 +1,7 @@
 /**
  * creates an access token expiration date from expiration timeout value
  * @param {Number|null|undefined} expiresIn - **value** in **ms** when access token expires
- * @returns {Number} - access token expiration **date** in ISO string format
+ * @returns {String} - access token expiration **date** in ISO string format
  */
 export default function createExpirationDate(expiresIn) {
     if (expiresIn === null || expiresIn === undefined) {
