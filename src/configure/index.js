@@ -45,6 +45,7 @@ export default function configure(customConfig = {}) {
         mapStorageDriverToTokensPersistence: {
             [TokensPersistence.SESSION]: StorageDrivers.sessionStorage,
             [TokensPersistence.LOCAL]: StorageDrivers.indexedDB,
+            [TokensPersistence.NONE]: StorageDrivers.reset,
             ...customConfig.mapStorageDriverToTokensPersistence,
         },
     });
