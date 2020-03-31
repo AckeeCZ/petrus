@@ -44,6 +44,7 @@
         "reselect": "4.x"
     },
     "devDependencies": {
+        "@ackee/eslint-config": "^2.0.0",
         "@babel/cli": "7.x",
         "@babel/core": "7.x",
         "@babel/plugin-proposal-class-properties": "7.x",
@@ -52,15 +53,12 @@
         "@babel/preset-env": "7.x",
         "@babel/preset-modules": "0.x",
         "@babel/preset-react": "7.x",
-        "babel-eslint": "10.x",
         "babel-jest": "24.x",
         "babel-plugin-module-resolver": "3.0",
         "babel-plugin-transform-imports": "1.x",
         "cross-env": "5.x",
         "enzyme": "3.x",
         "enzyme-adapter-react-16": "1.x",
-        "eslint": "5.x",
-        "eslint-config-ackee": "0.x",
         "eslint-config-prettier": "4.x",
         "eslint-import-resolver-webpack": "0.x",
         "eslint-plugin-import": "2.x",
