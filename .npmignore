@@ -9,7 +9,6 @@ yarn.lock
 .eslintignore
 .editorconfig
 babel.config.js
-.gitignore
 jest.config.js
 jsconfig.json
 webpack.config.js
