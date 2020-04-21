@@ -35,7 +35,7 @@ This method must be always called exactly once. It returns `saga` and `reducer`.
 
         // Check if access token is expired when document visibility changes
         // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
-        checkTokenExpirationOnTabFocus: false,
+        checkTokenExpirationOnTabFocus: true,
     },
 
     // Default value is window.console
@@ -398,10 +398,7 @@ import { select, takeEvery } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 import { SessionState, entitiesSelector, getAuthStateChannel } from '@ackee/petrus';
 
-const currenSessionStateSelector = createSelector(
-    entitiesSelector,
-    entities => entities.sessionState,
-);
+const currenSessionStateSelector = createSelector(entitiesSelector, entities => entities.sessionState);
 
 function* sessionStateChanged(action) {
     const currentSessionState = yield select(currenSessionStateSelector);
@@ -456,10 +453,7 @@ import { select } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 import { entitiesSelector } from '@ackee/petrus';
 
-const authUserSelector = createSelector(
-    entitiesSelector,
-    entities => entities.user,
-);
+const authUserSelector = createSelector(entitiesSelector, entities => entities.user);
 
 function* selectAuthUser() {
     const authUser = yield select(authUserSelector);
@@ -476,10 +470,7 @@ import { select } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 import { apiSelector } from '@ackee/petrus';
 
-const fetchUserSelector = createSelector(
-    apiSelector,
-    api => api.fetchUser,
-);
+const fetchUserSelector = createSelector(apiSelector, api => api.fetchUser);
 
 function* selectFetchUser() {
     const { inProgress, success, error } = yield select(fetchUserSelector);
