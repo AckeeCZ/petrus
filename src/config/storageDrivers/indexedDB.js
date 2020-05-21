@@ -1,4 +1,4 @@
-import { openDB } from 'idb';
+import { openDB as openDBReal } from 'idb';
 
 import { globalEnv } from '../global';
 
@@ -20,7 +20,18 @@ const idbConfig = {
     },
 };
 
-const db = globalEnv.indexedDB ? openDB(DATABASE_NAME, DATABASE_VERSION, idbConfig) : storageMock;
+async function openDB() {
+    try {
+        const open = globalEnv.indexedDB ? openDBReal(DATABASE_NAME, DATABASE_VERSION, idbConfig) : storageMock;
+        const db = await open(DATABASE_NAME, DATABASE_VERSION, idbConfig);
+
+        return db;
+    } catch (e) {
+        return storageMock;
+    }
+}
+
+const db = openDB();
 
 export default Object.freeze({
     async get(key) {
