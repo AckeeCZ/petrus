@@ -22,7 +22,7 @@ const idbConfig = {
 
 async function openDB() {
     try {
-        const open = globalEnv.indexedDB ? openDBReal(DATABASE_NAME, DATABASE_VERSION, idbConfig) : storageMock;
+        const open = globalEnv.indexedDB ? openDBReal : storageMock;
         const db = await open(DATABASE_NAME, DATABASE_VERSION, idbConfig);
 
         return db;
