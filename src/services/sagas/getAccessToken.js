@@ -1,12 +1,12 @@
 import { select, take, race } from 'redux-saga/effects';
 
-import { AuthSession, apiKeys } from 'Consts/index';
-import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'Services/selectors/index';
-import { types } from 'Services/actions';
+import { AuthSession, apiKeys } from 'constants/index';
+import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
+import { types } from 'services/actions';
 
-import { types as retrievalTypes } from 'Modules/tokens/modules/retrieval';
-import { types as refreshmentTypes } from 'Modules/tokens/modules/refreshment';
-import { types as authSessionTypes } from 'Modules/auth-session';
+import { types as retrievalTypes } from 'modules/tokens/modules/retrieval';
+import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
+import { types as authSessionTypes } from 'modules/auth-session';
 
 const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
 

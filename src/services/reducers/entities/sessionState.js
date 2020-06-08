@@ -1,4 +1,4 @@
-import { AuthSession } from 'Consts/index';
+import { AuthSession } from 'constants/index';
 
 import { types } from '../../actions';
 

@@ -1,7 +1,7 @@
-import { PetrusError } from 'Config';
-import { isFn } from 'Services/utils';
+import { PetrusError } from 'config';
+import { isFn } from 'services/utils';
 
-import { tokensPersistence as TokenPeristence } from 'Modules/tokens';
+import { tokensPersistence as TokenPeristence } from 'modules/tokens';
 
 export const handlers = ({ authenticate, getAuthUser } = {}, { oAuthEnabled, tokensPersistence }) => {
     if (!oAuthEnabled && !isFn(authenticate)) {

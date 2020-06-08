@@ -1,5 +1,3 @@
-const { babelAliases } = require('./config/aliases');
-
 const config = {
     presets: [
         '@babel/react',
@@ -14,6 +12,9 @@ const config = {
         ],
     ],
     plugins: [
+        require.resolve('@babel/plugin-proposal-object-rest-spread'),
+        require.resolve('@babel/plugin-proposal-class-properties'),
+        require.resolve('@babel/plugin-transform-runtime'),
         [
             require.resolve('babel-plugin-transform-imports'),
             {
@@ -23,15 +24,6 @@ const config = {
                 },
             },
         ],
-        [
-            require.resolve('babel-plugin-module-resolver'),
-            {
-                alias: babelAliases,
-            },
-        ],
-        require.resolve('@babel/plugin-proposal-object-rest-spread'),
-        require.resolve('@babel/plugin-proposal-class-properties'),
-        require.resolve('@babel/plugin-transform-runtime'),
     ],
     ignore: ['**/__tests__/', '**/*.test.js'],
 };

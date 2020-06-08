@@ -1,6 +1,6 @@
 import { cancel, fork, call, delay } from 'redux-saga/effects';
 
-import { config } from 'Config';
+import { config } from 'config';
 
 import { validateTimeoutValue, calcTimeoutValue } from './utils';
 

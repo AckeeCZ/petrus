@@ -3,14 +3,7 @@
         "target": "esnext",
         "module": "commonjs",
         "jsx": "preserve",
-        "baseUrl": "./src",
-        "paths": {
-            "Consts/*": ["constants/*"],
-            "Modules/*": ["modules/*"],
-            "Config/*": ["config/*"],
-            "Services/*": ["services/*"]
-        }
+        "baseUrl": "src"
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "include": ["src"]
 }

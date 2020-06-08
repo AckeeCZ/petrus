@@ -1,4 +1,4 @@
-import { apiKeys } from 'Consts';
+import { apiKeys } from 'constants/index';
 
 import login from './login';
 import logout from './logout';

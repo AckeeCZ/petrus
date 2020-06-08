@@ -1,4 +1,4 @@
-import { loginRequest, logoutRequest, setUserWithTokens, types as authSessionTypes } from 'Modules/auth-session';
+import { loginRequest, logoutRequest, setUserWithTokens, types as authSessionTypes } from 'modules/auth-session';
 import {
     checkAccessTokenExpiration,
     tokensPersistence as TokensPersistence,
@@ -7,7 +7,7 @@ import {
     applyAccessTokenResolve,
     unapplyAccessTokenResolve,
     externalTypes,
-} from 'Modules/tokens';
+} from 'modules/tokens';
 
 import { types, terminate } from './services/actions';
 

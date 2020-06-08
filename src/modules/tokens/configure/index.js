@@ -1,5 +1,5 @@
-import { PetrusError } from 'Config';
-import { isFn } from 'Services/utils';
+import { PetrusError } from 'config';
+import { isFn } from 'services/utils';
 
 import { config as refreshmentConfig } from '../modules/refreshment';
 import { tokensPersistence } from '../modules/storage';

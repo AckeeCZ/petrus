@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import { config } from 'Config';
-import { tokensPersistence } from 'Modules/tokens/modules/storage/constants';
+import { config } from 'config';
+import { tokensPersistence } from 'modules/tokens/modules/storage/constants';
 
 import { types } from '../actions';
 
@@ -37,6 +37,6 @@ function* setTokensPersistence(action) {
     }
 }
 
-export default function*() {
+export default function* () {
     yield takeLatest(types.SET_TOKENS_PERSISTENCE, setTokensPersistence);
 }

@@ -1,4 +1,4 @@
-import { types } from 'Services/actions';
+import { types } from 'services/actions';
 
 const initialState = {};
 

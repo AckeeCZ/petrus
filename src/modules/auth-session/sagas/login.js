@@ -1,13 +1,13 @@
 import { put, call, takeLeading } from 'redux-saga/effects';
 
-import { config, PetrusError } from 'Config';
-import { setTokens } from 'Services/actions';
-import { validateTokens } from 'Services/utils';
-import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
+import { config, PetrusError } from 'config';
+import { setTokens } from 'services/actions';
+import { validateTokens } from 'services/utils';
+import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
 import { types, loginSuccess, loginFailure, fetchUserSuccess } from '../actions';
 
-const handleLogin = function*(action) {
+const handleLogin = function* (action) {
     try {
         const response = yield call(config.remoteHandlers.authenticate, action.payload);
 
@@ -31,6 +31,6 @@ const handleLogin = function*(action) {
     }
 };
 
-export default function*() {
+export default function* () {
     yield takeLeading(types.LOGIN_REQUEST, handleLogin);
 }

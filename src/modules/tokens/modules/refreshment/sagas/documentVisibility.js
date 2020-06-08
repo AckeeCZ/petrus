@@ -1,7 +1,7 @@
 import { eventChannel } from 'redux-saga';
 import { take, put } from 'redux-saga/effects';
 
-import { globalEnv, config } from 'Config';
+import { globalEnv, config } from 'config';
 import { checkAccessTokenExpiration } from '../actions';
 
 function createVisibilityChangeChannel() {

@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 
-import withAuthSession from 'Services/sagas/withAuthSession';
+import withAuthSession from 'services/sagas/withAuthSession';
 
 import refreshTokens from './refreshTokens';
 import checkAccessTokenExpiration from './checkAccessTokenExpiration';
@@ -12,6 +12,6 @@ function* authSaga() {
     yield all([deleteTokens(), checkAccessTokenExpiration(), documentVisibility()]);
 }
 
-export default function*() {
+export default function* () {
     yield all([setTokens(), refreshTokens(), withAuthSession(authSaga)]);
 }

@@ -1,12 +1,12 @@
 import { put, call, all, actionChannel, select } from 'redux-saga/effects';
 
-import { config } from 'Config';
+import { config } from 'config';
 
-import { types as refreshmentTypes } from 'Modules/tokens/modules/refreshment';
-import { types as externalTypes, unapplyAccessTokenExternally } from 'Modules/tokens/modules/external';
-import { types as authSessionTypes } from 'Modules/auth-session';
+import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
+import { types as externalTypes, unapplyAccessTokenExternally } from 'modules/tokens/modules/external';
+import { types as authSessionTypes } from 'modules/auth-session';
 
-import { tokensSelector } from 'Services/selectors';
+import { tokensSelector } from 'services/selectors';
 
 import {
     types,
@@ -103,6 +103,6 @@ export function* getAuthStateChannel() {
     return authStateChannel;
 }
 
-export default function*() {
+export default function* () {
     yield all([tokenAvailabilityCircuit(), authSessionCircuit()]);
 }

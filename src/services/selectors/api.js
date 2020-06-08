@@ -1,4 +1,4 @@
-import { getReducerKey } from 'Config';
+import { getReducerKey } from 'config';
 
 export const apiSelector = (state, apiKey) => {
     const { api } = state[getReducerKey()];

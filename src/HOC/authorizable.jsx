@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import getDisplayName from 'react-display-name';
 
-import { flowTypeSelector } from 'Services/selectors';
-import { FlowType } from 'Consts/index';
+import { flowTypeSelector } from 'services/selectors';
+import { FlowType } from 'constants/index';
 
 const MockAppLoader = () => <div>Loading...</div>;
 
