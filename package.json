@@ -18,8 +18,6 @@
         "size:lib": "package-size ./lib --no-cache",
         "size": "yarn size:es && yarn size:lib",
         "test": "BABEL_ENV=test jest",
-        "release": "git fetch origin && yarn version",
-        "version": "yarn changelog && code CHANGELOG.md --wait && git add CHANGELOG.md",
         "changelog": "npx gitmoji-changelog"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
