@@ -1,0 +1,71 @@
+[non-minified versions]
+
+{
+  "chrome": "81"
+}
+  1.04 MB    build/static/js/2.5b56bc64.chunk.js
+  249.82 KB  build/static/js/main.bc413740.chunk.js
+  148.08 KB  build/static/js/5.ad3c265e.chunk.js
+
+
+// old default
+{
+  "android": "4.4.3",
+  "chrome": "49",
+  "edge": "18",
+  "firefox": "68",
+  "ios": "12",
+  "opera": "66",
+  "safari": "12.1",
+  "samsung": "9.2"
+}
+  1.12 MB    build/static/js/2.57ee812d.chunk.js
+  304.35 KB  build/static/js/main.f31d8ce2.chunk.js
+  148.08 KB  build/static/js/5.29a0f358.chunk.js
+
+// new default
+  {
+  "android": "81",
+  "chrome": "70",
+  "edge": "79",
+  "firefox": "68",
+  "ios": "12",
+  "opera": "55",
+  "safari": "12.1",
+  "samsung": "10.1"
+}
+  1.07 MB    build/static/js/2.b364bab5.chunk.js
+  250.22 KB  build/static/js/main.54d107d3.chunk.js
+  148.08 KB  build/static/js/5.2ac7dd81.chunk.js
+
+[minified versions]
+// old default
+{
+  "android": "4.4.3",
+  "chrome": "49",
+  "edge": "18",
+  "firefox": "68",
+  "ios": "12",
+  "opera": "66",
+  "safari": "12.1",
+  "samsung": "9.2"
+}
+538.66 KB  build/static/js/2.4e1330f8.chunk.js
+211.98 KB  build/static/js/main.ee90c111.chunk.js
+146.1 KB   build/static/js/5.68ec11a5.chunk.js
+
+// new default
+  {
+  "android": "81",
+  "chrome": "70",
+  "edge": "79",
+  "firefox": "68",
+  "ios": "12",
+  "opera": "55",
+  "safari": "12.1",
+  "samsung": "10.1"
+}
+525.84 KB  build/static/js/2.291c31d6.chunk.js
+196.21 KB  build/static/js/main.5e61e467.chunk.js
+146.1 KB   build/static/js/5.b525569f.chunk.js
+ 
