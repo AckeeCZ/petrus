@@ -23,12 +23,12 @@
     eslint-plugin-react "7.x"
     eslint-plugin-react-hooks "1.x"
 
-"@ackee/redux-utils@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@ackee/redux-utils/-/redux-utils-2.3.1.tgz#941c2c16a7f003601ffcc8d0b8e7c8f85873c83f"
-  integrity sha512-ks2Ohq4k5G5Mto62hugVlWtZHaz4X02vL8witI8EdXIHwx1uyCxkYXkayV4EZr2Xa5V3zg51E7zabX50CaOy0w==
+"@ackee/redux-utils@2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@ackee/redux-utils/-/redux-utils-2.3.3.tgz#9314e158309e02c60cb310a7ff4dacbd8681d83f"
+  integrity sha512-RW/RtygV64ernjQ1XFi/BZZjMqRftZgNcFxrq3vhr+8J1WrvUcvvOGcp4uErN4wvN57QeBEU6Yab+aVrzK83cA==
   dependencies:
-    "@babel/runtime" "7.x"
+    "@babel/runtime" "7.10.2"
 
 "@babel/cli@7.10.1":
   version "7.10.1"
@@ -912,7 +912,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@7.10.2", "@babel/runtime@7.x", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4":
+"@babel/runtime@7.10.2", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4":
   version "7.10.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.2.tgz#d103f21f2602497d38348a32e008637d506db839"
   integrity sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
