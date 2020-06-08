@@ -1,7 +1,7 @@
 import { takeEvery, put } from 'redux-saga/effects';
 
-import { config } from 'Config';
-import { types } from 'Services/actions';
+import { config } from 'config';
+import { types } from 'services/actions';
 import { refreshTokensRequest } from '../actions';
 
 import { setTimer, cancelTimer } from './tokensExpirationTimer';
@@ -22,7 +22,7 @@ function* handleSetTokens(action) {
 
         yield cancelTimer();
 
-        yield setTimer(expiration, function*() {
+        yield setTimer(expiration, function* () {
             yield put(refreshTokensRequest());
         });
     } else {
@@ -30,6 +30,6 @@ function* handleSetTokens(action) {
     }
 }
 
-export default function*() {
+export default function* () {
     yield takeEvery(types.SET_TOKENS, handleSetTokens);
 }

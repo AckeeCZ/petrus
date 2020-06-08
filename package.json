@@ -32,9 +32,9 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "2.x",
-        "@babel/runtime": "7.x",
-        "idb": "4.x",
+        "@ackee/redux-utils": "2.3.3",
+        "@babel/runtime": "7.10.2",
+        "idb": "5.0.4",
         "react-display-name": "0.x"
     },
     "peerDependencies": {
@@ -45,38 +45,34 @@
         "reselect": "4.x"
     },
     "devDependencies": {
-        "@ackee/eslint-config": "^2.0.0",
-        "@babel/cli": "7.x",
-        "@babel/core": "7.x",
-        "@babel/plugin-proposal-class-properties": "7.x",
-        "@babel/plugin-proposal-object-rest-spread": "7.x",
-        "@babel/plugin-transform-runtime": "7.x",
-        "@babel/preset-env": "7.x",
-        "@babel/preset-modules": "0.x",
-        "@babel/preset-react": "7.x",
-        "babel-jest": "24.x",
-        "babel-plugin-module-resolver": "3.0",
-        "babel-plugin-transform-imports": "1.x",
-        "cross-env": "5.x",
+        "@ackee/browserslist-config": "^1.0.0",
+        "@ackee/eslint-config": "^2.1.0",
+        "@babel/cli": "7.10.1",
+        "@babel/core": "7.10.2",
+        "@babel/plugin-proposal-class-properties": "7.10.1",
+        "@babel/plugin-proposal-object-rest-spread": "7.10.1",
+        "@babel/plugin-transform-runtime": "7.10.1",
+        "@babel/preset-env": "7.10.2",
+        "@babel/preset-react": "7.10.1",
+        "babel-jest": "26.0.1",
+        "babel-plugin-transform-imports": "2.0.0",
+        "cross-env": "7.0.2",
         "enzyme": "3.x",
         "enzyme-adapter-react-16": "1.x",
-        "eslint-config-prettier": "4.x",
-        "eslint-import-resolver-webpack": "0.x",
-        "eslint-plugin-import": "2.x",
-        "eslint-plugin-jest": "22.x",
-        "husky": "1.x",
-        "jest": "24.x",
-        "lint-staged": "8.x",
-        "onchange": "5.x",
+        "eslint-config-prettier": "6.11.0",
+        "eslint-plugin-jest": "23.13.2",
+        "husky": "4.2.5",
+        "jest": "26.0.1",
+        "lint-staged": "10.2.9",
+        "onchange": "7.0.2",
         "package-size": "2.x",
-        "prettier": "1.x",
+        "prettier": "2.0.5",
         "prettier-config-ackee": "0.x",
         "react": "16.x",
         "react-redux": "7.x",
         "redux": "4.x",
         "redux-saga": "1.x",
-        "reselect": "4.0.x",
-        "webpack": "4.x"
+        "reselect": "4.0.x"
     },
     "husky": {
         "hooks": {
@@ -86,11 +82,13 @@
     },
     "lint-staged": {
         "*.{js,jsx,json,scss,less,css,md}": [
-            "prettier --config ./prettier.config.js --write && yarn lint",
-            "git add"
+            "prettier --config ./prettier.config.js --write"
         ]
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "browserslist": [
+        "extends @ackee/browserslist-config"
+    ]
 }

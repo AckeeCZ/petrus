@@ -1,7 +1,7 @@
-import { FlowType } from 'Consts/index';
+import { FlowType } from 'constants/index';
 
-import { types as retrievalTypes } from 'Modules/tokens/modules/retrieval';
-import { types as authSessionTypes } from 'Modules/auth-session';
+import { types as retrievalTypes } from 'modules/tokens/modules/retrieval';
+import { types as authSessionTypes } from 'modules/auth-session';
 import { types } from '../../actions';
 
 const initialState = FlowType.INDETERMINATE;

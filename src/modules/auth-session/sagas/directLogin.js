@@ -1,13 +1,13 @@
 import { put, takeLeading, select, take } from 'redux-saga/effects';
 
-import { config } from 'Config';
-import { setTokens } from 'Services/actions';
-import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
+import { config } from 'config';
+import { setTokens } from 'services/actions';
+import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
 import { loginSuccess, loginFailure, logoutRequest, types, fetchUserSuccess } from '../actions';
 import { loginSelector } from '../selectors';
 
-const handleSetUserWithTokens = function*(action) {
+const handleSetUserWithTokens = function* (action) {
     try {
         const login = yield select(loginSelector);
 
@@ -33,6 +33,6 @@ const handleSetUserWithTokens = function*(action) {
     }
 };
 
-export default function*() {
+export default function* () {
     yield takeLeading(types.SET_USER_WITH_TOKENS, handleSetUserWithTokens);
 }

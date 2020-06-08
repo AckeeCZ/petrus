@@ -1,4 +1,4 @@
-import { PetrusError } from 'Config';
+import { PetrusError } from 'config';
 
 function isPlainObject(o) {
     return typeof o === 'object' && o.constructor === Object;

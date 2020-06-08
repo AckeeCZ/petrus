@@ -1,5 +1,5 @@
 import { strictObjectAccess } from '@ackee/redux-utils';
-import { asyncType } from 'Services/utils';
+import { asyncType } from 'services/utils';
 
 export default strictObjectAccess(
     asyncType({

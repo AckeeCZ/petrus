@@ -1,4 +1,4 @@
-import { entityReducer as tokensPersistence } from 'Modules/tokens/modules/storage';
+import { entityReducer as tokensPersistence } from 'modules/tokens/modules/storage';
 
 import tokens from './tokens';
 

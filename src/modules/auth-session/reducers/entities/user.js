@@ -1,4 +1,4 @@
-import { types as globalTypes } from 'Services/actions';
+import { types as globalTypes } from 'services/actions';
 
 import { types } from '../../actions';
 

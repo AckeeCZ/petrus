@@ -1,4 +1,4 @@
-import { PetrusError, config } from 'Config';
+import { PetrusError, config } from 'config';
 
 export const isTokenExpired = token => {
     return Boolean(token && token.expiration && Date.parse(token.expiration) <= Date.now());
@@ -17,8 +17,9 @@ export function validateTimeoutValue(timeout, { minRequiredExpiration, requestDu
 
     if (timeout < minRequiredExpiration) {
         throw new PetrusError(
-            `Token 'timeout' value is too low. Minimum required value is: ${minRequiredExpiration +
-                requestDurationEstimate}ms.`,
+            `Token 'timeout' value is too low. Minimum required value is: ${
+                minRequiredExpiration + requestDurationEstimate
+            }ms.`,
         );
     }
 }

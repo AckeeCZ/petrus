@@ -1,5 +1,5 @@
-import { entitiesReducers as authSessionReducers } from 'Modules/auth-session';
-import { entitiesReducers as tokensReducers } from 'Modules/tokens';
+import { entitiesReducers as authSessionReducers } from 'modules/auth-session';
+import { entitiesReducers as tokensReducers } from 'modules/tokens';
 import sessionState from './sessionState';
 import flowType from './flowType';
 

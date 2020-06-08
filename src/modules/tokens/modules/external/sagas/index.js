@@ -1,6 +1,6 @@
 import { put, take } from 'redux-saga/effects';
 
-import { config } from 'Config';
+import { config } from 'config';
 
 import { types, applyAccessTokenRequest, unapplyAccessTokenRequest } from '../actions';
 

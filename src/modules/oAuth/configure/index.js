@@ -1,4 +1,4 @@
-import { isEmptyStr } from 'Services/utils';
+import { isEmptyStr } from 'services/utils';
 
 import defaultConfig from '../config';
 import validateOAuth from './validateOAuth';

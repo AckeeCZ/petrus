@@ -1,15 +1,15 @@
-import { PetrusError, config, StorageDrivers } from 'Config';
+import { PetrusError, config, StorageDrivers } from 'config';
 
-import { configure as oAuth } from 'Modules/oAuth';
-import { configure as authSession } from 'Modules/auth-session';
+import { configure as oAuth } from 'modules/oAuth';
+import { configure as authSession } from 'modules/auth-session';
 import {
     configure as tokens,
     tokensPersistenceInitialState,
     tokensPersistence as TokensPersistence,
-} from 'Modules/tokens';
+} from 'modules/tokens';
 
-import createRootReducer from 'Services/reducers';
-import rootSaga from 'Services/sagas';
+import createRootReducer from 'services/reducers';
+import rootSaga from 'services/sagas';
 
 config.initialized = false;
 

@@ -1,5 +1,5 @@
-import { PetrusError } from 'Config';
-import { isFn, isEmptyStr } from 'Services/utils';
+import { PetrusError } from 'config';
+import { isFn, isEmptyStr } from 'services/utils';
 
 export default function validateOAuth(oAuth) {
     const {

@@ -1,7 +1,7 @@
 import { select } from 'redux-saga/effects';
 
-import { config } from 'Config';
-import { tokensPersistenceSelector } from 'Services/selectors';
+import { config } from 'config';
+import { tokensPersistenceSelector } from 'services/selectors';
 
 import { TOKENS_KEY } from '../config';
 

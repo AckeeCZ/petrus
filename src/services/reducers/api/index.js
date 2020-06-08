@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { basicResetReducer } from '@ackee/redux-utils';
 
-import { apiReducers as authSession } from 'Modules/auth-session';
-import { apiReducers as tokens } from 'Modules/tokens';
+import { apiReducers as authSession } from 'modules/auth-session';
+import { apiReducers as tokens } from 'modules/tokens';
 
 import { types } from '../../actions';
 

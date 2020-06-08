@@ -1,12 +1,12 @@
 import { take, put, call, select } from 'redux-saga/effects';
 
-import { config } from 'Config';
-import { setTokens, deleteTokens } from 'Services/actions';
-import { tokensPersistenceSelector } from 'Services/selectors';
+import { config } from 'config';
+import { setTokens, deleteTokens } from 'services/actions';
+import { tokensPersistenceSelector } from 'services/selectors';
 
-import { getOAuthTokens } from 'Modules/oAuth';
-import { fetchUserRequest, types as authSessionTypes } from 'Modules/auth-session';
-import { applyAccessTokenExternally } from 'Modules/tokens/modules/external';
+import { getOAuthTokens } from 'modules/oAuth';
+import { fetchUserRequest, types as authSessionTypes } from 'modules/auth-session';
+import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
 import { refreshTokensRequest, types as refreshTokensTypes, isTokenExpired } from '../../refreshment';

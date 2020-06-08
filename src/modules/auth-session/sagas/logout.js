@@ -1,7 +1,7 @@
 import { takeLeading, put } from 'redux-saga/effects';
 
-import { config } from 'Config';
-import { deleteTokens } from 'Services/actions';
+import { config } from 'config';
+import { deleteTokens } from 'services/actions';
 import { types, logoutSuccess, logoutFailure } from '../actions';
 
 function requestFrame() {
@@ -26,6 +26,6 @@ function* logout() {
     }
 }
 
-export default function*() {
+export default function* () {
     yield takeLeading(types.LOGOUT_REQUEST, logout);
 }

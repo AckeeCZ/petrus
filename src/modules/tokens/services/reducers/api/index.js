@@ -1,5 +1,5 @@
-import { apiReducers as retrieval } from 'Modules/tokens/modules/retrieval';
-import { apiReducers as refreshment } from 'Modules/tokens/modules/refreshment';
+import { apiReducers as retrieval } from 'modules/tokens/modules/retrieval';
+import { apiReducers as refreshment } from 'modules/tokens/modules/refreshment';
 
 export default {
     ...retrieval,

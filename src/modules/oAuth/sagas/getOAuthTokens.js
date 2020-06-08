@@ -1,4 +1,4 @@
-import { config, globalEnv } from 'Config';
+import { config, globalEnv } from 'config';
 
 export default function* getOAuthTokens() {
     const {

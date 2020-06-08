@@ -1,7 +1,7 @@
 import { put, select, call, takeLeading } from 'redux-saga/effects';
 
-import { PetrusError, config } from 'Config';
-import { tokensSelector } from 'Services/selectors';
+import { PetrusError, config } from 'config';
+import { tokensSelector } from 'services/selectors';
 
 import { types, fetchUserFailure, fetchUserSuccess, loginSuccess } from '../actions';
 
@@ -24,6 +24,6 @@ function* fetchUser() {
     }
 }
 
-export default function*() {
+export default function* () {
     yield takeLeading(types.FETCH_USER_REQUEST, fetchUser);
 }
