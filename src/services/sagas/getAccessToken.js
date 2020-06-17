@@ -6,7 +6,6 @@ import { types } from 'services/actions';
 
 import { types as retrievalTypes } from 'modules/tokens/modules/retrieval';
 import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
-import { types as authSessionTypes } from 'modules/auth-session';
 
 const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
 
@@ -17,22 +16,9 @@ function* preSessionResolvement() {
         return null;
     }
 
-    const action = yield take(retrievalTypes.RETRIEVE_TOKENS_RESOLVE);
+    yield take(retrievalTypes.RETRIEVE_TOKENS_RESOLVE);
 
-    if (!action.payload.tokensRetrieved) {
-        return null;
-    }
-
-    const result = yield race({
-        accessToken: take(types.ACCESS_TOKEN_AVAILABLE),
-        failure: take([authSessionTypes.FETCH_USER_FAILURE, authSessionTypes.LOGIN_FAILURE]),
-    });
-
-    if (result.accessToken) {
-        return result.accessToken.payload;
-    }
-
-    return null;
+    return yield select(accessTokenSelector);
 }
 
 function* afterRefreshAccessToken() {
