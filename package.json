@@ -55,6 +55,7 @@
         "@babel/preset-env": "7.10.2",
         "@babel/preset-react": "7.10.1",
         "babel-jest": "26.0.1",
+        "babel-plugin-module-resolver": "^4.0.0",
         "babel-plugin-transform-imports": "2.0.0",
         "cross-env": "7.0.2",
         "enzyme": "3.x",

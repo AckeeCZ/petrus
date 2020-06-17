@@ -12,6 +12,12 @@ const config = {
         ],
     ],
     plugins: [
+        [
+            require.resolve('babel-plugin-module-resolver'),
+            {
+                root: ['./src'],
+            },
+        ],
         require.resolve('@babel/plugin-proposal-object-rest-spread'),
         require.resolve('@babel/plugin-proposal-class-properties'),
         require.resolve('@babel/plugin-transform-runtime'),
