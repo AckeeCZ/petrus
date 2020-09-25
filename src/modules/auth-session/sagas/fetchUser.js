@@ -19,8 +19,8 @@ function* fetchUser() {
 
         yield put(loginSuccess());
     } catch (e) {
-        config.logger.error(e);
-        yield put(fetchUserFailure(e.message));
+        config.logger.error(e.toString());
+        yield put(fetchUserFailure(e));
     }
 }
 

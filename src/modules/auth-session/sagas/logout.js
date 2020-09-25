@@ -21,8 +21,8 @@ function* logout() {
 
         yield put(logoutSuccess());
     } catch (e) {
-        config.logger.error(e);
-        yield put(logoutFailure(e.message));
+        config.logger.error(e.toString());
+        yield put(logoutFailure(e));
     }
 }
 
