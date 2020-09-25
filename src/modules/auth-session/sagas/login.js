@@ -26,8 +26,8 @@ const handleLogin = function* (action) {
 
         yield put(loginSuccess());
     } catch (e) {
-        config.logger.error(`User login failed: ${e.message}`);
-        yield put(loginFailure(e.message));
+        config.logger.error(`User login failed: ${e.toString()}`);
+        yield put(loginFailure(e));
     }
 };
 

@@ -22,8 +22,8 @@ function* refreshTokens(action) {
 
         yield put(refreshTokensSuccess());
     } catch (e) {
-        config.logger.error(e);
-        yield put(refreshTokensFailure(e.message));
+        config.logger.error(e.toString());
+        yield put(refreshTokensFailure(e));
         yield put(deleteTokens());
     }
 }

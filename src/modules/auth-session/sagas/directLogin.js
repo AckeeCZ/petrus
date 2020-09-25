@@ -28,7 +28,7 @@ const handleSetUserWithTokens = function* (action) {
 
         yield put(loginSuccess());
     } catch (e) {
-        config.logger.error(`Failed to set user with tokens: ${e.message}.`);
+        config.logger.error(`Failed to set user with tokens: ${e.toString()}.`);
         yield put(loginFailure(e));
     }
 };
