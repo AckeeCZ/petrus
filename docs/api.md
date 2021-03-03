@@ -650,6 +650,8 @@ function* mySaga() {
 
 #### `authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`
 
+> `authorizable` HOC will be deprecated soon. We suggest using `Authenticated` component instead
+
 High order component that based on current state of the `auth` reducer renders one of these components:
 
 -   `AuthorizableComponent` it is rendered only if an authorized user had been fetched (-> `state.auth.user`)
