@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.1.0"></a>
+
+## 5.1.0 (2021-03-03)
+
+### Added
+
+-   ✨ Add authenticated component [[7e39a26](https://github.com/AckeeCZ/petrus/commit/7e39a2684b310b1d7aeb5c37f596baf8bad7bd01)]
+
 <a name="5.0.0"></a>
 
 ## 5.0.0 (2020-09-25)
