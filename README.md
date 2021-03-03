@@ -26,6 +26,7 @@ The library handles authentication logic with token based flow.
 -   [Usage](#usage)
 -   [Usage Examples](./docs/usage-examples/index.md)
 -   [API Reference](./docs/api.md#api)
+    -   [Components](./docs/api.md#components)
     -   [Action creators](./docs/api.md#action-creators)
     -   [Action types](./docs/api.md#action-types)
     -   [Constants](./docs/api.md#constants)

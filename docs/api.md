@@ -3,6 +3,7 @@
 ## Table of contents
 
 -   [configure(config)](#configure)
+-   [Components](#components)
 -   [Action creators](#action-creators)
 -   [Action types](#action-types)
 -   [Constants](#constants)
@@ -172,6 +173,30 @@ const { saga, reducer } = configure({
 
 ---
 
+## <a name="components"></a>Components
+
+### `Authenticated`
+
+Component that based on current state of the `auth` reducer renders one of these components:
+
+-   `children` are rendered only if an authorized user was fetched (-> `state.auth.user`)
+-   `FallbackComponent` is rendered if application isn't authorized
+-   `Loader` (optional) is renderer whenever the app can't determinate if it's authorized or not (e.g. when app is loading and it doesn't know yet if tokens are available or not)
+
+```js
+import React from 'react';
+import { Authenticated } from '@ackee/petrus';
+import MyLoginForm from './MyLoginForm';
+
+const MyLoader = () => <div>Loading...</div>;
+
+const MyComponent = () => (
+    <Authenticated FallbackComponent={MyLoginForm} Loader={MyLoader}>
+        <div>Private content</div>
+    </Authenticated>
+);
+```
+
 ## <a name="action-creators"></a>Action creators
 
 #### `loginRequest(credentials: Object)`
@@ -305,7 +330,7 @@ import { put } from 'redux-saga/effects';
 import { AUTH_SESSION_START } from '@ackee/petrus';
 
 function* watchAuthSession() {
-    yield takeEvery(AUTH_SESSION_START, function*(action) {
+    yield takeEvery(AUTH_SESSION_START, function* (action) {
         // ...
     });
 }
@@ -421,7 +446,7 @@ function* sessionStateChanged(action) {
     }
 }
 
-export default function*() {
+export default function* () {
     const authStateChannel = yield getAuthStateChannel();
 
     yield takeEvery(authStateChannel, sessionStateChanged);
@@ -494,7 +519,7 @@ import { withAuthSession } from '@ackee/petrus';
 
 function* myAuthSaga() {}
 
-export default function*() {
+export default function* () {
     yield withAuthSession(myAuthSaga);
     // non-blocking version: yield fork(withAuthSession, myAuthSaga);
 }
@@ -520,7 +545,7 @@ import { getAuthStateChannel, ACCESS_TOKEN_AVAILABLE, ACCESS_TOKEN_UNAVAILABLE }
 function* logOutEveryAuthStateStep() {
     const authStateChannel = yield getAuthStateChannel();
 
-    yield takeEvery(authStateChannel, function*(action) {
+    yield takeEvery(authStateChannel, function* (action) {
         switch (action.type) {
             case ACCESS_TOKEN_AVAILABLE: {
                 const accessToken = action.payload;
