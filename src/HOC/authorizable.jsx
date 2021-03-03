@@ -1,30 +1,19 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import getDisplayName from 'react-display-name';
 
-import { flowTypeSelector } from 'services/selectors';
-import { FlowType } from 'constants/index';
+import Authenticated from '../components/Authenticated';
 
 const MockAppLoader = () => <div>Loading...</div>;
 
 const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
-    const AuthorizedComponent = props => {
-        const flowType = useSelector(flowTypeSelector);
+    const AuthorizedComponent = props => (
+        <Authenticated FallbackComponent={Firewall} Loader={Loader}>
+            <AuthorizableComponent {...props} />
+        </Authenticated>
+    );
 
-        switch (flowType) {
-            case FlowType.INDETERMINATE:
-                return <Loader />;
-
-            case FlowType.ANONYMOUS:
-                return <Firewall />;
-
-            case FlowType.AUTHENTICATED:
-                return <AuthorizableComponent {...props} />;
-
-            default:
-                return null;
-        }
-    };
+    // eslint-disable-next-line no-console
+    console.warning('authorizable HOC will be deprecated soon. We suggest using Authenticated component instead.');
 
     AuthorizedComponent.displayName = `Authorizable(${getDisplayName(AuthorizableComponent)})`;
 

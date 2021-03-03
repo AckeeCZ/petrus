@@ -55,6 +55,8 @@ export {
     TokensPersistence,
 };
 
+export { default as Authenticated } from './components/Authenticated';
+
 export { default as configure } from './configure';
 export { default as authorizable } from './HOC/authorizable';
 export { withAuthSession, getAuthStateChannel, getAccessToken } from './services/sagas';
