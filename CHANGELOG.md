@@ -1,5 +1,23 @@
 # Changelog
 
+<a name="5.1.1"></a>
+
+## 5.1.1 (2021-03-17)
+
+### Added
+
+-   ✨ Add version and release npm scripts [[53c0b06](https://github.com/AckeeCZ/petrus/commit/53c0b06cf06002e984f8515906f79ae2fb4728c5)]
+
+### Fixed
+
+-   🐛 Fix checking sessionStorage availability [[4e2250f](https://github.com/AckeeCZ/petrus/commit/4e2250f3388d3ec69d1f0c86bd264fcf65375758)]
+
+### Miscellaneous
+
+-   Bump elliptic from 6.5.2 to 6.5.4 [[769bf75](https://github.com/AckeeCZ/petrus/commit/769bf7500307b0f688d8217b2d7f39df8d7ab828)]
+-   Bump ini from 1.3.5 to 1.3.8 [[6364422](https://github.com/AckeeCZ/petrus/commit/6364422476751bc9ae00faa11452bf480d8b373f)]
+-   Bump lodash from 4.17.15 to 4.17.21 [[56b5c64](https://github.com/AckeeCZ/petrus/commit/56b5c64177d4f1b64b777356a2db638a2084c428)]
+
 <a name="5.1.0"></a>
 
 ## 5.1.0 (2021-03-03)

@@ -1,6 +1,6 @@
 {
     "name": "@ackee/petrus",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "A module that handles authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
