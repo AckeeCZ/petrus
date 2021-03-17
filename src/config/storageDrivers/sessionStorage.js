@@ -8,7 +8,7 @@ const storageMock = {
     getItem: noop,
 };
 
-const storage = globalEnv.sessionStorage || storageMock;
+const storage = 'sessionStorage' in globalEnv || storageMock;
 
 export default Object.freeze({
     set(key, values) {
