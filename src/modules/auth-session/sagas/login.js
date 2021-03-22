@@ -15,18 +15,20 @@ const handleLogin = function* (action) {
             throw new PetrusError(`'authenticate' must return object with 'user' and 'tokens'.`);
         }
 
-        const { user, tokens } = response;
+        let { user, tokens } = response;
 
         validateTokens(tokens);
-
-        yield put(fetchUserSuccess(user));
         yield put(setTokens(tokens));
-
         yield applyAccessTokenExternally(tokens);
+
+        if (!user) {
+            user = yield call(config.remoteHandlers.getAuthUser, tokens);
+        }
+        yield put(fetchUserSuccess(user));
 
         yield put(loginSuccess());
     } catch (e) {
-        config.logger.error(`User login failed: ${e.toString()}`);
+        config.logger.error(new PetrusError(`User login failed: ${e.toString()}`));
         yield put(loginFailure(e));
     }
 };

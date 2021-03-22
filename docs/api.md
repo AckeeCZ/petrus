@@ -89,9 +89,10 @@ const { saga, reducer } = configure({
 
 #### Handlers
 
-1. `authenticate(credentials: any) => { user: any, tokens: TokensShape }`
+1. `authenticate(credentials: any) => { user?: any, tokens: TokensShape }`
 
-    This method is called when the `loginRequest(credentials)` action is dispatched. The credentials object is passed to `authenticate` method where you handles the authentication and returns object with `user` and `tokens`.
+    - Called when `loginRequest(credentials)` action dispatches.
+    - If `user` isn't returned, `getAuthUser` handler is called.
 
     #### Example
 
@@ -648,9 +649,9 @@ function* mySaga() {
 
 ### <a name="hoc"></a>HOC
 
-#### `authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`
+#### ~~`authorizable(AuthorizableComponent, Firewall, Loader) => AuthorizedComponent`~~
 
-> `authorizable` HOC will be deprecated soon. We suggest using `Authenticated` component instead
+> `authorizable` HOC has been deprecated. Use the [`Authenticated`](#authenticated) component instead.
 
 High order component that based on current state of the `auth` reducer renders one of these components:
 
