@@ -1,5 +1,21 @@
 # Changelog
 
+<a name="5.2.0"></a>
+
+## 5.2.0 (2021-03-22)
+
+### Added
+
+-   ✨ If authenticate handler doesn&#x27;t return a user, getAuthUser handler is called [[7a24320](https://github.com/AckeeCZ/petrus/commit/7a2432018dfb7b3fc783957e0668008524b1c75b)]
+
+### Removed
+
+-   🔥 Deprecate authorizable HOC in favor of Authenticated component [[9836166](https://github.com/AckeeCZ/petrus/commit/9836166f9b2b6d31a4a1b37c10994e90861274a7)]
+
+### Fixed
+
+-   🐛 Fix defininig session storage object [[e5011fa](https://github.com/AckeeCZ/petrus/commit/e5011fab02989dfe799dde81e694915ffdf435a1)]
+
 <a name="5.1.1"></a>
 
 ## 5.1.1 (2021-03-17)
