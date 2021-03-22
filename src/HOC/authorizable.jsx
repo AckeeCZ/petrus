@@ -5,6 +5,10 @@ import Authenticated from '../components/Authenticated';
 
 const MockAppLoader = () => <div>Loading...</div>;
 
+/**
+ * Use `Authenticated` component instead.
+ * @deprecated
+ */
 const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
     const AuthorizedComponent = props => (
         <Authenticated FallbackComponent={Firewall} Loader={Loader}>
@@ -13,7 +17,7 @@ const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoade
     );
 
     // eslint-disable-next-line no-console
-    console.warning('authorizable HOC will be deprecated soon. We suggest using Authenticated component instead.');
+    console.warn('authorizable HOC has been depcreated. Use Authenticated component instead.');
 
     AuthorizedComponent.displayName = `Authorizable(${getDisplayName(AuthorizableComponent)})`;
 
