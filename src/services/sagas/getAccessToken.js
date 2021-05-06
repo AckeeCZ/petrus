@@ -4,7 +4,6 @@ import { AuthSession, apiKeys } from 'constants/index';
 import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
 import { types } from 'services/actions';
 
-import { types as retrievalTypes } from 'modules/tokens/modules/retrieval';
 import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
 
 const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
@@ -16,7 +15,13 @@ function* preSessionResolvement() {
         return null;
     }
 
-    yield take(retrievalTypes.RETRIEVE_TOKENS_RESOLVE);
+    const accessToken = yield select(accessTokenSelector);
+
+    if (accessToken) {
+        return accessToken;
+    }
+
+    yield take(types.SET_TOKENS);
 
     return yield select(accessTokenSelector);
 }
