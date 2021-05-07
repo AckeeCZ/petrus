@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.2.1"></a>
+
+## 5.2.1 (2021-05-07)
+
+### Fixed
+
+-   🐛 Resolve getAccessToken when accessToken is avail. or on SET_TOKENS during tokens retrieval [[e1ca55b](https://github.com/AckeeCZ/petrus/commit/e1ca55bf0611c44bb475e9e3461d0f3a4b0dc1a5)]
+
 <a name="5.2.0"></a>
 
 ## 5.2.0 (2021-03-22)
