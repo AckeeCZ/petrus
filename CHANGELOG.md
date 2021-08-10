@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.2.2"></a>
+
+## 5.2.2 (2021-08-10)
+
+### Fixed
+
+-   🐛 getAccessToken - refresh expired access token [[9dbf24b](https://github.com/AckeeCZ/petrus/commit/9dbf24bec28d9af04cd068e1f49ec0068a4c9e88)]
+
 <a name="5.2.1"></a>
 
 ## 5.2.1 (2021-05-07)
