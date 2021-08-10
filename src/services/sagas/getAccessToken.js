@@ -4,7 +4,7 @@ import { AuthSession, apiKeys } from 'constants/index';
 import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
 import { types } from 'services/actions';
 
-import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
+import { types as refreshmentTypes, refreshExpiredToken } from 'modules/tokens/modules/refreshment';
 
 const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
 
@@ -42,7 +42,13 @@ function* afterRefreshAccessToken() {
 }
 
 export default function* getAccessToken() {
-    const sessionState = yield select(sessionStateSelector);
+    let sessionState = yield select(sessionStateSelector);
+
+    if (sessionState === AuthSession.ACTIVE) {
+        yield refreshExpiredToken();
+    }
+
+    sessionState = yield select(sessionStateSelector);
 
     switch (sessionState) {
         case null:
