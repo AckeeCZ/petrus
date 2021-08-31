@@ -18,7 +18,7 @@
         "size:lib": "package-size ./lib --no-cache",
         "size": "yarn size:es && yarn size:lib",
         "test": "BABEL_ENV=test jest",
-        "changelog": "gitmoji-changelog",
+        "changelog": "npx gitmoji-changelog",
         "version": "yarn changelog && code --wait CHANGELOG.md && git add CHANGELOG.md",
         "release": "git fetch origin && yarn version"
     },
@@ -64,7 +64,6 @@
         "enzyme-adapter-react-16": "1.x",
         "eslint-config-prettier": "6.11.0",
         "eslint-plugin-jest": "23.13.2",
-        "gitmoji-changelog": "^2.2.0",
         "husky": "4.2.5",
         "jest": "26.0.1",
         "lint-staged": "10.2.9",
