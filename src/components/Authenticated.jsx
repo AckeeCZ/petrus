@@ -25,12 +25,15 @@ const Authenticated = ({ children, FallbackComponent, LoaderComponent }) => {
 
 Authenticated.propTypes = {
     children: PropTypes.node.isRequired,
-    FallbackComponent: PropTypes.func.isRequired,
-    LoaderComponent: PropTypes.func,
+    FallbackComponent: PropTypes.elementType,
+    LoaderComponent: PropTypes.elementType,
 };
 
+const Empty = () => null;
+
 Authenticated.defaultProps = {
-    LoaderComponent: () => null,
+    FallbackComponent: Empty,
+    LoaderComponent: Empty,
 };
 
 export default Authenticated;
