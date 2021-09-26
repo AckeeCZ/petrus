@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.2.3"></a>
+
+## 5.2.3 (2021-09-26)
+
+### Changed
+
+-   🚨 Fix correct Authenticated prop type [[b06d37d](https://github.com/AckeeCZ/petrus/commit/b06d37d00c495baf562b7bb63ea7af7d616f9471)]
+
 <a name="5.2.2"></a>
 
 ## 5.2.2 (2021-08-10)
