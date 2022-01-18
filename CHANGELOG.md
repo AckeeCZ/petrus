@@ -1,12 +1,26 @@
 # Changelog
 
-<a name="5.2.3"></a>
+<a name="5.2.4"></a>
 
-## 5.2.3 (2021-09-26)
+## 5.2.4 (2022-01-18)
 
 ### Changed
 
+-   🔧 Support react@17 in peerDependencies too [[623d016](https://github.com/AckeeCZ/petrus/commit/623d016eaf6f48edeef0515c5ff31d844a226574)]
+-   ⬆️ @ackee/redux-utils@3.1.8 [[dc0a9d8](https://github.com/AckeeCZ/petrus/commit/dc0a9d896293f9684fda6c658fdf40751abea327)]
 -   🚨 Fix correct Authenticated prop type [[b06d37d](https://github.com/AckeeCZ/petrus/commit/b06d37d00c495baf562b7bb63ea7af7d616f9471)]
+-   ⬆️ Bump nth-check from 2.0.0 to 2.0.1 [[e4141d3](https://github.com/AckeeCZ/petrus/commit/e4141d3638d476f36ef01af3fec4360a9af28e0d)]
+-   ⬆️ Bump tmpl from 1.0.4 to 1.0.5 [[6ec1c49](https://github.com/AckeeCZ/petrus/commit/6ec1c49ea1157c9c5aeaf502f8880a3b593eee15)]
+-   ♻️ Use gitmoji-changelog from npx [[9daa6ad](https://github.com/AckeeCZ/petrus/commit/9daa6ad9435fb172472b8fc3bfe0a2d343f4f296)]
+-   ⬆️ Bump path-parse from 1.0.6 to 1.0.7 [[ab23874](https://github.com/AckeeCZ/petrus/commit/ab238742959ca5f9d79bc2f56806deeb5c47cce9)]
+-   ⬆️ Bump tar from 4.4.13 to 4.4.16 [[76a0a63](https://github.com/AckeeCZ/petrus/commit/76a0a63c3feddbd67a7f17135894eae63924ee2d)]
+-   ⬆️ Bump hosted-git-info from 2.8.8 to 2.8.9 [[d957815](https://github.com/AckeeCZ/petrus/commit/d9578150b116facd6943d18b98d71f487481be90)]
+
+### Miscellaneous
+
+-   Bump ws from 6.2.1 to 6.2.2 [[2dec120](https://github.com/AckeeCZ/petrus/commit/2dec120f4fd341c9e3fe7fd420d9897cb6fce9e2)]
+-   Bump browserslist from 4.12.0 to 4.16.6 [[18e7f94](https://github.com/AckeeCZ/petrus/commit/18e7f945643880ca5c6ca04d4fea9eba59d6dc0b)]
+-   Bump ssri from 6.0.1 to 6.0.2 [[9390867](https://github.com/AckeeCZ/petrus/commit/93908672eb86597f777acd6b6bde152f43a19a40)]
 
 <a name="5.2.2"></a>
 
