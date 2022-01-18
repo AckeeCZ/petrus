@@ -1,6 +1,6 @@
-import { createAsyncType } from '@ackee/redux-utils';
+import { createApiRequestType } from '@ackee/redux-utils';
 
-export const asyncType = createAsyncType({
+export const asyncType = createApiRequestType({
     modulePrefix: '@@petrus',
     defaultTypes: ['REQUEST', 'SUCCESS', 'FAILURE'],
 });

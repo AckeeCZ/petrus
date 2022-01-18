@@ -34,7 +34,7 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "2.3.3",
+        "@ackee/redux-utils": "^3.1.8",
         "@babel/runtime": "7.10.2",
         "idb": "5.0.4",
         "react-display-name": "0.x"
