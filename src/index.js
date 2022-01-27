@@ -64,3 +64,4 @@ export { entitiesSelector, apiSelector } from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
 export { StorageDrivers } from './config';
 export { AuthSession as SessionState, FlowType } from './constants';
+export { retrieveTokens } from 'modules/tokens/modules/retrieval';

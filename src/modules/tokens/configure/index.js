@@ -16,6 +16,7 @@ export const handlers = ({ refreshTokens } = {}) => {
 
 export const options = (customOptions = {}) => ({
     applyAccessTokenExternally: false,
+    autoStartTokensRetrieval: true,
     ...refreshmentConfig.options,
     ...customOptions,
 });
