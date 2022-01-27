@@ -16,7 +16,8 @@
         "size:es": "package-size ./es --no-cache",
         "size:lib": "package-size ./lib --no-cache",
         "size": "yarn size:es && yarn size:lib",
-        "test": "BABEL_ENV=test jest",
+        "test": "BABEL_ENV=test jest --watch",
+        "test:ci": "BABEL_ENV=test jest",
         "changelog": "npx gitmoji-changelog",
         "version": "yarn changelog && code --wait CHANGELOG.md && git add CHANGELOG.md",
         "release": "git fetch origin && yarn version"
