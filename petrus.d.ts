@@ -84,7 +84,7 @@ declare module '@ackee/petrus' {
             refreshTokens: (tokens: TokensState) => Generator<any, TokensState>;
             getAuthUser: (tokens: TokensState) => Generator<any, any>;
         };
-        initialState: Partial<PetrusState>;
+        initialState?: Partial<PetrusState>;
         tokens?: {
             applyAccessTokenExternally?: boolean;
             requestDurationEstimate?: boolean;
