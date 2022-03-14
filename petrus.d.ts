@@ -55,7 +55,7 @@ declare module '@ackee/petrus' {
         refreshToken?: Token;
     }
 
-    export function getAccessToken(): Promise<TokensState['accessToken']>;
+    export function getAccessToken(): Generator<any, TokensState['accessToken']>;
 
     export interface PetrusState<User = unknown> {
         user: User;
