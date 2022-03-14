@@ -91,7 +91,7 @@ declare module '@ackee/petrus' {
             minRequiredExpiration?: boolean;
             checkTokenExpirationOnTabFocus?: boolean;
         };
-        logger: Pick<typeof console, 'info' | 'debug' | 'warn' | 'error'>;
+        logger?: Pick<typeof console, 'info' | 'debug' | 'warn' | 'error'>;
     }): { saga: RootSaga; reducer: RootReducer };
 
     export function entitiesSelector<U = any>(): PetrusState<U>;
