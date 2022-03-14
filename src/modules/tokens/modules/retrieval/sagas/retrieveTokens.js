@@ -68,7 +68,7 @@ function* tokensRetrieval() {
     return fetchUserResultAction.type === authSessionTypes.FETCH_USER_SUCCESS;
 }
 
-export default function* tryToRetrieveTokens() {
+export function* retrieveTokens() {
     yield put(retrieveTokensRequest());
 
     const tokensRetrieved = yield call(tokensRetrieval);

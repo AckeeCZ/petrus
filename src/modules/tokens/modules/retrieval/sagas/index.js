@@ -1,1 +1,1 @@
-export { default } from './retrieveTokens';
+export { retrieveTokens } from './retrieveTokens';

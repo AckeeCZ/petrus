@@ -37,6 +37,10 @@ This method must be always called exactly once. It returns `saga` and `reducer`.
         // Check if access token is expired when document visibility changes
         // from 'hidden' to 'visibile'. And it's expired, then refresh access token.
         checkTokenExpirationOnTabFocus: true,
+
+        // If false, petrus won't start tokens retrieval saga automatically but it's up to you to call `retrieveTokens` saga.
+        // By calling `retrieveTokens` saga, petrus starts the authentication flow. Either it signs-in user with avail. access token or it won't if the access token is expired and couldn't be refreshed.
+        autoStartTokensRetrieval: true,
     },
 
     // Default value is window.console
