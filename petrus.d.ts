@@ -78,7 +78,7 @@ declare module '@ackee/petrus' {
     export type RootSaga = () => Generator<any, void, unknown>;
 
     export function configure(config: {
-        reducerKey: string;
+        reducerKey?: string;
         handlers: {
             authenticate: (payload: any) => Generator<any, Pick<PetrusState, 'tokens' | 'user'>>;
             refreshTokens: (tokens: TokensState) => Generator<any, TokensState>;
