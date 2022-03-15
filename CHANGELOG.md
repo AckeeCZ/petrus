@@ -1,5 +1,31 @@
 # Changelog
 
+<a name="5.3.0"></a>
+
+## 5.3.0 (2022-03-14)
+
+### Added
+
+-   ✨ Make starting retrieveTokens saga conditional based on autoStartTokensRetrieval option [[9502ff0](https://github.com/AckeeCZ/petrus/commit/9502ff0e79104cfd637b5eb1081950d833544ac4)]
+
+### Changed
+
+-   🚚 Migrate to github actions from travis [[8fd2a89](https://github.com/AckeeCZ/petrus/commit/8fd2a89a7a01bf05fbb37aa458427c00e93c6af1)]
+
+### Fixed
+
+-   🐛 refreshing access token timeout - throw an error if upper limit is exceeded [[541eeda](https://github.com/AckeeCZ/petrus/commit/541eeda8f631dfb145b00e6633ed9525209d5597)]
+-   💚 Fix test:ci script [[e24a0ac](https://github.com/AckeeCZ/petrus/commit/e24a0ac62fbeda8270e74583621013226769c29a)]
+
+### Miscellaneous
+
+-   🏷️ Fix type of getaccess token [[a0bbfbf](https://github.com/AckeeCZ/petrus/commit/a0bbfbf37ea00d9340dedab4d01f05eb8cd10bbb)]
+-   Make logger optional in petrus.d.ts [[4060207](https://github.com/AckeeCZ/petrus/commit/4060207d4f0e667274bc1e784bed02178342cfc2)]
+-   Make reducerKey optional in petrus.d.ts [[90aa273](https://github.com/AckeeCZ/petrus/commit/90aa273f1c09a1668a526fda102d8aa0d0e36f64)]
+-   Make initialState optional in petrus.d.ts [[615cd4e](https://github.com/AckeeCZ/petrus/commit/615cd4eb5318452261f998cb9c6d37f95b9469f2)]
+-   Make tokens optional in petrus.d.ts [[1387fc2](https://github.com/AckeeCZ/petrus/commit/1387fc23ac8addb531a8181691cc58db8edcaada)]
+-   🏷️ Add types declaration file [[82d333f](https://github.com/AckeeCZ/petrus/commit/82d333f1f0e689feec228abe935809c001443bc8)]
+
 <a name="5.2.4"></a>
 
 ## 5.2.4 (2022-01-18)
