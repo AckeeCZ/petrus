@@ -106,8 +106,8 @@ declare module '@ackee/petrus' {
 
     export function Authenticated(props: {
         children: ReactNode;
-        FallbackComponent?: (props: object) => JSX.Element;
-        LoaderComponent?: (props: object) => JSX.Element;
+        FallbackComponent?: (props?: object) => JSX.Element;
+        LoaderComponent?: (props?: object) => JSX.Element;
     }): JSX.Element;
 
     export function createExpirationDate(expiresIn: number | null | undefined): string;
