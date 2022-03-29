@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.3.1"></a>
+
+## 5.3.1 (2022-03-29)
+
+### Fixed
+
+-   🏷️ Fix some types issues found during usage at project [[72a24d5](https://github.com/AckeeCZ/petrus/commit/72a24d55d6dce2ed226445b8d34f1a7bae955b7c)]
+
 <a name="5.3.0"></a>
 
 ## 5.3.0 (2022-03-14)
