@@ -77,12 +77,15 @@ declare module '@ackee/petrus' {
 
     export type RootSaga = () => Generator<any, void, unknown>;
 
-    export function configure(config: {
+    export function configure<User = any>(config: {
         reducerKey?: string;
         handlers: {
             authenticate: (payload: any) => Generator<any, Pick<PetrusState, 'tokens' | 'user'>>;
             refreshTokens: (tokens: TokensState) => Generator<any, TokensState>;
-            getAuthUser: (tokens: TokensState) => Generator<any, any>;
+            getAuthUser:
+                | ((tokens: TokensState) => Generator<User, any>)
+                | ((tokens: TokensState) => Promise<User>)
+                | ((tokens: TokensState) => User);
         };
         initialState?: Partial<PetrusState>;
         tokens?: {
@@ -94,7 +97,7 @@ declare module '@ackee/petrus' {
         logger?: Pick<typeof console, 'info' | 'debug' | 'warn' | 'error'>;
     }): { saga: RootSaga; reducer: RootReducer };
 
-    export function entitiesSelector<U = any>(): PetrusState<U>;
+    export function entitiesSelector<U = any, S = any>(state: S): PetrusState<U>;
 
     export function apiSelector<S = any>(
         state: S,
@@ -103,8 +106,8 @@ declare module '@ackee/petrus' {
 
     export function Authenticated(props: {
         children: ReactNode;
-        FallbackComponent?: () => JSX.Element;
-        LoaderComponent?: () => JSX.Element;
+        FallbackComponent?: (props?: object) => JSX.Element;
+        LoaderComponent?: (props?: object) => JSX.Element;
     }): JSX.Element;
 
     export function createExpirationDate(expiresIn: number | null | undefined): string;
