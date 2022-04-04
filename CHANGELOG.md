@@ -1,11 +1,16 @@
 # Changelog
 
-<a name="5.3.1"></a>
+<a name="5.3.2"></a>
 
-## 5.3.1 (2022-03-29)
+## 5.3.2 (2022-04-04)
 
 ### Fixed
 
+-   🐛 Skip calling requestAnimationFrame if window object isn&#x27;t present [[8a327ed](https://github.com/AckeeCZ/petrus/commit/8a327ede94fbb01977367223997c0d3cb4d73d9a)]
+
+### Miscellaneous
+
+-   Apply suggestions from code review [[64073b6](https://github.com/AckeeCZ/petrus/commit/64073b6eeb86d5383c68c5016abe901417951f42)]
 -   🏷️ Fix some types issues found during usage at project [[72a24d5](https://github.com/AckeeCZ/petrus/commit/72a24d55d6dce2ed226445b8d34f1a7bae955b7c)]
 
 <a name="5.3.0"></a>
