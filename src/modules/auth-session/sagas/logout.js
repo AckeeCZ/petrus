@@ -1,12 +1,16 @@
 import { takeLeading, put } from 'redux-saga/effects';
 
-import { config } from 'config';
+import { config, globalEnv } from 'config';
 import { deleteTokens } from 'services/actions';
 import { types, logoutSuccess, logoutFailure } from '../actions';
 
 function requestFrame() {
     return new Promise(res => {
-        window.requestAnimationFrame(res);
+        if (globalEnv.requestAnimationFrame) {
+            window.requestAnimationFrame(res);
+        } else {
+            res();
+        }
     });
 }
 
