@@ -68,26 +68,26 @@ declare module '@ackee/petrus' {
         flowType: FlowType;
     }
 
-    export type RootReducer = Reducer<
+    export type RootReducer<U = unknown> = Reducer<
         CombinedState<{
             api: Reducer<ApiState>;
-            entities: PetrusState;
+            entities: PetrusState<U>;
         }>
     >;
 
     export type RootSaga = () => Generator<any, void, unknown>;
 
-    export function configure<User = any>(config: {
+    export function configure<U = unknown>(config: {
         reducerKey?: string;
         handlers: {
-            authenticate: (payload: any) => Generator<any, Pick<PetrusState, 'tokens' | 'user'>>;
+            authenticate: (payload: any) => Generator<any, Pick<PetrusState<U>, 'tokens' | 'user'>>;
             refreshTokens: (tokens: TokensState) => Generator<any, TokensState>;
             getAuthUser:
-                | ((tokens: TokensState) => Generator<User, any>)
-                | ((tokens: TokensState) => Promise<User>)
-                | ((tokens: TokensState) => User);
+                | ((tokens: TokensState) => Generator<U, any>)
+                | ((tokens: TokensState) => Promise<U>)
+                | ((tokens: TokensState) => U);
         };
-        initialState?: Partial<PetrusState>;
+        initialState?: Partial<PetrusState<U>>;
         tokens?: {
             applyAccessTokenExternally?: boolean;
             requestDurationEstimate?: boolean;
@@ -95,7 +95,7 @@ declare module '@ackee/petrus' {
             checkTokenExpirationOnTabFocus?: boolean;
         };
         logger?: Pick<typeof console, 'info' | 'debug' | 'warn' | 'error'>;
-    }): { saga: RootSaga; reducer: RootReducer };
+    }): { saga: RootSaga; reducer: RootReducer<U> };
 
     export function entitiesSelector<U = any, S = any>(state: S): PetrusState<U>;
 
