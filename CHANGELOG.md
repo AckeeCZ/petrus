@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.3.3"></a>
+
+## 5.3.3 (2022-04-22)
+
+### Miscellaneous
+
+-   🏷️ Pass user to petrus state via generics [[10d9b1f](https://github.com/AckeeCZ/petrus/commit/10d9b1f3242fc8b400a62908bece7a4a2bb933f3)]
+
 <a name="5.3.2"></a>
 
 ## 5.3.2 (2022-04-04)
