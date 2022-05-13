@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="5.3.4"></a>
+
+## 5.3.4 (2022-05-13)
+
+### Fixed
+
+-   🐛 Fix starting oAuth flow if tokens persistence is none [[881f006](https://github.com/AckeeCZ/petrus/commit/881f0067f4b1a895744539e2806df68f0baad9d1)]
+
 <a name="5.3.3"></a>
 
 ## 5.3.3 (2022-04-22)
