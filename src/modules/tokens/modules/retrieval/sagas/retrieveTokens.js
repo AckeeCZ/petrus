@@ -18,6 +18,8 @@ function* tokensRetrieval() {
 
     let tokens = yield call(storageHandlers.retrieveTokens);
 
+    // debugger;
+
     if (config.oAuth.enabled) {
         // get the fresh tokens always as first
         const tokensFromOAuth = yield getOAuthTokens();
@@ -29,10 +31,9 @@ function* tokensRetrieval() {
 
     if (tokensPersistence === TokensPersistence.NONE) {
         yield put(deleteTokens());
-        return false;
     }
 
-    if (!tokens) {
+    if (!tokens || (!config.oAuth.enabled && tokensPersistence === TokensPersistence.NONE)) {
         return false;
     }
 
