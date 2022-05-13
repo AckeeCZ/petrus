@@ -18,8 +18,6 @@ function* tokensRetrieval() {
 
     let tokens = yield call(storageHandlers.retrieveTokens);
 
-    // debugger;
-
     if (config.oAuth.enabled) {
         // get the fresh tokens always as first
         const tokensFromOAuth = yield getOAuthTokens();
