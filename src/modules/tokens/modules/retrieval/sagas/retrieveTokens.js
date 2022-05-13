@@ -16,11 +16,6 @@ import { retrieveTokensRequest, retrieveTokensResolve } from '../actions';
 function* tokensRetrieval() {
     const tokensPersistence = yield select(tokensPersistenceSelector);
 
-    if (tokensPersistence === TokensPersistence.NONE) {
-        yield put(deleteTokens());
-        return false;
-    }
-
     let tokens = yield call(storageHandlers.retrieveTokens);
 
     if (config.oAuth.enabled) {
@@ -30,6 +25,11 @@ function* tokensRetrieval() {
         if (tokensFromOAuth) {
             tokens = tokensFromOAuth;
         }
+    }
+
+    if (tokensPersistence === TokensPersistence.NONE) {
+        yield put(deleteTokens());
+        return false;
     }
 
     if (!tokens) {
