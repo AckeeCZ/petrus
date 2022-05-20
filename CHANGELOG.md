@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="5.3.6"></a>
+
+## 5.3.6 (2022-05-20)
+
+### Removed
+
+-   🔥 Remove commented debugger [[0520c47](https://github.com/AckeeCZ/petrus/commit/0520c477e6c0f0c1bacf4600b2df3b7e30412d5a)]
+
+### Fixed
+
+-   🐛 Wrap getOAuthTokens with try/catch block [[f42bba1](https://github.com/AckeeCZ/petrus/commit/f42bba11ec61a6e85c2202851aafcd803cd4426c)]
+
 <a name="5.3.5"></a>
 
 ## 5.3.5 (2022-05-13)
