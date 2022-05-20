@@ -5,34 +5,32 @@ import { setTokens } from 'services/actions';
 import { validateTokens } from 'services/utils';
 import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
-import { types, loginSuccess, loginFailure, fetchUserSuccess } from '../actions';
-
-const handleLogin = function* (action) {
-    try {
-        const response = yield call(config.remoteHandlers.authenticate, action.payload);
-
-        if (!response) {
-            throw new PetrusError(`'authenticate' must return object with 'user' and 'tokens'.`);
-        }
-
-        let { user, tokens } = response;
-
-        validateTokens(tokens);
-        yield put(setTokens(tokens));
-        yield applyAccessTokenExternally(tokens);
-
-        if (!user) {
-            user = yield call(config.remoteHandlers.getAuthUser, tokens);
-        }
-        yield put(fetchUserSuccess(user));
-
-        yield put(loginSuccess());
-    } catch (e) {
-        config.logger.error(new PetrusError(`User login failed: ${e.toString()}`));
-        yield put(loginFailure(e));
-    }
-};
+import { fetchUser, login } from '../actions';
 
 export default function* () {
-    yield takeLeading(types.LOGIN_REQUEST, handleLogin);
+    yield takeLeading(login.request, function* (action) {
+        try {
+            const response = yield call(config.remoteHandlers.authenticate, action.payload);
+
+            if (!response) {
+                throw new PetrusError(`'authenticate' must return object with 'user' and 'tokens'.`);
+            }
+
+            let { user, tokens } = response;
+
+            validateTokens(tokens);
+            yield put(setTokens(tokens));
+            yield applyAccessTokenExternally(tokens);
+
+            if (!user) {
+                user = yield call(config.remoteHandlers.getAuthUser, tokens);
+            }
+            yield put(fetchUser.success(user));
+
+            yield put(login.success());
+        } catch (e) {
+            config.logger.error(new PetrusError(`User login failed: ${e.toString()}`));
+            yield put(login.failure(e));
+        }
+    });
 }

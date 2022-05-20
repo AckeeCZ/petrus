@@ -1,7 +1,6 @@
-import { strictObjectAccess } from '@ackee/redux-utils';
 import { asyncType } from 'services/utils';
 
-export default strictObjectAccess({
+export default {
     ...asyncType({
         types: ['SET_TOKENS', 'DELETE_TOKENS'],
     }),
@@ -16,4 +15,4 @@ export default strictObjectAccess({
     ...asyncType({
         types: ['TERMINATE'],
     }),
-});
+};

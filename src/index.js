@@ -1,4 +1,4 @@
-import { loginRequest, logoutRequest, setUserWithTokens, types as authSessionTypes } from 'modules/auth-session';
+import { loginRequest, logout, setUserWithTokens, login } from 'modules/auth-session';
 import {
     checkAccessTokenExpiration,
     tokensPersistence as TokensPersistence,
@@ -22,14 +22,15 @@ const {
 
 const { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } = retrievalTypes;
 
-const { LOGIN_SUCCESS, LOGIN_FAILURE } = authSessionTypes;
-
 const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = externalTypes;
+
+export const logoutRequest = logout.request;
+export const LOGIN_SUCCESS = login.success.type;
+export const LOGIN_FAILURE = login.failure.type;
 
 export {
     // actions
     loginRequest,
-    logoutRequest,
     setUserWithTokens,
     checkAccessTokenExpiration,
     setTokensPersistence,
@@ -44,8 +45,6 @@ export {
     AUTH_SESSION_RESUME,
     ACCESS_TOKEN_AVAILABLE,
     ACCESS_TOKEN_UNAVAILABLE,
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE,
     RETRIEVE_TOKENS_REQUEST,
     RETRIEVE_TOKENS_RESOLVE,
     APPLY_ACCESS_TOKEN_REQUEST,
@@ -55,8 +54,6 @@ export {
     TokensPersistence,
 };
 
-export { default as Authenticated } from './components/Authenticated';
-
 export { default as configure } from './configure';
 export { default as authorizable } from './HOC/authorizable';
 export { withAuthSession, getAuthStateChannel, getAccessToken } from './services/sagas';
@@ -65,3 +62,6 @@ export { createExpirationDate } from './modules/oAuth';
 export { StorageDrivers } from './config';
 export { AuthSession as SessionState, FlowType } from './constants';
 export { retrieveTokens } from 'modules/tokens/modules/retrieval';
+
+export * from './hooks/useAuthenticated';
+export * from './components/Authenticated';

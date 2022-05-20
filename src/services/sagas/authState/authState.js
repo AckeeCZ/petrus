@@ -4,7 +4,7 @@ import { config } from 'config';
 
 import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
 import { types as externalTypes, unapplyAccessTokenExternally } from 'modules/tokens/modules/external';
-import { types as authSessionTypes } from 'modules/auth-session';
+import { login, logout, fetchUser } from 'modules/auth-session';
 
 import { tokensSelector } from 'services/selectors';
 
@@ -27,18 +27,14 @@ function* tokenAvailabilityCircuit() {
         {
             pattern: applyAccessTokenExternally
                 ? externalTypes.APPLY_ACCESS_TOKEN_RESOLVE
-                : [authSessionTypes.LOGIN_SUCCESS, refreshmentTypes.REFRESH_TOKENS_SUCCESS],
+                : [login.success.type, refreshmentTypes.REFRESH_TOKENS_SUCCESS],
             *task() {
                 const tokens = yield select(tokensSelector);
                 yield put(accessTokenAvailable(tokens.accessToken));
             },
         },
         {
-            pattern: [
-                refreshmentTypes.REFRESH_TOKENS_REQUEST,
-                authSessionTypes.LOGOUT_SUCCESS,
-                authSessionTypes.FETCH_USER_FAILURE,
-            ],
+            pattern: [refreshmentTypes.REFRESH_TOKENS_REQUEST, logout.success.type, fetchUser.failure.type],
             *task() {
                 if (applyAccessTokenExternally) {
                     yield unapplyAccessTokenExternally();
@@ -55,17 +51,13 @@ function* tokenAvailabilityCircuit() {
 function* authSessionCircuit() {
     const authSessionUnits = [
         {
-            pattern: authSessionTypes.LOGIN_SUCCESS,
+            pattern: login.success.type,
             *task() {
                 yield put(authSessionStart());
             },
         },
         {
-            pattern: [
-                authSessionTypes.LOGOUT_SUCCESS,
-                authSessionTypes.FETCH_USER_FAILURE,
-                refreshmentTypes.REFRESH_TOKENS_FAILURE,
-            ],
+            pattern: [logout.success.type, fetchUser.failure.type, refreshmentTypes.REFRESH_TOKENS_FAILURE],
             *task() {
                 yield put(authSessionEnd());
             },

@@ -8,4 +8,4 @@ export default {
     [apiKeys.LOGIN]: login,
     [apiKeys.LOGOUT]: logout,
     [apiKeys.FETCH_USER]: fetchUser,
-};
+} as const;

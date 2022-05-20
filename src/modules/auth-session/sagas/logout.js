@@ -2,7 +2,7 @@ import { takeLeading, put } from 'redux-saga/effects';
 
 import { config, globalEnv } from 'config';
 import { deleteTokens } from 'services/actions';
-import { types, logoutSuccess, logoutFailure } from '../actions';
+import { logout } from '../actions';
 
 function requestFrame() {
     return new Promise(res => {
@@ -14,7 +14,7 @@ function requestFrame() {
     });
 }
 
-function* logout() {
+function* logoutHandler() {
     try {
         yield put(deleteTokens());
 
@@ -23,13 +23,13 @@ function* logout() {
         // And if we'd remove auth user the app relies on, an error might be thrown.
         yield requestFrame();
 
-        yield put(logoutSuccess());
+        yield put(logout.success());
     } catch (e) {
         config.logger.error(e.toString());
-        yield put(logoutFailure(e));
+        yield put(logout.failure(e));
     }
 }
 
 export default function* () {
-    yield takeLeading(types.LOGOUT_REQUEST, logout);
+    yield takeLeading(logout.request, logoutHandler);
 }

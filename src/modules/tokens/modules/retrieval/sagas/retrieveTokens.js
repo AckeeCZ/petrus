@@ -5,7 +5,7 @@ import { setTokens, deleteTokens } from 'services/actions';
 import { tokensPersistenceSelector } from 'services/selectors';
 
 import { getMaybeOAuthTokens } from 'modules/oAuth';
-import { fetchUserRequest, types as authSessionTypes } from 'modules/auth-session';
+import { fetchUser } from 'modules/auth-session';
 import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
@@ -53,18 +53,15 @@ function* tokensRetrieval() {
         yield applyAccessTokenExternally(tokens);
     }
 
-    yield put(fetchUserRequest());
+    yield put(fetchUser.request());
 
-    const fetchUserResultAction = yield take([
-        authSessionTypes.FETCH_USER_SUCCESS,
-        authSessionTypes.FETCH_USER_FAILURE,
-    ]);
+    const fetchUserResultAction = yield take([fetchUser.success.type, fetchUser.failure.type]);
 
-    if (fetchUserResultAction.type === authSessionTypes.FETCH_USER_FAILURE) {
+    if (fetchUserResultAction.type === fetchUser.failure.type) {
         yield put(deleteTokens());
     }
 
-    return fetchUserResultAction.type === authSessionTypes.FETCH_USER_SUCCESS;
+    return fetchUserResultAction.type === fetchUser.success.type;
 }
 
 export function* retrieveTokens() {
