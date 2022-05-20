@@ -4,7 +4,7 @@ import { config } from 'config';
 import { setTokens, deleteTokens } from 'services/actions';
 import { tokensPersistenceSelector } from 'services/selectors';
 
-import { getOAuthTokens } from 'modules/oAuth';
+import { getMaybeOAuthTokens } from 'modules/oAuth';
 import { fetchUserRequest, types as authSessionTypes } from 'modules/auth-session';
 import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
@@ -20,7 +20,7 @@ function* tokensRetrieval() {
 
     if (config.oAuth.enabled) {
         // get the fresh tokens always as first
-        const tokensFromOAuth = yield getOAuthTokens();
+        const tokensFromOAuth = yield* getMaybeOAuthTokens();
 
         if (tokensFromOAuth) {
             tokens = tokensFromOAuth;

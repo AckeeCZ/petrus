@@ -1,6 +1,6 @@
 import { config, globalEnv } from 'config';
 
-export default function* getOAuthTokens() {
+function* getOAuthTokens() {
     const {
         validateRedirectUrl,
         parseRedirectUrlParams,
@@ -28,4 +28,13 @@ export default function* getOAuthTokens() {
     const tokens = yield processTokens(accessToken, refreshToken);
 
     return tokens;
+}
+
+export function* getMaybeOAuthTokens() {
+    try {
+        return yield* getOAuthTokens();
+    } catch (e) {
+        config.logger.error(e);
+        return null;
+    }
 }

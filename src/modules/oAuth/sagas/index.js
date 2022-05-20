@@ -1,1 +1,1 @@
-export { default as getOAuthTokens } from './getOAuthTokens';
+export * from './getOAuthTokens';
