@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "strict": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "moduleResolution": "node",
+        "noEmit": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "baseUrl": "src",
+        "importsNotUsedAsValues": "error",
+        "skipLibCheck": true
+    },
+    "include": ["src"]
+}

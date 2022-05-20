@@ -4,3 +4,5 @@ es
 dist
 .DS_Store
 node_modules_bak
+yalc.*
+.yalc

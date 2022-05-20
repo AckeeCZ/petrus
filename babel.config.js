@@ -1,5 +1,12 @@
 const config = {
     presets: [
+        [
+            '@babel/typescript',
+            {
+                onlyRemoveTypeImports: true,
+                allowDeclareFields: true,
+            },
+        ],
         '@babel/react',
         [
             '@babel/env',
