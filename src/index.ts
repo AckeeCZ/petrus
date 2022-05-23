@@ -1,4 +1,4 @@
-import { loginRequest, logout, setUserWithTokens, login } from 'modules/auth-session';
+import { logout, setUserWithTokens, login } from 'modules/auth-session';
 import {
     checkAccessTokenExpiration,
     tokensPersistence as TokensPersistence,
@@ -18,19 +18,19 @@ const {
     AUTH_SESSION_RESUME,
     ACCESS_TOKEN_AVAILABLE,
     ACCESS_TOKEN_UNAVAILABLE,
-} = types;
+} = types as any;
 
 const { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } = retrievalTypes;
 
-const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = externalTypes;
+const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = externalTypes as any;
 
 export const logoutRequest = logout.request;
+export const loginRequest = login.request;
 export const LOGIN_SUCCESS = login.success.type;
 export const LOGIN_FAILURE = login.failure.type;
 
 export {
     // actions
-    loginRequest,
     setUserWithTokens,
     checkAccessTokenExpiration,
     setTokensPersistence,

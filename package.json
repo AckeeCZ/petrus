@@ -41,6 +41,7 @@
     "dependencies": {
         "@ackee/redux-utils": "^4.1.1",
         "@babel/runtime": "7.10.2",
+        "@reduxjs/toolkit": "^1.8.1",
         "idb": "5.0.4",
         "react-display-name": "0.x"
     },
@@ -62,7 +63,6 @@
         "@babel/preset-env": "7.10.2",
         "@babel/preset-react": "7.10.1",
         "@babel/preset-typescript": "^7.17.12",
-        "@reduxjs/toolkit": "^1.8.1",
         "@typescript-eslint/eslint-plugin": "^5.25.0",
         "@typescript-eslint/parser": "^5.25.0",
         "babel-jest": "26.0.1",

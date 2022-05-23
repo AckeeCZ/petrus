@@ -12,9 +12,10 @@
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "baseUrl": "src",
+        "baseUrl": "./src",
         "importsNotUsedAsValues": "error",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "preserveSymlinks": true
     },
     "include": ["src"]
 }
