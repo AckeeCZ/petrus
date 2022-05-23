@@ -1,9 +1,6 @@
 {
-    "extends": "./tsconfig.json",
+    "extends": "./tsconfig.types.es.json",
     "compilerOptions": {
-        "noEmit": false,
-        "declaration": true,
-        "emitDeclarationOnly": true,
         "outDir": "lib"
     }
 }

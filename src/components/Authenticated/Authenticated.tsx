@@ -1,4 +1,3 @@
-import React from 'react';
 import { FlowType } from 'constants/index';
 import type { ElementType, ReactNode } from 'react';
 import { useAuthenticated } from 'hooks/useAuthenticated';

@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "module": "CommonJS",
+        "module": "ESNext",
         "strict": true,
         "jsx": "react-jsx",
         "allowJs": true,
@@ -15,7 +15,7 @@
         "baseUrl": "./src",
         "importsNotUsedAsValues": "error",
         "skipLibCheck": true,
-        "preserveSymlinks": true
+        "noUnusedLocals": true
     },
     "include": ["src"]
 }
