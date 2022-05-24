@@ -2,7 +2,7 @@ import { PetrusError } from 'config';
 import { isFn } from 'services/utils';
 
 import { config as refreshmentConfig } from '../modules/refreshment';
-import { tokensPersistence } from '../modules/storage';
+import { TokensPersistence } from '../modules/storage';
 
 export const handlers = ({ refreshTokens } = {}) => {
     if (!isFn(refreshTokens)) {
@@ -24,6 +24,6 @@ export const options = (customOptions = {}) => ({
 export const initialState = (customInitialState = {}) => {
     return {
         ...customInitialState,
-        persistence: tokensPersistence.LOCAL,
+        persistence: TokensPersistence.LOCAL,
     };
 };

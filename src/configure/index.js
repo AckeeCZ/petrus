@@ -2,11 +2,7 @@ import { PetrusError, config, StorageDrivers } from 'config';
 
 import { configure as oAuth } from 'modules/oAuth';
 import { configure as authSession } from 'modules/auth-session';
-import {
-    configure as tokens,
-    tokensPersistenceInitialState,
-    tokensPersistence as TokensPersistence,
-} from 'modules/tokens';
+import { configure as tokens, tokensPersistenceInitialState, TokensPersistence } from 'modules/tokens';
 
 import createRootReducer from 'services/reducers';
 import rootSaga from 'services/sagas';

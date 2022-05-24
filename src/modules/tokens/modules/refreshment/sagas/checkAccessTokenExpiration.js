@@ -2,7 +2,7 @@ import { takeEvery, select, put } from 'redux-saga/effects';
 
 import { tokensSelector } from 'services/selectors';
 
-import { types, refreshTokensRequest } from '../actions';
+import { refreshTokensRequest, checkAccessTokenExpiration } from '../actions';
 import { isTokenExpired } from './utils';
 
 export function* refreshExpiredToken() {
@@ -13,6 +13,6 @@ export function* refreshExpiredToken() {
     }
 }
 
-export default function* checkAccessTokenExpiration() {
-    yield takeEvery(types.CHECK_ACCESS_TOKEN_EXPIRATION, refreshExpiredToken);
+export default function* checkAccessTokenExpirationHandler() {
+    yield takeEvery(checkAccessTokenExpiration, refreshExpiredToken);
 }

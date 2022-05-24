@@ -1,15 +1,15 @@
 import { take, race, call } from 'redux-saga/effects';
 
-import { types } from '../actions';
+import { authSessionStart, authSessionEnd } from '../actions';
 import { raceWithTerminate } from './helpers';
 
 function* infiniteWithAuthSession(task) {
     while (true) {
-        yield take(types.AUTH_SESSION_START);
+        yield take(authSessionStart);
 
         yield race({
             task: call(task),
-            abort: take(types.AUTH_SESSION_END),
+            abort: take(authSessionEnd),
         });
     }
 }

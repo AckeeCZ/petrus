@@ -1,11 +1,11 @@
 import { takeEvery, put } from 'redux-saga/effects';
 
 import { config } from 'config';
-import { types } from 'services/actions';
 import { refreshTokensRequest } from '../actions';
 
 import { setTimer, cancelTimer } from './tokensExpirationTimer';
 import { validateExpiration } from './utils';
+import setTokens from '../../storage/sagas/setTokens';
 
 function* handleSetTokens(action) {
     const { expiration } = action.payload.accessToken;
@@ -31,5 +31,5 @@ function* handleSetTokens(action) {
 }
 
 export default function* () {
-    yield takeEvery(types.SET_TOKENS, handleSetTokens);
+    yield takeEvery(setTokens, handleSetTokens);
 }

@@ -1,10 +1,10 @@
 import { fork, take, cancel } from 'redux-saga/effects';
-import { types } from '../actions';
+import { terminate } from '../actions';
 
 export function* raceWithTerminate(...args) {
     const task = yield fork(...args);
 
-    yield take(types.TERMINATE);
+    yield take(terminate);
 
     yield cancel(task);
 }

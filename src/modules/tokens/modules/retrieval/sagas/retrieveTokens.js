@@ -9,7 +9,7 @@ import { fetchUser } from 'modules/auth-session';
 import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
 import { tokensPersistence as TokensPersistence, storageHandlers } from '../../storage';
-import { refreshTokensRequest, types as refreshTokensTypes, isTokenExpired } from '../../refreshment';
+import { refreshTokens, isTokenExpired } from '../../refreshment';
 
 import { retrieveTokensRequest, retrieveTokensResolve } from '../actions';
 
@@ -36,15 +36,12 @@ function* tokensRetrieval() {
     }
 
     if (isTokenExpired(tokens.accessToken)) {
-        yield put(refreshTokensRequest(tokens));
+        yield put(refreshTokens.request(tokens));
         // 'retrieveTokensResolve' action must be dispatched when tokens has been refreshed
         // otherwise authorizable HOC will render <Firewall/> which is wrong.
-        const result = yield take([
-            refreshTokensTypes.REFRESH_TOKENS_SUCCESS,
-            refreshTokensTypes.REFRESH_TOKENS_FAILURE,
-        ]);
+        const result = yield take([refreshTokens.success.type, refreshTokens.failure.type]);
 
-        if (result.type === refreshTokensTypes.REFRESH_TOKENS_FAILURE) {
+        if (result.type === refreshTokens.failure.type) {
             return false;
         }
     } else {

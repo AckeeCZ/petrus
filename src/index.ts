@@ -1,33 +1,40 @@
 import { logout, setUserWithTokens, login } from 'modules/auth-session';
 import {
     checkAccessTokenExpiration,
-    tokensPersistence as TokensPersistence,
+    TokensPersistence,
     setTokensPersistence,
-    retrievalTypes,
     applyAccessTokenResolve,
     unapplyAccessTokenResolve,
-    externalTypes,
+    applyAccessTokenRequest,
+    unapplyAccessTokenRequest,
+    retrieveTokensRequest,
+    retrieveTokensResolve,
 } from 'modules/tokens';
 
-import { types, terminate } from './services/actions';
-
-const {
-    AUTH_SESSION_START,
-    AUTH_SESSION_END,
-    AUTH_SESSION_PAUSE,
-    AUTH_SESSION_RESUME,
-    ACCESS_TOKEN_AVAILABLE,
-    ACCESS_TOKEN_UNAVAILABLE,
-} = types as any;
-
-const { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } = retrievalTypes;
-
-const { APPLY_ACCESS_TOKEN_REQUEST, UNAPPLY_ACCESS_TOKEN_REQUEST } = externalTypes as any;
+import {
+    terminate,
+    authSessionStart,
+    authSessionEnd,
+    accessTokenUnavailable,
+    accessTokenAvailable,
+    authSessionResume,
+    authSessionPause,
+} from './services/actions';
 
 export const logoutRequest = logout.request;
 export const loginRequest = login.request;
 export const LOGIN_SUCCESS = login.success.type;
 export const LOGIN_FAILURE = login.failure.type;
+export const AUTH_SESSION_START = authSessionStart.type;
+export const AUTH_SESSION_END = authSessionEnd.type;
+export const AUTH_SESSION_PAUSE = authSessionPause.type;
+export const AUTH_SESSION_RESUME = authSessionResume.type;
+export const ACCESS_TOKEN_AVAILABLE = accessTokenAvailable.type;
+export const ACCESS_TOKEN_UNAVAILABLE = accessTokenUnavailable.type;
+export const APPLY_ACCESS_TOKEN_REQUEST = applyAccessTokenRequest.type;
+export const UNAPPLY_ACCESS_TOKEN_REQUEST = unapplyAccessTokenRequest.type;
+export const RETRIEVE_TOKENS_REQUEST = retrieveTokensRequest.type;
+export const RETRIEVE_TOKENS_RESOLVE = retrieveTokensResolve.type;
 
 export {
     // actions
@@ -37,18 +44,18 @@ export {
     applyAccessTokenResolve,
     unapplyAccessTokenResolve,
     terminate,
-    //
-    // action types types
-    AUTH_SESSION_START,
-    AUTH_SESSION_END,
-    AUTH_SESSION_PAUSE,
-    AUTH_SESSION_RESUME,
-    ACCESS_TOKEN_AVAILABLE,
-    ACCESS_TOKEN_UNAVAILABLE,
-    RETRIEVE_TOKENS_REQUEST,
-    RETRIEVE_TOKENS_RESOLVE,
-    APPLY_ACCESS_TOKEN_REQUEST,
-    UNAPPLY_ACCESS_TOKEN_REQUEST,
+    logout,
+    login,
+    authSessionStart,
+    authSessionEnd,
+    authSessionPause,
+    authSessionResume,
+    accessTokenAvailable,
+    accessTokenUnavailable,
+    applyAccessTokenRequest,
+    unapplyAccessTokenRequest,
+    retrieveTokensRequest,
+    retrieveTokensResolve,
     //
     // constants
     TokensPersistence,

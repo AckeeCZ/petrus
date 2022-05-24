@@ -2,9 +2,9 @@ import { select, take, race } from 'redux-saga/effects';
 
 import { AuthSession, apiKeys } from 'constants/index';
 import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
-import { types } from 'services/actions';
+import { accessTokenAvailable, setTokens } from 'services/actions';
 
-import { types as refreshmentTypes, refreshExpiredToken } from 'modules/tokens/modules/refreshment';
+import { refreshTokens, refreshExpiredToken } from 'modules/tokens/modules/refreshment';
 
 const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
 
@@ -21,22 +21,22 @@ function* preSessionResolvement() {
         return accessToken;
     }
 
-    yield take(types.SET_TOKENS);
+    yield take(setTokens);
 
     return yield select(accessTokenSelector);
 }
 
 function* afterRefreshAccessToken() {
     const result = yield race({
-        success: refreshmentTypes.REFRESH_TOKENS_SUCCESS,
-        failure: refreshmentTypes.REFRESH_TOKENS_FAILURE,
+        success: refreshTokens.success.type,
+        failure: refreshTokens.failure.type,
     });
 
     if (result.failure) {
         return null;
     }
 
-    const action = yield take(types.ACCESS_TOKEN_AVAILABLE);
+    const action = yield take(accessTokenAvailable);
 
     return action.payload;
 }

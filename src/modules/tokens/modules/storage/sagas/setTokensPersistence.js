@@ -1,14 +1,14 @@
 import { takeLatest } from 'redux-saga/effects';
 
 import { config } from 'config';
-import { tokensPersistence } from 'modules/tokens/modules/storage/constants';
+import { TokensPersistence } from 'modules/tokens/modules/storage/constants';
 
-import { types } from '../actions';
+import { setTokensPersistence } from '../actions';
 
 import { clearTokens, retrieveTokens, storeTokens } from './storageHandlers';
 
 function* applyTokensPersistence(persistence) {
-    const { LOCAL, SESSION, NONE } = tokensPersistence;
+    const { LOCAL, SESSION, NONE } = TokensPersistence;
 
     switch (persistence) {
         case SESSION:
@@ -29,14 +29,12 @@ function* applyTokensPersistence(persistence) {
     }
 }
 
-function* setTokensPersistence(action) {
-    try {
-        yield applyTokensPersistence(action.persistence);
-    } catch (e) {
-        config.logger.error(e);
-    }
-}
-
-export default function* () {
-    yield takeLatest(types.SET_TOKENS_PERSISTENCE, setTokensPersistence);
+export default function* setTokensPersistenceHandler() {
+    yield takeLatest(setTokensPersistence, function* (action) {
+        try {
+            yield applyTokensPersistence(action.persistence);
+        } catch (e) {
+            config.logger.error(e);
+        }
+    });
 }

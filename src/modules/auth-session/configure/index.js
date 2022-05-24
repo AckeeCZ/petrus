@@ -1,14 +1,14 @@
 import { PetrusError } from 'config';
 import { isFn } from 'services/utils';
 
-import { tokensPersistence as TokenPeristence } from 'modules/tokens';
+import { TokensPersistence } from 'modules/tokens';
 
 export const handlers = ({ authenticate, getAuthUser } = {}, { oAuthEnabled, tokensPersistence }) => {
     if (!oAuthEnabled && !isFn(authenticate)) {
         throw new PetrusError(`'authenticate' is not a function: Received argument: '${authenticate}'.`);
     }
 
-    const { LOCAL, NONE } = TokenPeristence;
+    const { LOCAL, NONE } = TokensPersistence;
 
     if (tokensPersistence === LOCAL && !isFn(getAuthUser)) {
         throw new PetrusError(

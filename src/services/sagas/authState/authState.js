@@ -2,14 +2,13 @@ import { put, call, all, actionChannel, select } from 'redux-saga/effects';
 
 import { config } from 'config';
 
-import { types as refreshmentTypes } from 'modules/tokens/modules/refreshment';
-import { types as externalTypes, unapplyAccessTokenExternally } from 'modules/tokens/modules/external';
+import { refreshTokens } from 'modules/tokens/modules/refreshment';
+import { unapplyAccessTokenExternally, applyAccessTokenResolve } from 'modules/tokens/modules/external';
 import { login, logout, fetchUser } from 'modules/auth-session';
 
 import { tokensSelector } from 'services/selectors';
 
 import {
-    types,
     accessTokenAvailable,
     accessTokenUnavailable,
     authSessionStart,
@@ -26,15 +25,15 @@ function* tokenAvailabilityCircuit() {
     const tokenAvailabilityUnits = [
         {
             pattern: applyAccessTokenExternally
-                ? externalTypes.APPLY_ACCESS_TOKEN_RESOLVE
-                : [login.success.type, refreshmentTypes.REFRESH_TOKENS_SUCCESS],
+                ? applyAccessTokenResolve.type
+                : [login.success.type, refreshTokens.success.type],
             *task() {
                 const tokens = yield select(tokensSelector);
                 yield put(accessTokenAvailable(tokens.accessToken));
             },
         },
         {
-            pattern: [refreshmentTypes.REFRESH_TOKENS_REQUEST, logout.success.type, fetchUser.failure.type],
+            pattern: [refreshTokens.request.type, logout.success.type, fetchUser.failure.type],
             *task() {
                 if (applyAccessTokenExternally) {
                     yield unapplyAccessTokenExternally();
@@ -57,7 +56,7 @@ function* authSessionCircuit() {
             },
         },
         {
-            pattern: [logout.success.type, fetchUser.failure.type, refreshmentTypes.REFRESH_TOKENS_FAILURE],
+            pattern: [logout.success.type, fetchUser.failure.type, refreshTokens.failure.type],
             *task() {
                 yield put(authSessionEnd());
             },
@@ -66,13 +65,13 @@ function* authSessionCircuit() {
 
     const authSessionInterruptionUnits = [
         {
-            pattern: refreshmentTypes.REFRESH_TOKENS_REQUEST,
+            pattern: refreshTokens.request.type,
             *task() {
                 yield put(authSessionPause());
             },
         },
         {
-            pattern: refreshmentTypes.REFRESH_TOKENS_SUCCESS,
+            pattern: refreshTokens.success.type,
             *task() {
                 yield put(authSessionResume());
             },
@@ -84,17 +83,17 @@ function* authSessionCircuit() {
 
 export function* getAuthStateChannel() {
     const authStateChannel = yield actionChannel([
-        types.AUTH_SESSION_START,
-        types.AUTH_SESSION_PAUSE,
-        types.AUTH_SESSION_RESUME,
-        types.AUTH_SESSION_END,
-        types.ACCESS_TOKEN_AVAILABLE,
-        types.ACCESS_TOKEN_UNAVAILABLE,
+        authSessionStart.type,
+        authSessionPause.type,
+        authSessionResume.type,
+        authSessionEnd.type,
+        accessTokenAvailable.type,
+        accessTokenUnavailable.type,
     ]);
 
     return authStateChannel;
 }
 
-export default function* () {
+export default function* authState() {
     yield all([tokenAvailabilityCircuit(), authSessionCircuit()]);
 }

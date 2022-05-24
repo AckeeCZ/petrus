@@ -1,4 +1,5 @@
 import { createApiActions } from '@ackee/redux-utils';
+import { actionType } from 'services/utils';
 
 export type LogoutRequestPayload = void;
 
@@ -8,6 +9,11 @@ export type LogoutSuccessPayload = any;
 // TODO:
 export type LogoutFailurePayload = any;
 
-export const logout = createApiActions<'LOGOUT', LogoutRequestPayload, LogoutSuccessPayload, LogoutFailurePayload>(
-    'LOGOUT',
-);
+const ACTION_TYPE_PREFIX = actionType('LOGOUT');
+
+export const logout = createApiActions<
+    typeof ACTION_TYPE_PREFIX,
+    LogoutRequestPayload,
+    LogoutSuccessPayload,
+    LogoutFailurePayload
+>(ACTION_TYPE_PREFIX);
