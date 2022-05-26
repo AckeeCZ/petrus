@@ -6,10 +6,17 @@ import { configure as tokens, tokensPersistenceInitialState, TokensPersistence }
 
 import createRootReducer from 'services/reducers';
 import rootSaga from 'services/sagas';
+import type { PetrusCredentials, PetrusCustomConfig, PetrusLogger, PetrusOAuth, PetrusTokens, PetrusUser } from 'types';
 
 config.initialized = false;
 
-export default function configure(customConfig = {}) {
+export function configure<
+    User extends PetrusUser = PetrusUser,
+    Tokens extends PetrusTokens = PetrusTokens,
+    OAuth extends PetrusOAuth = PetrusOAuth,
+    Credentials extends PetrusCredentials = PetrusCredentials,
+    Logger extends PetrusLogger = PetrusLogger,
+>(customConfig: PetrusCustomConfig<User, Tokens, OAuth, Credentials, Logger>) {
     if (config.initialized) {
         throw new PetrusError(`'configure' method can be called only once.`);
     }
@@ -31,6 +38,7 @@ export default function configure(customConfig = {}) {
         tokens: tokens.options(customConfig.tokens),
 
         remoteHandlers: {
+            /* @ts-expect-error */
             ...authSession.handlers(customConfig.handlers, {
                 oAuthEnabled: oAuthConfig.enabled,
                 tokensPersistence,
@@ -41,7 +49,7 @@ export default function configure(customConfig = {}) {
         mapStorageDriverToTokensPersistence: {
             [TokensPersistence.SESSION]: StorageDrivers.sessionStorage,
             [TokensPersistence.LOCAL]: StorageDrivers.indexedDB,
-            [TokensPersistence.NONE]: StorageDrivers.reset,
+            [TokensPersistence.NONE]: StorageDrivers.resetStorage,
             ...customConfig.mapStorageDriverToTokensPersistence,
         },
     });
@@ -51,5 +59,5 @@ export default function configure(customConfig = {}) {
     return {
         reducer: createRootReducer(initialState),
         saga: rootSaga,
-    };
+    } as const;
 }

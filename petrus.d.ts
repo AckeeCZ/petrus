@@ -1,10 +1,7 @@
 declare module '@ackee/petrus' {
-    import type { ReactNode } from 'react';
-    import type { ActionCreator, AnyAction, CombinedState, Reducer } from 'redux';
+    import type { CombinedState, Reducer } from 'redux';
     import type { ActionChannelEffect, TakeEffect, CancelEffect, ForkEffect } from 'redux-saga/effects';
     import type { ApiState } from '@ackee/redux-utils';
-
-    export interface TokensPersistence {}
 
     export enum FlowType {
         INDETERMINATE = 'indeterminate',
@@ -23,27 +20,6 @@ declare module '@ackee/petrus' {
         LOCAL = 'LOCAL',
         SESSION = 'SESSION',
     }
-
-    export const LOGIN_SUCCESS: string;
-    export const LOGIN_FAILURE: string;
-    export const AUTH_SESSION_START: string;
-    export const AUTH_SESSION_END: string;
-    export const AUTH_SESSION_PAUSE: string;
-    export const AUTH_SESSION_RESUME: string;
-    export const RETRIEVE_TOKENS_REQUEST: string;
-    export const RETRIEVE_TOKENS_RESOLVE: string;
-    export const ACCESS_TOKEN_AVAILABLE: string;
-    export const ACCESS_TOKEN_UNAVAILABLE: string;
-    export const UNAPPLY_ACCESS_TOKEN_REQUEST: string;
-
-    export const loginRequest: ActionCreator<AnyAction>;
-    export const logoutRequest: ActionCreator<AnyAction>;
-    export const setUserWithTokens: ActionCreator<AnyAction>;
-    export const checkAccessTokenExpiration: ActionCreator<AnyAction>;
-    export const setTokensPersistence: ActionCreator<AnyAction>;
-    export const applyAccessTokenResolve: ActionCreator<AnyAction>;
-    export const unapplyAccessTokenResolve: ActionCreator<AnyAction>;
-    export const terminate: ActionCreator<AnyAction>;
 
     export interface Token {
         token: string;
@@ -77,38 +53,12 @@ declare module '@ackee/petrus' {
 
     export type RootSaga = () => Generator<any, void, unknown>;
 
-    export function configure<U = unknown>(config: {
-        reducerKey?: string;
-        handlers: {
-            authenticate: (payload: any) => Generator<any, Pick<PetrusState<U>, 'tokens' | 'user'>>;
-            refreshTokens: (tokens: TokensState) => Generator<any, TokensState>;
-            getAuthUser:
-                | ((tokens: TokensState) => Generator<U, any>)
-                | ((tokens: TokensState) => Promise<U>)
-                | ((tokens: TokensState) => U);
-        };
-        initialState?: Partial<PetrusState<U>>;
-        tokens?: {
-            applyAccessTokenExternally?: boolean;
-            requestDurationEstimate?: boolean;
-            minRequiredExpiration?: boolean;
-            checkTokenExpirationOnTabFocus?: boolean;
-        };
-        logger?: Pick<typeof console, 'info' | 'debug' | 'warn' | 'error'>;
-    }): { saga: RootSaga; reducer: RootReducer<U> };
-
     export function entitiesSelector<U = any, S = any>(state: S): PetrusState<U>;
 
     export function apiSelector<S = any>(
         state: S,
         api: 'login' | 'fetchUser' | 'logout' | 'refreshTokens' | 'retrieveTokens',
     ): ApiState;
-
-    export function Authenticated(props: {
-        children: ReactNode;
-        FallbackComponent?: (props?: object) => JSX.Element;
-        LoaderComponent?: (props?: object) => JSX.Element;
-    }): JSX.Element;
 
     export function createExpirationDate(expiresIn: number | null | undefined): string;
 
@@ -117,22 +67,4 @@ declare module '@ackee/petrus' {
     ): Generator<Generator<TakeEffect | CancelEffect | ForkEffect<unknown>, void, unknown>, void, unknown>;
 
     export function getAuthStateChannel(): Generator<ActionChannelEffect, any, unknown>;
-
-    export interface StorageDrivers {
-        indexedDB: {
-            get(key: string): Promise<any>;
-            set(key: string, value: any): Promise<void>;
-            remove(key: string): Promise<void>;
-        };
-        sessionStorage: {
-            get(key: string): void;
-            set(key: string, values: any): void;
-            remove(key: string): void;
-        };
-        reset: {
-            get(): void;
-            set(): void;
-            remove(key: string): Promise<void>;
-        };
-    }
 }

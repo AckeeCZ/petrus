@@ -24,6 +24,6 @@ export const options = (customOptions = {}) => ({
 export const initialState = (customInitialState = {}) => {
     return {
         ...customInitialState,
-        persistence: TokensPersistence.LOCAL,
+        tokensPersistence: TokensPersistence.LOCAL,
     };
 };

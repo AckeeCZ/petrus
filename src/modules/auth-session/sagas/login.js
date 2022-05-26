@@ -7,7 +7,7 @@ import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
 import { fetchUser, login } from '../actions';
 
-export default function* () {
+export default function* loginHandler() {
     yield takeLeading(login.request, function* (action) {
         try {
             const response = yield call(config.remoteHandlers.authenticate, action.payload);

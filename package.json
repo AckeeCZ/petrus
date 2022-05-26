@@ -115,7 +115,6 @@
     "browserslist": [
         "extends @ackee/browserslist-config"
     ],
-    "types": "petrus.d.ts",
     "files": [
         "lib",
         "es",

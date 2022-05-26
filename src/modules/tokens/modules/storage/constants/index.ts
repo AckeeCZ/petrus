@@ -1,5 +1,5 @@
 export enum TokensPersistence {
-    NONE = 'NONE',
-    LOCAL = 'LOCAL',
-    SESSION = 'SESSION',
+    NONE = 'none',
+    LOCAL = 'local',
+    SESSION = 'session',
 }

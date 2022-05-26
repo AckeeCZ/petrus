@@ -6,7 +6,7 @@ function isPlainObject(o) {
 
 export default function validateTokens(tokens) {
     if (!isPlainObject(tokens)) {
-        throw new PetrusError(`'tokens' must be an object including 'accessToken' and 'refreshToken' properties.`);
+        throw new PetrusError(`'tokens' must be an object including 'accessToken' property.`);
     }
 
     const { accessToken } = tokens;

@@ -6,15 +6,19 @@ const storageMock = {
     getItem: noop,
 } as const;
 
-const storage = 'sessionStorage' in globalThis ? globalThis.sessionStorage : storageMock;
+const storage = 'sessionStorage' in globalThis ? globalThis.sessionStorage : (storageMock as unknown as Storage);
 
-export default {
-    set(key: string, values: any) {
+export const sessionStorage = {
+    set<Key extends string, Value extends any>(key: Key, values: Value) {
         storage.setItem(key, JSON.stringify(values));
     },
-    get(key: string) {
+    get<Key extends string>(key: Key) {
         const values = storage.getItem(key);
         return values ? JSON.parse(values) : values;
     },
-    remove: storage.removeItem,
+    remove<Key extends string>(key: Key) {
+        storage.removeItem(key);
+    },
 } as const;
+
+export type SessionStorage = typeof sessionStorage;
