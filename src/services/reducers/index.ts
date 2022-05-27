@@ -13,4 +13,4 @@ export function createRootReducer<User extends PetrusUser, Tokens extends Petrus
     });
 }
 
-export type PetrusRootState = ReturnType<typeof createRootReducer>;
+export type PetrusRootState = ReturnType<ReturnType<typeof createRootReducer>>;

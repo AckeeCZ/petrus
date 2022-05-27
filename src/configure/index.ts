@@ -31,7 +31,8 @@ export function configure<
         initialized: true,
 
         logger: customConfig.logger || console,
-        reducerKey: customConfig.reducerKey || 'auth',
+
+        selector: (state: any) => state.auth,
 
         oAuth: oAuthConfig,
 

@@ -121,7 +121,7 @@ export { withAuthSession, getAuthStateChannel, getAccessToken } from './services
 export { entitiesSelector, apiSelector } from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
 export { StorageDrivers } from './config';
-export { AuthSession as SessionState, FlowType } from './constants';
+export * from './constants';
 export { retrieveTokens } from 'modules/tokens/modules/retrieval';
 
 export * from './hooks/useAuthenticated';

@@ -1,12 +1,13 @@
-import { getReducerKey } from 'config';
+import { config } from 'config';
 import type { ApiKeys } from 'constants/index';
-import type { PetrusRootState } from 'services/reducers';
 
-// TODO:
-export const apiSelector = (state: any, apiKey: ApiKeys) => {
-    const { api } = state[getReducerKey()];
-
-    return apiKey ? api[apiKey] : api;
+export const apiSelector = <AppState>(state: AppState, apiKey: ApiKeys) => {
+    const { api } = config.selector<AppState>(state);
+    return api[apiKey];
 };
 
-export const apiSelectorFactory = (apiKey: ApiKeys) => (state: PetrusRootState) => apiSelector(state, apiKey);
+export const apiSelectorFactory =
+    (apiKey: ApiKeys) =>
+    <AppState>(state: AppState) => {
+        return apiSelector(state, apiKey);
+    };

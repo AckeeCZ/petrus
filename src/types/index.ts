@@ -1,6 +1,7 @@
 import type { IndexedDBStorage, ResetStorage, SessionStorage } from 'config/storageDrivers';
 import type { AuthSession, FlowType } from 'constants/index';
 import type { TokensPersistence } from 'modules/tokens/modules/storage';
+import type { PetrusRootState } from 'services/reducers';
 
 export type PetrusLogger = {
     error: Console['error'];
@@ -39,7 +40,7 @@ export interface PetrusConfig<
 > {
     logger: Logger;
 
-    reducerKey: string;
+    selector: <AppState>(state: AppState) => PetrusRootState;
 
     initialized: boolean;
 
@@ -261,9 +262,11 @@ export interface PetrusCustomConfig<
     >,
 > {
     /**
-     * @default 'auth'
+     * This function must return petrus reducer from your application root state,
+     * so you can set it on nested level or on different path.
+     * @default (state) => state.auth
      */
-    reducerKey?: Config['reducerKey'];
+    selector: Config['selector'];
 
     /**
      * @default Console

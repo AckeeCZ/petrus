@@ -9,8 +9,6 @@ export const StorageDrivers = storageDrivers;
 // The final configuration is validated and then freezed.
 export const config = {} as PetrusConfig;
 
-export const getReducerKey = () => config.reducerKey;
-
 export class PetrusError extends Error {
     constructor(message: string) {
         super(message);
