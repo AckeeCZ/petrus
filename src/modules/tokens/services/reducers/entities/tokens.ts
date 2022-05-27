@@ -1,10 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { deleteTokens, setTokens } from 'services/actions';
+import type { PetrusTokens } from 'types';
 
-// TODO:
-const initialState: any = {};
-
-export const tokens = createReducer(initialState, b => {
-    b.addCase(setTokens, (_, action) => action.payload);
-    b.addCase(deleteTokens, () => initialState);
-});
+export const createTokensReducer = <Tokens extends PetrusTokens>(initState: Tokens | null) =>
+    createReducer(initState, b => {
+        b.addCase(setTokens, (_, action) => action.payload);
+        b.addCase(deleteTokens, () => initState);
+    });

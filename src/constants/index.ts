@@ -4,7 +4,7 @@ export enum AuthSession {
     INACTIVE = 'INACTIVE',
 }
 
-export enum apiKeys {
+export enum ApiKeys {
     FETCH_USER = 'fetchUser',
     LOGIN = 'login',
     LOGOUT = 'logout',

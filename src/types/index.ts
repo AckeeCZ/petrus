@@ -219,6 +219,33 @@ export interface PetrusConfig<
     };
 }
 
+export interface PetrusInitialState<User extends PetrusUser, Tokens extends PetrusTokens> {
+    /**
+     * @initial TokensPersistence.LOCAL
+     */
+    tokensPersistence: TokensPersistence;
+
+    /**
+     * @initial null
+     */
+    user: User | null;
+
+    /**
+     * @initial null
+     */
+    tokens: Tokens | null;
+
+    /**
+     * @initial null
+     */
+    sessionState: AuthSession | null;
+
+    /**
+     * @initial FlowType.INDETERMINATE
+     */
+    flowType: FlowType;
+}
+
 export interface PetrusCustomConfig<
     User extends PetrusUser = PetrusUser,
     Tokens extends PetrusTokens = PetrusTokens,
@@ -250,32 +277,7 @@ export interface PetrusCustomConfig<
     /**
      * Initial state of the `entities` reducer.
      */
-    initialState?: Partial<{
-        /**
-         * @initial TokensPersistence.LOCAL
-         */
-        tokensPersistence: TokensPersistence;
-
-        /**
-         * @initial null
-         */
-        user: PetrusUser | null;
-
-        /**
-         * @initial {}
-         */
-        tokens: PetrusTokens | null;
-
-        /**
-         * @initial null
-         */
-        sessionState: AuthSession;
-
-        /**
-         * @initial FlowType.INDETERMINATE
-         */
-        flowType: FlowType;
-    }>;
+    initialState?: Partial<PetrusInitialState<User, Tokens>>;
 
     handlers: Config['remoteHandlers'];
 

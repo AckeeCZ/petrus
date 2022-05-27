@@ -1,4 +1,4 @@
 import { apiSelectorFactory } from 'services/selectors';
-import { apiKeys } from 'constants/index';
+import { ApiKeys } from 'constants/index';
 
-export const loginSelector = apiSelectorFactory(apiKeys.LOGIN);
+export const loginSelector = apiSelectorFactory(ApiKeys.LOGIN);

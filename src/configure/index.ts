@@ -2,9 +2,9 @@ import { PetrusError, config, StorageDrivers } from 'config';
 
 import { configure as oAuth } from 'modules/oAuth';
 import { configure as authSession } from 'modules/auth-session';
-import { configure as tokens, tokensPersistenceInitialState, TokensPersistence } from 'modules/tokens';
+import { configure as tokens, TokensPersistence } from 'modules/tokens';
 
-import createRootReducer from 'services/reducers';
+import { createRootReducer } from 'services/reducers';
 import rootSaga from 'services/sagas';
 import type { PetrusCredentials, PetrusCustomConfig, PetrusLogger, PetrusOAuth, PetrusTokens, PetrusUser } from 'types';
 
@@ -23,7 +23,7 @@ export function configure<
 
     // get default  tokens persistence from tokens reducer initial state
     const initialState = tokens.initialState(customConfig.initialState);
-    const tokensPersistence = initialState.tokensPersistence || tokensPersistenceInitialState;
+    const tokensPersistence = initialState.tokensPersistence;
 
     const oAuthConfig = oAuth(customConfig.oAuth);
 
@@ -57,7 +57,7 @@ export function configure<
     Object.freeze(config);
 
     return {
-        reducer: createRootReducer(initialState),
+        reducer: createRootReducer<User, Tokens>(customConfig.initialState),
         saga: rootSaga,
     } as const;
 }

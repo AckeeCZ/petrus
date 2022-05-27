@@ -1,11 +1,11 @@
-import { apiKeys } from 'constants/index';
+import { ApiKeys } from 'constants/index';
 
 import login from './login';
 import logout from './logout';
 import fetchUser from './fetchUser';
 
 export default {
-    [apiKeys.LOGIN]: login,
-    [apiKeys.LOGOUT]: logout,
-    [apiKeys.FETCH_USER]: fetchUser,
+    [ApiKeys.LOGIN]: login,
+    [ApiKeys.LOGOUT]: logout,
+    [ApiKeys.FETCH_USER]: fetchUser,
 } as const;

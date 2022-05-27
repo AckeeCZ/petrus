@@ -1,12 +1,12 @@
 import { select, take, race } from 'redux-saga/effects';
 
-import { AuthSession, apiKeys } from 'constants/index';
+import { AuthSession, ApiKeys } from 'constants/index';
 import { sessionStateSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
 import { accessTokenAvailable, setTokens } from 'services/actions';
 
 import { refreshTokens, refreshExpiredToken } from 'modules/tokens/modules/refreshment';
 
-const retrieveTokensApiSelector = apiSelectorFactory(apiKeys.RETRIEVE_TOKENS);
+const retrieveTokensApiSelector = apiSelectorFactory(ApiKeys.RETRIEVE_TOKENS);
 
 function* preSessionResolvement() {
     const retriveTokensApi = yield select(retrieveTokensApiSelector);

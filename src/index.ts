@@ -1,15 +1,14 @@
 import { logout, setUserWithTokens, login } from 'modules/auth-session';
 import {
-    checkAccessTokenExpiration,
     TokensPersistence,
     setTokensPersistence,
     applyAccessTokenResolve,
     unapplyAccessTokenResolve,
     applyAccessTokenRequest,
     unapplyAccessTokenRequest,
-    retrieveTokensRequest,
-    retrieveTokensResolve,
 } from 'modules/tokens';
+import { retrieveTokensRequest, retrieveTokensResolve } from 'modules/tokens/modules/retrieval';
+import { checkAccessTokenExpiration } from 'modules/tokens/modules/refreshment';
 
 import {
     terminate,

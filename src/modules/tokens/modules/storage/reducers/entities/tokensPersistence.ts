@@ -1,9 +1,8 @@
-import { TokensPersistence } from '../../constants';
+import type { TokensPersistence } from '../../constants';
 import { setTokensPersistence } from '../../actions';
 import { createReducer } from '@reduxjs/toolkit';
 
-export const initialState = TokensPersistence.LOCAL;
-
-export const tokensPersistence = createReducer<TokensPersistence>(initialState, b => {
-    b.addCase(setTokensPersistence, (_, action) => action.payload);
-});
+export const createTokensPersistenceReducer = (initialState: TokensPersistence) =>
+    createReducer<TokensPersistence>(initialState, b => {
+        b.addCase(setTokensPersistence, (_, action) => action.payload);
+    });

@@ -1,19 +1,17 @@
 import { combineReducers } from 'redux';
 import { basicResetReducer } from '@ackee/redux-utils';
 
-import { apiReducers as authSession } from 'modules/auth-session';
-import { apiReducers as tokens } from 'modules/tokens';
+import { authSessionApiReducers } from 'modules/auth-session';
+import { tokensRefreshmentApiReducers } from 'modules/tokens/modules/refreshment';
+import { tokensRetrievalApiReducers } from 'modules/tokens/modules/retrieval';
 
 import { authSessionEnd, authSessionStart } from '../../actions';
 
-const { fetchUser, login, logout } = authSession;
-const { refreshTokens, retrieveTokens } = tokens;
-
 export default combineReducers({
-    login: basicResetReducer(login, authSessionEnd.type),
-    fetchUser: basicResetReducer(fetchUser, authSessionEnd.type),
-    logout: basicResetReducer(logout, authSessionStart.type),
+    login: basicResetReducer(authSessionApiReducers.login, authSessionEnd.type),
+    fetchUser: basicResetReducer(authSessionApiReducers.fetchUser, authSessionEnd.type),
+    logout: basicResetReducer(authSessionApiReducers.logout, authSessionStart.type),
 
-    refreshTokens: basicResetReducer(refreshTokens, authSessionEnd.type),
-    retrieveTokens,
+    refreshTokens: basicResetReducer(tokensRefreshmentApiReducers.refreshTokens, authSessionEnd.type),
+    retrieveTokens: tokensRetrievalApiReducers.retrieveTokens,
 });

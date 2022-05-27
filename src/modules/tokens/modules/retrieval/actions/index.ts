@@ -10,7 +10,6 @@ export const retrieveTokensRequest = createAction<void, typeof types['RETRIEVE_T
     types.RETRIEVE_TOKENS_REQUEST,
 );
 
-// TODO:
-export const retrieveTokensResolve = createAction<any, typeof types['RETRIEVE_TOKENS_RESOLVE']>(
+export const retrieveTokensResolve = createAction<boolean, typeof types['RETRIEVE_TOKENS_RESOLVE']>(
     types.RETRIEVE_TOKENS_RESOLVE,
 );
