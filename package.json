@@ -6,7 +6,7 @@
     "module": "es/index.js",
     "sideEffects": false,
     "scripts": {
-        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
+        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx,ts,tsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib  --extensions \".ts,.js,.tsx,.jsx\"",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es --extensions \".ts,.js,.tsx,.jsx\"",
         "build:es:types": "tsc -p tsconfig.types.es.json && tsc-alias -p tsconfig.types.es.json",
@@ -25,7 +25,8 @@
         "version": "yarn changelog && code --wait CHANGELOG.md && git add CHANGELOG.md",
         "release": "git fetch origin && yarn version",
         "type-check": "tsc --noEmit",
-        "type-check:watch": "yarn type-check -- --watch"
+        "type-check:watch": "yarn type-check -- --watch",
+        "docs:build": "rm -rf docs/api && typedoc --options ./typedocsOptions.js"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
@@ -96,6 +97,8 @@
         "redux-saga": "1.x",
         "reselect": "4.1.5",
         "tsc-alias": "^1.6.7",
+        "typedoc": "^0.22.16",
+        "typedoc-plugin-markdown": "^3.12.1",
         "typescript": "4.6.4"
     },
     "husky": {

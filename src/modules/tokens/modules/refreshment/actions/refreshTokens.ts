@@ -4,11 +4,11 @@ import type { PetrusTokens } from 'types';
 
 const ACTION_TYPE = actionType('REFRESH_TOKENS');
 
-type RefreshTokensRequestPayload = PetrusTokens | undefined;
+export type RefreshTokensRequestPayload = PetrusTokens | undefined;
 
-type RefreshTokensSuccessPayload = void;
+export type RefreshTokensSuccessPayload = void;
 
-type RefreshTokensFailurePayload = Error;
+export type RefreshTokensFailurePayload = Error;
 
 export const refreshTokens = createApiActions<
     typeof ACTION_TYPE,
