@@ -1,13 +1,12 @@
 import { createApiActions } from '@ackee/redux-utils';
 import { actionType } from 'services/utils';
+import type { PetrusUser } from 'types';
 
 export type FetchUserRequestPayload = void;
 
-// TODO:
-export type FetchUserSuccessPayload = any;
+export type FetchUserSuccessPayload = PetrusUser;
 
-// TODO:
-export type FetchUserFailurePayload = any;
+export type FetchUserFailurePayload = Error;
 
 const ACTION_TYPE_PREFIX = actionType('FETCH_USER');
 

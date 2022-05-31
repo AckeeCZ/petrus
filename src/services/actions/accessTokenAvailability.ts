@@ -1,12 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 import { actionType } from 'services/utils';
+import type { PetrusTokens } from 'types';
 
 const types = {
     ACCESS_TOKEN_AVAILABLE: actionType('ACCESS_TOKEN_AVAILABLE'),
     ACCESS_TOKEN_UNAVAILABLE: actionType('ACCESS_TOKEN_UNAVAILABLE'),
 } as const;
 
-export const accessTokenAvailable = createAction<string, typeof types['ACCESS_TOKEN_AVAILABLE']>(
+export const accessTokenAvailable = createAction<PetrusTokens['accessToken'], typeof types['ACCESS_TOKEN_AVAILABLE']>(
     types.ACCESS_TOKEN_AVAILABLE,
 );
 

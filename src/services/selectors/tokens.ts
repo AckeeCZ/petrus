@@ -5,4 +5,4 @@ export const tokensSelector = createSelector(entitiesSelector, entities => entit
 
 export const tokensPersistenceSelector = createSelector(entitiesSelector, entities => entities.tokensPersistence);
 
-export const accessTokenSelector = createSelector(tokensSelector, tokens => tokens?.accessToken || null);
+export const accessTokenSelector = createSelector(tokensSelector, tokens => tokens?.accessToken ?? null);

@@ -6,43 +6,35 @@ import { configure as tokens, TokensPersistence } from 'modules/tokens';
 
 import { createRootReducer } from 'services/reducers';
 import rootSaga from 'services/sagas';
-import type { PetrusCredentials, PetrusCustomConfig, PetrusLogger, PetrusOAuth, PetrusTokens, PetrusUser } from 'types';
-
-config.initialized = false;
+import type { PetrusCredentials, PetrusCustomConfig, PetrusUser } from 'types';
 
 export function configure<
     User extends PetrusUser = PetrusUser,
-    Tokens extends PetrusTokens = PetrusTokens,
-    OAuth extends PetrusOAuth = PetrusOAuth,
     Credentials extends PetrusCredentials = PetrusCredentials,
-    Logger extends PetrusLogger = PetrusLogger,
->(customConfig: PetrusCustomConfig<User, Tokens, OAuth, Credentials, Logger>) {
+    AppState extends Record<string, any> = Record<string, any>,
+>(customConfig: PetrusCustomConfig<User, Credentials>) {
     if (config.initialized) {
         throw new PetrusError(`'configure' method can be called only once.`);
     }
 
-    // get default  tokens persistence from tokens reducer initial state
-    const initialState = tokens.initialState(customConfig.initialState);
-    const tokensPersistence = initialState.tokensPersistence;
-
     const oAuthConfig = oAuth(customConfig.oAuth);
+    const { rootReducer, entitiesInitState } = createRootReducer<User>(customConfig.initialState);
 
     Object.assign(config, {
         initialized: true,
 
         logger: customConfig.logger || console,
 
-        selector: (state: any) => state.auth,
+        selector: (state: AppState) => state.auth,
 
         oAuth: oAuthConfig,
 
         tokens: tokens.options(customConfig.tokens),
 
-        remoteHandlers: {
-            /* @ts-expect-error */
+        handlers: {
             ...authSession.handlers(customConfig.handlers, {
                 oAuthEnabled: oAuthConfig.enabled,
-                tokensPersistence,
+                tokensPersistence: entitiesInitState.tokensPersistence,
             }),
             ...tokens.handlers(customConfig.handlers),
         },
@@ -58,7 +50,7 @@ export function configure<
     Object.freeze(config);
 
     return {
-        reducer: createRootReducer<User, Tokens>(customConfig.initialState),
+        reducer: rootReducer,
         saga: rootSaga,
     } as const;
 }

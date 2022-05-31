@@ -1,14 +1,14 @@
-import type { PetrusHandlerReturnValue } from 'types';
+import type { HandlerReturnValue } from 'types';
 
 export type StorageDriver = {
     set<Key extends string = string, Value extends Record<Key, any> = Record<Key, any>>(
         k: Key,
         v: Value,
-    ): PetrusHandlerReturnValue<void>;
+    ): HandlerReturnValue<void>;
 
     get<Key extends string = string, Value extends Record<Key, any> = Record<Key, string>>(
         k: Key,
-    ): PetrusHandlerReturnValue<Value | void>;
+    ): HandlerReturnValue<Value | void>;
 
-    remove<Key extends string = string>(k: Key): PetrusHandlerReturnValue<void>;
+    remove<Key extends string = string>(k: Key): HandlerReturnValue<void>;
 };

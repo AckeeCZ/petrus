@@ -1,7 +1,11 @@
 import type { IndexedDBStorage, ResetStorage, SessionStorage } from 'config/storageDrivers';
+import type { StorageDriver } from 'config/types';
 import type { AuthSession, FlowType } from 'constants/index';
 import type { TokensPersistence } from 'modules/tokens/modules/storage';
 import type { PetrusRootState } from 'services/reducers';
+import type { HandlerReturnValue } from './helpers';
+
+export * from './helpers';
 
 export type PetrusLogger = {
     error: Console['error'];
@@ -17,7 +21,7 @@ export type PetrusTokens = {
         /**
          * If `expiration` is omitted, then petrus won't automatically refresh the access token.
          */
-        expiration?: string;
+        expiration?: string | null;
     } & Record<string, any>;
 
     refreshToken?: {
@@ -25,22 +29,18 @@ export type PetrusTokens = {
     } & Record<string, any>;
 };
 
-export type PetrusHandlerReturnValue<R> = R | Promise<R> | Generator<unknown, R>;
-
 export type PetrusOAuth = {
     searchParams: Record<string, any>;
 };
 
 export interface PetrusConfig<
     User extends PetrusUser = PetrusUser,
-    Tokens extends PetrusTokens = PetrusTokens,
-    OAuth extends PetrusOAuth = PetrusOAuth,
     Credentials extends PetrusCredentials = PetrusCredentials,
     Logger extends PetrusLogger = PetrusLogger,
 > {
     logger: Logger;
 
-    selector: <AppState>(state: AppState) => PetrusRootState;
+    selector: <AppState extends Record<string, any> = Record<string, any>>(state: AppState) => PetrusRootState;
 
     initialized: boolean;
 
@@ -93,6 +93,8 @@ export interface PetrusConfig<
      *
      */
     oAuth: {
+        enabled: boolean;
+
         /**
          * Origin of your app: `window.location.origin`
          * @default ''
@@ -110,7 +112,7 @@ export interface PetrusConfig<
          * if the URL is valid, the 'parseRedirectUrlParams' method is called.
          * @default 'src/modules/oAuth/config/validateRedirectUrl'
          */
-        validateRedirectUrl?: (location: Location) => boolean;
+        validateRedirectUrl: (oAuth: PetrusConfig<User, Credentials, Logger>['oAuth'], location: Location) => boolean;
 
         /**
          * Parse search params from URL. It must handle both `location.search` and `location.hash`:
@@ -118,43 +120,45 @@ export interface PetrusConfig<
          * - `/oauth/redirect#access_token=123`
          * @default 'src/modules/oAuth/config/getSearchParams'
          */
-        parseRedirectUrlParams?: (location: Location) => PetrusHandlerReturnValue<OAuth['searchParams']>;
+        parseRedirectUrlParams: (location: Location) => HandlerReturnValue<PetrusOAuth['searchParams']>;
 
         /**
          * This method is called after 'parseRedirectUrlParams', but only if those search params don't include `accessToken` property.
          */
-        fetchAccessToken?: (searchParams: OAuth['searchParams']) => PetrusHandlerReturnValue<{
-            accessToken: string;
-            expiresIn?: number | string;
-            refreshToken?: string;
-        }>;
+        fetchAccessToken:
+            | ((searchParams: PetrusOAuth['searchParams']) => HandlerReturnValue<{
+                  accessToken: string;
+                  expiresIn?: number | string;
+                  refreshToken?: string;
+              }>)
+            | (() => void);
 
         /**
          * - It creates and `accessToken` object from provided `searchParams`.
          * - This method is called when access token is available.
          * @default 'src/modules/oAuth/config/enforceAccessTokenScheme'
          */
-        enforceAccessTokenScheme?: (
-            searchParams: OAuth['searchParams'],
-        ) => PetrusHandlerReturnValue<Tokens['accessToken']>;
+        enforceAccessTokenScheme: (
+            searchParams: PetrusOAuth['searchParams'],
+        ) => HandlerReturnValue<PetrusTokens['accessToken']>;
 
         /**
          * - It creates and `refreshToken` object from provided `searchParams`.
          * - This method is called when access token is available.
          * @default 'src/modules/oAuth/config/enforceRefreshTokenScheme'
          */
-        enforceRefreshTokenScheme?: (
-            searchParams: OAuth['searchParams'],
-        ) => PetrusHandlerReturnValue<Tokens['refreshToken']>;
+        enforceRefreshTokenScheme: (
+            searchParams: PetrusOAuth['searchParams'],
+        ) => HandlerReturnValue<PetrusTokens['refreshToken']>;
 
         /**
-         * This is final OAuth method in this custom flow that combines the results of `enforceAccessTokenScheme` and `enforceRefreshTokenScheme` to the `Tokens` object or `null` if accessToken isn't available (for example due to authentication error).
+         * This is final OAuth method in this custom flow that combines the results of `enforceAccessTokenScheme` and `enforceRefreshTokenScheme` to the `PetrusTokens` object or `null` if accessToken isn't available (for example due to authentication error).
          * @default 'src/modules/oAuth/config/processTokens'
          */
-        processTokens?: (
-            accessToken: Tokens['accessToken'],
-            refreshToken: Tokens['refreshToken'],
-        ) => PetrusHandlerReturnValue<Tokens | null>;
+        processTokens: (
+            accessToken: PetrusTokens['accessToken'],
+            refreshToken: PetrusTokens['refreshToken'],
+        ) => HandlerReturnValue<PetrusTokens | null>;
     };
 
     tokens: {
@@ -193,24 +197,24 @@ export interface PetrusConfig<
         checkTokenExpirationOnTabFocus: boolean;
     };
 
-    remoteHandlers: {
+    handlers: {
         /**
          * - Called when `loginRequest` action dispatches.
          * - If returned `user` property is undefiend, the `getAuthUser` handler gets called.
          * - Optional if the oauth flow is used instead.
          */
-        authenticate?: (credentails: Credentials) => PetrusHandlerReturnValue<{ user?: User | null; tokens: Tokens }>;
+        authenticate?: (credentails: Credentials) => HandlerReturnValue<{ user?: User | null; tokens: PetrusTokens }>;
 
         /**
          * - This method is called when tokens are successfully retrieved.
          * - Or when the `authenticate` returns undefined `user` property.
          */
-        getAuthUser: (tokens: Tokens) => PetrusHandlerReturnValue<User>;
+        getAuthUser: (tokens: PetrusTokens) => HandlerReturnValue<User>;
 
         /**
          * This method is called anytime when access token is expired.
          */
-        refreshTokens: (tokens: Tokens) => PetrusHandlerReturnValue<Tokens>;
+        refreshTokens: (tokens: Required<PetrusTokens>) => HandlerReturnValue<PetrusTokens>;
     };
 
     mapStorageDriverToTokensPersistence: {
@@ -220,7 +224,7 @@ export interface PetrusConfig<
     };
 }
 
-export interface PetrusInitialState<User extends PetrusUser, Tokens extends PetrusTokens> {
+export interface PetrusEntitiesState<User extends PetrusUser> {
     /**
      * @initial TokensPersistence.LOCAL
      */
@@ -234,7 +238,7 @@ export interface PetrusInitialState<User extends PetrusUser, Tokens extends Petr
     /**
      * @initial null
      */
-    tokens: Tokens | null;
+    tokens: PetrusTokens | null;
 
     /**
      * @initial null
@@ -249,17 +253,8 @@ export interface PetrusInitialState<User extends PetrusUser, Tokens extends Petr
 
 export interface PetrusCustomConfig<
     User extends PetrusUser = PetrusUser,
-    Tokens extends PetrusTokens = PetrusTokens,
-    OAuth extends PetrusOAuth = PetrusOAuth,
     Credentials extends PetrusCredentials = PetrusCredentials,
-    Logger extends PetrusLogger = PetrusLogger,
-    Config extends PetrusConfig<User, Tokens, OAuth, Credentials, Logger> = PetrusConfig<
-        User,
-        Tokens,
-        OAuth,
-        Credentials,
-        Logger
-    >,
+    Config extends PetrusConfig<User, Credentials> = PetrusConfig<User, Credentials>,
 > {
     /**
      * This function must return petrus reducer from your application root state,
@@ -273,19 +268,28 @@ export interface PetrusCustomConfig<
      */
     logger?: Config['logger'];
 
-    oAuth?: Config['oAuth'];
+    oAuth?: {
+        origin: Config['oAuth']['origin'];
+        redirectPathname: Config['oAuth']['redirectPathname'];
+        validateRedirectUrl?: Config['oAuth']['validateRedirectUrl'];
+        parseRedirectUrlParams?: Config['oAuth']['parseRedirectUrlParams'];
+        fetchAccessToken?: Config['oAuth']['fetchAccessToken'];
+        enforceAccessTokenScheme?: Config['oAuth']['enforceAccessTokenScheme'];
+        enforceRefreshTokenScheme?: Config['oAuth']['enforceRefreshTokenScheme'];
+        processTokens?: Config['oAuth']['processTokens'];
+    };
 
     tokens?: Partial<Config['tokens']>;
 
     /**
      * Initial state of the `entities` reducer.
      */
-    initialState?: Partial<PetrusInitialState<User, Tokens>>;
+    initialState?: Partial<PetrusEntitiesState<User>>;
 
-    handlers: Config['remoteHandlers'];
+    handlers: Config['handlers'];
 
     /**
      * Set a custom storage driver for a given `TokensPersistence`.
      */
-    mapStorageDriverToTokensPersistence?: Partial<Config['mapStorageDriverToTokensPersistence']>;
+    mapStorageDriverToTokensPersistence?: Partial<Record<TokensPersistence, StorageDriver>>;
 }

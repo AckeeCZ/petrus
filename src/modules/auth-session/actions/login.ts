@@ -1,13 +1,12 @@
 import { createApiActions } from '@ackee/redux-utils';
 import { actionType } from 'services/utils';
+import type { PetrusCredentials } from 'types';
 
-export type LoginRequestPayload = any; // credentials
+export type LoginRequestPayload = PetrusCredentials;
 
-// TODO:
-export type LoginSuccessPayload = any;
+export type LoginSuccessPayload = void;
 
-// TODO:
-export type LoginFailurePayload = any; // error
+export type LoginFailurePayload = Error;
 
 const ACTION_TYPE_PREFIX = actionType('LOGIN');
 

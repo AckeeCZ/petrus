@@ -4,10 +4,8 @@ export const resetStorage = {
     set: () => {},
     get: () => null,
     async remove<Key extends string>(key: Key) {
-        return indexedDB.remove(key);
-
-        // FIXME: calling this method results in "TypeError: Illegal invocation"
-        // sessionStorage.remove(key);
+        sessionStorage.removeItem(key);
+        await indexedDB.remove(key);
     },
 } as const;
 

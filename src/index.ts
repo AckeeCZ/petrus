@@ -118,7 +118,13 @@ export {
 export { configure } from './configure';
 export { default as authorizable } from './HOC/authorizable';
 export { withAuthSession, getAuthStateChannel, getAccessToken } from './services/sagas';
-export { entitiesSelector, apiSelector } from './services/selectors';
+export {
+    entitiesSelector,
+    apiSelector,
+    tokensSelector,
+    accessTokenSelector,
+    tokensPersistenceSelector,
+} from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
 export { StorageDrivers } from './config';
 export * from './constants';

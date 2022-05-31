@@ -2,7 +2,7 @@ import { config } from 'config';
 import type { ApiKeys } from 'constants/index';
 
 export const apiSelector = <AppState>(state: AppState, apiKey: ApiKeys) => {
-    const { api } = config.selector<AppState>(state);
+    const { api } = config.selector(state);
     return api[apiKey];
 };
 

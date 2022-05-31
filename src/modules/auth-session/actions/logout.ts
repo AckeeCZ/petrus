@@ -3,11 +3,9 @@ import { actionType } from 'services/utils';
 
 export type LogoutRequestPayload = void;
 
-// TODO:
-export type LogoutSuccessPayload = any;
+export type LogoutSuccessPayload = void;
 
-// TODO:
-export type LogoutFailurePayload = any;
+export type LogoutFailurePayload = Error;
 
 const ACTION_TYPE_PREFIX = actionType('LOGOUT');
 

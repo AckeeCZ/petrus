@@ -7,7 +7,9 @@ export const StorageDrivers = storageDrivers;
 // This object is once mutated when the 'configure' ('../configure') method is called.
 // On this call custom configuration is merged with default configuration.
 // The final configuration is validated and then freezed.
-export const config = {} as PetrusConfig;
+export const config = {
+    initialized: false,
+} as PetrusConfig;
 
 export class PetrusError extends Error {
     constructor(message: string) {
@@ -15,5 +17,3 @@ export class PetrusError extends Error {
         this.name = 'PetrusError';
     }
 }
-
-export * from './global';

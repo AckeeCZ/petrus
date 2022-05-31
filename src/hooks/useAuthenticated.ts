@@ -1,7 +1,8 @@
 import type { FlowType } from 'constants/index';
 import { useSelector } from 'react-redux';
-import { flowTypeSelector } from 'services/selectors';
+import { entitiesSelector } from 'services/selectors';
 
 export function useAuthenticated(): FlowType {
-    return useSelector(flowTypeSelector);
+    const { flowType } = useSelector(entitiesSelector);
+    return flowType;
 }

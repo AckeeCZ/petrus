@@ -1,14 +1,13 @@
 import { createApiActions } from '@ackee/redux-utils';
 import { actionType } from 'services/utils';
+import type { PetrusTokens } from 'types';
 
 const ACTION_TYPE = actionType('REFRESH_TOKENS');
 
-// TODO:
-type RefreshTokensRequestPayload = any;
+type RefreshTokensRequestPayload = PetrusTokens | undefined;
 
 type RefreshTokensSuccessPayload = void;
 
-// TODO:
 type RefreshTokensFailurePayload = Error;
 
 export const refreshTokens = createApiActions<

@@ -1,9 +1,7 @@
-import { createSelector } from 'reselect';
 import { config } from 'config';
+import type { PetrusEntitiesState, PetrusUser } from 'types';
 
-export const entitiesSelector = <AppState>(state: AppState) => {
-    const { entities } = config.selector(state);
-    return entities;
+export const entitiesSelector = <AppState, User extends PetrusUser = PetrusUser>(state: AppState) => {
+    const { entities } = config.selector<AppState>(state);
+    return entities as PetrusEntitiesState<User>;
 };
-
-export const sessionStateSelector = createSelector(entitiesSelector, entities => entities.sessionState);
