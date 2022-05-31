@@ -168,6 +168,7 @@ export interface PetrusConfig<
          * This gives you the option to do something with access token externally, e.g. injected to the Authorization header.
          *
          * @default false
+         * @deprecated
          */
         applyAccessTokenExternally: boolean;
 
