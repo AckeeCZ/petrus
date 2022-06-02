@@ -1,4 +1,4 @@
-import { PetrusError, config, StorageDrivers } from 'config';
+import { PetrusError, config, storageDrivers } from 'config';
 
 import { configure as oAuth } from 'modules/oAuth';
 import { configure as authSession } from 'modules/auth-session';
@@ -40,9 +40,9 @@ export function configure<
         },
 
         mapStorageDriverToTokensPersistence: {
-            [TokensPersistence.SESSION]: StorageDrivers.sessionStorage,
-            [TokensPersistence.LOCAL]: StorageDrivers.indexedDB,
-            [TokensPersistence.NONE]: StorageDrivers.resetStorage,
+            [TokensPersistence.SESSION]: storageDrivers.sessionStorage,
+            [TokensPersistence.LOCAL]: storageDrivers.indexedDB,
+            [TokensPersistence.NONE]: storageDrivers.resetStorage,
             ...customConfig.mapStorageDriverToTokensPersistence,
         },
     });

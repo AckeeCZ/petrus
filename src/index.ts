@@ -126,7 +126,7 @@ export {
     tokensPersistenceSelector,
 } from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
-export { StorageDrivers } from './config';
+export { storageDrivers } from './config';
 export * from './constants';
 export { retrieveTokens } from 'modules/tokens/modules/retrieval';
 
@@ -135,3 +135,4 @@ export * from './components/Authenticated';
 
 export * from './types';
 export * from './config/types';
+export type { RefreshTokensRequestPayload } from 'modules/tokens/modules/refreshment';

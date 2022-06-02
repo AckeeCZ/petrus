@@ -47,7 +47,7 @@ export interface PetrusConfig<
     /**
      * ## Implicit grant flow
      * @example 
-     ```
+     ```ts
         import { configure } from '@ackee/petrus';
     
         // Minimal required setup:
@@ -64,7 +64,7 @@ export interface PetrusConfig<
      *  
      * ## Web application flow
      * @example 
-     ```
+     ```ts
         import { configure } from '@ackee/petrus';
     
         // Minimal required setup:

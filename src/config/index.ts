@@ -1,8 +1,12 @@
 import type { PetrusConfig } from 'types';
 
-import * as storageDrivers from './storageDrivers';
+import { indexedDB, resetStorage, sessionStorage } from './storageDrivers';
 
-export const StorageDrivers = storageDrivers;
+export const storageDrivers = {
+    indexedDB,
+    resetStorage,
+    sessionStorage,
+} as const;
 
 // This object is once mutated when the 'configure' ('../configure') method is called.
 // On this call custom configuration is merged with default configuration.

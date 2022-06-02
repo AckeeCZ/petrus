@@ -26,7 +26,8 @@
         "release": "git fetch origin && yarn version",
         "type-check": "tsc --noEmit",
         "type-check:watch": "yarn type-check -- --watch",
-        "docs:build": "rm -rf docs/api && typedoc --options ./typedocsOptions.js"
+        "docs:clear": "rm -rf petrus.wiki/**/*.md .nojekyll petrus.wiki/media",
+        "docs:build": "yarn docs:clear && typedoc --tsconfig tsconfig.json"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
@@ -97,7 +98,8 @@
         "redux-saga": "1.x",
         "reselect": "4.1.5",
         "tsc-alias": "^1.6.7",
-        "typedoc": "^0.22.16",
+        "typedoc": "^0.22.17",
+        "typedoc-github-wiki-theme": "^1.0.1",
         "typedoc-plugin-markdown": "^3.12.1",
         "typescript": "4.6.4"
     },

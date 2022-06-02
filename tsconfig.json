@@ -17,5 +17,17 @@
         "skipLibCheck": true,
         "noUnusedLocals": true
     },
-    "include": ["src"]
+    "include": ["src"],
+    "typedocOptions": {
+        "entryPoints": ["./src/index.ts"],
+        "out": "petrus.wiki",
+        "hideGenerator": true,
+        "includeVersion": true,
+        "githubPages": true,
+        "pretty": true,
+        "media": "./media",
+        "excludeInternal": true,
+        "cleanOutputDir": false,
+        "theme": "github-wiki"
+    }
 }
