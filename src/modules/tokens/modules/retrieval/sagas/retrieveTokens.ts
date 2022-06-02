@@ -74,6 +74,9 @@ function* tokensRetrieval() {
     return fetchUserResultAction.type === fetchUser.success.type;
 }
 
+/**
+ * @category Redux Saga
+ */
 export function* retrieveTokens() {
     yield put(retrieveTokensRequest());
 

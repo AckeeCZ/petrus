@@ -10,6 +10,9 @@ export type LoginFailurePayload = Error;
 
 const ACTION_TYPE_PREFIX = actionType('LOGIN');
 
+/**
+ * @category Redux Action Creator
+ */
 export const login = createApiActions<
     typeof ACTION_TYPE_PREFIX,
     LoginRequestPayload,

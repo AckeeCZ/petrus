@@ -9,6 +9,9 @@ export type LogoutFailurePayload = Error;
 
 const ACTION_TYPE_PREFIX = actionType('LOGOUT');
 
+/**
+ * @category Redux Action Creator
+ */
 export const logout = createApiActions<
     typeof ACTION_TYPE_PREFIX,
     LogoutRequestPayload,

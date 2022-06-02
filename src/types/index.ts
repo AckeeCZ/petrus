@@ -46,50 +46,50 @@ export interface PetrusConfig<
 
     /**
      * ## Implicit grant flow
-     * @example 
-     ```ts
-        import { configure } from '@ackee/petrus';
-    
-        // Minimal required setup:
-        const { saga, reducer } = configure({
-            oAuth: {
-                origin: 'http://myapp.com',
-            },
-            handlers: {
-                refreshTokens,
-                getAuthUser,
-            },
-        });
-     ```
-     *  
+     * @example
+     *```ts
+     *   import { configure } from '@ackee/petrus';
+     *
+     *   // Minimal required setup:
+     *   const { saga, reducer } = configure({
+     *       oAuth: {
+     *           origin: 'http://myapp.com',
+     *       },
+     *       handlers: {
+     *           refreshTokens,
+     *           getAuthUser,
+     *       },
+     *   });
+     *```
+     *
      * ## Web application flow
-     * @example 
-     ```ts
-        import { configure } from '@ackee/petrus';
-    
-        // Minimal required setup:
-        const { saga, reducer } = configure({
-            oAuth: {
-                origin: 'http://myapp.com',
-                *fetchAccessToken(searchParams) {
-                    const { code } = searchParams;
-
-                    // the actuall API request:
-                    const { accessToken, refreshToken, expiresIn } = yield* api.get('...');
-
-                    return {
-                        accessToken,
-                        refreshToken,
-                        expiresIn,
-                    };
-                },
-            },
-            handlers: {
-                refreshTokens,
-                getAuthUser,
-            },
-        });
-     ```
+     * @example
+     * ```ts
+     *   import { configure } from '@ackee/petrus';
+     *
+     *   // Minimal required setup:
+     *   const { saga, reducer } = configure({
+     *      oAuth: {
+     *           origin: 'http://myapp.com',
+     *           *fetchAccessToken(searchParams) {
+     *                const { code } = searchParams;
+     *
+     *               // the actuall API request:
+     *               const { accessToken, refreshToken, expiresIn } = yield* api.get('...');
+     *
+     *              return {
+     *                   accessToken,
+     *                   refreshToken,
+     *                   expiresIn,
+     *               };
+     *           },
+     *       },
+     *       handlers: {
+     *           refreshTokens,
+     *           getAuthUser,
+     *       },
+     *   });
+     * ```
      *
      */
     oAuth: {

@@ -9,19 +9,35 @@ const types = {
     UNAPPLY_ACCESS_TOKEN_RESOLVE: actionType('UNAPPLY_ACCESS_TOKEN_RESOLVE'),
 } as const;
 
+/**
+ * @depreacted
+ * @ignore
+ */
 export const applyAccessTokenRequest = createAction<
     PetrusTokens['accessToken'],
     typeof types['APPLY_ACCESS_TOKEN_REQUEST']
 >(types.APPLY_ACCESS_TOKEN_REQUEST);
 
+/**
+ * @depreacted
+ * @ignore
+ */
 export const applyAccessTokenResolve = createAction<void, typeof types['APPLY_ACCESS_TOKEN_RESOLVE']>(
     types.APPLY_ACCESS_TOKEN_RESOLVE,
 );
 
+/**
+ * @depreacted
+ * @ignore
+ */
 export const unapplyAccessTokenRequest = createAction<void, typeof types['UNAPPLY_ACCESS_TOKEN_REQUEST']>(
     types.UNAPPLY_ACCESS_TOKEN_REQUEST,
 );
 
+/**
+ * @depreacted
+ * @ignore
+ */
 export const unapplyAccessTokenResolve = createAction<void, typeof types['UNAPPLY_ACCESS_TOKEN_RESOLVE']>(
     types.UNAPPLY_ACCESS_TOKEN_RESOLVE,
 );

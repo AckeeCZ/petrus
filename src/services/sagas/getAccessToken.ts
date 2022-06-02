@@ -44,6 +44,9 @@ function* afterRefreshAccessToken() {
     return action.payload;
 }
 
+/**
+ * @category Redux Saga
+ */
 export default function* getAccessToken() {
     const { sessionState } = yield* appSelect(entitiesSelector);
 

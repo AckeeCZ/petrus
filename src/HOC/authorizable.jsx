@@ -8,6 +8,7 @@ const MockAppLoader = () => <div>Loading...</div>;
 /**
  * Use `Authenticated` component instead.
  * @deprecated
+ * @category HOC
  */
 const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
     const AuthorizedComponent = props => (

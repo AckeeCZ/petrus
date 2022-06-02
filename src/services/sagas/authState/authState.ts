@@ -83,6 +83,9 @@ function* authSessionCircuit() {
     yield call(deepCircuit, [authSessionUnits[0], ...authSessionInterruptionUnits, authSessionUnits[1]]);
 }
 
+/**
+ * @category Redux Saga
+ */
 export function* getAuthStateChannel() {
     const authStateChannel: ActionChannelEffect = yield actionChannel([
         authSessionStart,

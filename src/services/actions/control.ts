@@ -5,4 +5,7 @@ const types = {
     TERMINATE: actionType('TERMINATE'),
 } as const;
 
+/**
+ * @category Redux Action Creator
+ */
 export const terminate = createAction<void, typeof types['TERMINATE']>(types.TERMINATE);

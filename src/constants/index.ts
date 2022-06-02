@@ -18,4 +18,7 @@ export enum FlowType {
     AUTHENTICATED = 'authenticated',
 }
 
+/**
+ * @ignore
+ */
 export const ACTION_PREFIX = '@@petrus/';

@@ -15,6 +15,9 @@ function* infiniteWithAuthSession<Fn extends DefaultFn>(task: Fn, ...args: Param
     }
 }
 
+/**
+ * @category Redux Saga
+ */
 export default function* withAuthSession<Fn extends DefaultFn>(task: Fn) {
     yield* raceWithTerminate(infiniteWithAuthSession, task);
 }

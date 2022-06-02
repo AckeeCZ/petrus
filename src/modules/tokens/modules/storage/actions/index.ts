@@ -6,6 +6,9 @@ const types = {
     SET_TOKENS_PERSISTENCE: actionType('SET_TOKENS_PERSISTENCE'),
 } as const;
 
+/**
+ * @category Redux Action Creator
+ */
 export const setTokensPersistence = createAction<TokensPersistence, typeof types['SET_TOKENS_PERSISTENCE']>(
     types.SET_TOKENS_PERSISTENCE,
 );

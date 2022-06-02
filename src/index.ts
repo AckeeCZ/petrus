@@ -22,81 +22,97 @@ import {
 
 /**
  * @deprecated use `logout.request`
+ * @ignore
  */
 export const logoutRequest = logout.request;
 
 /**
  * @deprecated use `login.request`
+ * @ignore
  */
 export const loginRequest = login.request;
 
 /**
  * @deprecated use `login.success.type`
+ * @ignore
  */
 export const LOGIN_SUCCESS = login.success.type;
 
 /**
  * @deprecated use `login.failure.type`
+ * @ignore
  */
 export const LOGIN_FAILURE = login.failure.type;
 
 /**
  * @deprecated use `authSessionStart.type`
+ * @ignore
  */
 export const AUTH_SESSION_START = authSessionStart.type;
 
 /**
  * @deprecated use `authSessionEnd.type`
+ * @ignore
  */
 export const AUTH_SESSION_END = authSessionEnd.type;
 
 /**
  * @deprecated use `authSessionPause.type`
+ * @ignore
  */
 export const AUTH_SESSION_PAUSE = authSessionPause.type;
 
 /**
  * @deprecated use `authSessionResume.type`
+ * @ignore
  */
 export const AUTH_SESSION_RESUME = authSessionResume.type;
 
 /**
  * @deprecated use `accessTokenAvailable.type`
+ * @ignore
  */
 export const ACCESS_TOKEN_AVAILABLE = accessTokenAvailable.type;
 
 /**
  * @deprecated use `accessTokenUnavailable.type`
+ * @ignore
  */
 export const ACCESS_TOKEN_UNAVAILABLE = accessTokenUnavailable.type;
 
 /**
- * @deprecated use `applyAccessTokenRequest.type`
+ * @deprecated
+ * @ignore
  */
 export const APPLY_ACCESS_TOKEN_REQUEST = applyAccessTokenRequest.type;
 
 /**
  * @deprecated use `unapplyAccessTokenRequest.type`
+ * @ignore
  */
 export const UNAPPLY_ACCESS_TOKEN_REQUEST = unapplyAccessTokenRequest.type;
 
 /**
  * @deprecated use `retrieveTokensRequest.type`
+ * @ignore
  */
 export const RETRIEVE_TOKENS_REQUEST = retrieveTokensRequest.type;
 
 /**
  * @deprecated use `retrieveTokensResolve.type`
+ * @ignore
  */
 export const RETRIEVE_TOKENS_RESOLVE = retrieveTokensResolve.type;
 
 export {
-    // actions
+    applyAccessTokenRequest,
+    unapplyAccessTokenRequest,
+    applyAccessTokenResolve,
+    unapplyAccessTokenResolve,
+    // ----
     setUserWithTokens,
     checkAccessTokenExpiration,
     setTokensPersistence,
-    applyAccessTokenResolve,
-    unapplyAccessTokenResolve,
     terminate,
     logout,
     login,
@@ -106,12 +122,8 @@ export {
     authSessionResume,
     accessTokenAvailable,
     accessTokenUnavailable,
-    applyAccessTokenRequest,
-    unapplyAccessTokenRequest,
     retrieveTokensRequest,
     retrieveTokensResolve,
-    //
-    // constants
     TokensPersistence,
 };
 

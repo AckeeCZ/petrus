@@ -4,6 +4,9 @@ import type { PetrusTokens } from 'types';
 
 const ACTION_TYPE = actionType('REFRESH_TOKENS');
 
+/**
+ * @ignore
+ */
 export type RefreshTokensRequestPayload = PetrusTokens | undefined;
 
 export type RefreshTokensSuccessPayload = void;
