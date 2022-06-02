@@ -1,5 +1,14 @@
+const path = require('path');
+
 const config = {
     presets: [
+        [
+            '@babel/typescript',
+            {
+                onlyRemoveTypeImports: true,
+                allowDeclareFields: true,
+            },
+        ],
         '@babel/react',
         [
             '@babel/env',
@@ -13,13 +22,17 @@ const config = {
     ],
     plugins: [
         [
+            require.resolve('babel-plugin-custom-import-path-transform'),
+            {
+                transformImportPath: path.resolve(__dirname, 'scripts/transformImportPath.js'),
+            },
+        ],
+        [
             require.resolve('babel-plugin-module-resolver'),
             {
                 root: ['./src'],
             },
         ],
-        require.resolve('@babel/plugin-proposal-object-rest-spread'),
-        require.resolve('@babel/plugin-proposal-class-properties'),
         require.resolve('@babel/plugin-transform-runtime'),
         [
             require.resolve('babel-plugin-transform-imports'),

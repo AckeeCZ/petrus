@@ -1,0 +1,6 @@
+{
+    "extends": "./tsconfig.types.es.json",
+    "compilerOptions": {
+        "outDir": "lib"
+    }
+}

@@ -1,4 +1,4 @@
-![ackee|Petrus](assets/ackee_git_frontend_petrus.png)
+![ackee|Petrus](media/ackee_git_frontend_petrus.png)
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AckeeCZ/petrus/blob/master/LICENSE) [![CI Status](https://img.shields.io/travis/com/AckeeCZ/petrus.svg?style=flat)](https://travis-ci.com/AckeeCZ/petrus) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request) [![Dependency Status](https://img.shields.io/david/AckeeCZ/petrus.svg?style=flat-square)](https://david-dm.org/AckeeCZ/petrus) [![bundlephobia](https://flat.badgen.net/bundlephobia/min/@ackee/petrus)](https://bundlephobia.com/result?p=@ackee/petrus) [![bundlephobia](https://flat.badgen.net/bundlephobia/minzip/@ackee/petrus)](https://bundlephobia.com/result?p=@ackee/petrus)
 
@@ -79,35 +79,7 @@ function*() {
 
 > To see defaults and available configurations with examples, go [here](./docs/api.md#configure).
 
-### Usage with [`@ackee/antonio`](https://github.com/AckeeCZ/antonio)
-
-Minimal required configuration with HTTP client `@ackee/antonio` requires additionally to set `applyAccessTokenExternally` option to `true`. Otherwise `Authorization` header won't be set and thus every auth. request will result in `401` error.
-
-```js
-import { configure } from '@ackee/petrus';
-
-// 1. Provide authenticate, refreshTokens and getAuthUser methods
-const { saga, reducer } = configure({
-    handlers: {
-        authenticate,
-        refreshTokens,
-        getAuthUser,
-    },
-    tokens: {
-        applyAccessTokenExternally: true,
-    },
-});
-
-// 2. Add auth reducer
-const rootReducer = combineReducers({
-    auth: reducer
-});
-
-// 3. And launch the saga
-function*() {
-    yield all([saga()])
-}
-```
+### Usage with [`@ackee/antonio`](https://github.com/AckeeCZ/antonio/tree/master/packages/@ackee/antonio-auth#requestauthheaderinterceptorrequest-request-request)
 
 ### With OAuth2
 

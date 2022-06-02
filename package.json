@@ -6,10 +6,13 @@
     "module": "es/index.js",
     "sideEffects": false,
     "scripts": {
-        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx}'",
-        "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib",
-        "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es",
-        "build": "yarn build:es && yarn build:lib",
+        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx,ts,tsx}'",
+        "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib  --extensions \".ts,.js,.tsx,.jsx\"",
+        "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es --extensions \".ts,.js,.tsx,.jsx\"",
+        "build:es:types": "tsc -p tsconfig.types.es.json && tsc-alias -p tsconfig.types.es.json",
+        "build:lib:types": "tsc -p tsconfig.types.lib.json && tsc-alias -p tsconfig.types.lib.json",
+        "build:types": "yarn build:es:types & yarn build:lib:types",
+        "build": "yarn build:es && yarn build:lib && yarn build:types",
         "prepare": "yarn build",
         "start": "yarn build && onchange 'src/**/*.{js,jsx}' -- yarn push",
         "lint": "eslint 'src/**/*.{js,jsx}'",
@@ -20,7 +23,11 @@
         "test:ci": "BABEL_ENV=test jest --passWithNoTests",
         "changelog": "npx gitmoji-changelog",
         "version": "yarn changelog && code --wait CHANGELOG.md && git add CHANGELOG.md",
-        "release": "git fetch origin && yarn version"
+        "release": "git fetch origin && yarn version",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch",
+        "docs:clear": "rm -rf petrus.wiki/**/*.md .nojekyll petrus.wiki/media",
+        "docs:build": "yarn docs:clear && typedoc --tsconfig tsconfig.json"
     },
     "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
@@ -34,10 +41,11 @@
         "url": "https://github.com/AckeeCZ/petrus"
     },
     "dependencies": {
-        "@ackee/redux-utils": "^3.1.8",
-        "@babel/runtime": "7.10.2",
+        "@ackee/redux-utils": "^4.1.2",
+        "@babel/runtime": "7.18.0",
+        "@reduxjs/toolkit": "^1.8.1",
         "idb": "5.0.4",
-        "react-display-name": "0.x"
+        "react-display-name": "^0.2.5"
     },
     "peerDependencies": {
         "react": "16.x | 17.x",
@@ -47,35 +55,53 @@
         "reselect": "4.x"
     },
     "devDependencies": {
-        "@ackee/browserslist-config": "^1.0.0",
-        "@ackee/eslint-config": "^2.1.0",
-        "@babel/cli": "7.10.1",
-        "@babel/core": "7.10.2",
-        "@babel/plugin-proposal-class-properties": "7.10.1",
-        "@babel/plugin-proposal-object-rest-spread": "7.10.1",
-        "@babel/plugin-transform-runtime": "7.10.1",
-        "@babel/preset-env": "7.10.2",
-        "@babel/preset-react": "7.10.1",
-        "babel-jest": "26.0.1",
+        "@ackee/browserslist-config": "^2.0.0",
+        "@ackee/eslint-config": "^4.0.0",
+        "@babel/cli": "7.17.10",
+        "@babel/core": "7.18.0",
+        "@babel/plugin-transform-runtime": "7.18.0",
+        "@babel/preset-env": "7.18.0",
+        "@babel/preset-react": "7.17.12",
+        "@babel/preset-typescript": "^7.17.12",
+        "@types/node": "^14.18.18",
+        "@types/react": "^18.0.9",
+        "@types/react-redux": "^7.1.24",
+        "@typescript-eslint/eslint-plugin": "^5.25.0",
+        "@typescript-eslint/parser": "^5.25.0",
+        "babel-jest": "28.1.0",
+        "babel-plugin-custom-import-path-transform": "^1.0.3",
         "babel-plugin-module-resolver": "^4.0.0",
         "babel-plugin-transform-imports": "2.0.0",
-        "cross-env": "7.0.2",
+        "babel-preset-react-app": "^10.0.1",
+        "cross-env": "7.0.3",
         "enzyme": "3.x",
         "enzyme-adapter-react-16": "1.x",
-        "eslint-config-prettier": "6.11.0",
-        "eslint-plugin-jest": "23.13.2",
+        "eslint": "^8.16.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-compat": "^4.0.2",
+        "eslint-plugin-flowtype": "^8.0.3",
+        "eslint-plugin-jest": "^26.2.2",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-react-hooks": "^4.5.0",
+        "eslint-plugin-testing-library": "^5.5.0",
         "husky": "4.2.5",
-        "jest": "26.0.1",
+        "jest": "28.1.0",
         "lint-staged": "10.2.9",
-        "onchange": "7.0.2",
+        "onchange": "7.1.0",
         "package-size": "2.x",
-        "prettier": "2.0.5",
+        "prettier": "2.6.2",
         "prettier-config-ackee": "0.x",
-        "react": "16.x",
-        "react-redux": "7.x",
+        "react": "18.1.0",
+        "react-redux": "8.0.2",
         "redux": "4.x",
         "redux-saga": "1.x",
-        "reselect": "4.0.x"
+        "reselect": "4.1.5",
+        "tsc-alias": "^1.6.7",
+        "typedoc": "^0.22.17",
+        "typedoc-github-wiki-theme": "^1.0.1",
+        "typedoc-plugin-markdown": "^3.12.1",
+        "typescript": "4.6.4"
     },
     "husky": {
         "hooks": {
@@ -84,7 +110,7 @@
         }
     },
     "lint-staged": {
-        "*.{js,jsx,json,scss,less,css,md}": [
+        "*.{ts,tsx,js,jsx,json,scss,less,css,md}": [
             "prettier --config ./prettier.config.js --write"
         ]
     },
@@ -94,5 +120,9 @@
     "browserslist": [
         "extends @ackee/browserslist-config"
     ],
-    "types": "petrus.d.ts"
+    "files": [
+        "lib",
+        "es",
+        "docs"
+    ]
 }
