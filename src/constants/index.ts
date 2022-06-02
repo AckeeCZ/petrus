@@ -13,8 +13,17 @@ export enum ApiKeys {
 }
 
 export enum FlowType {
+    /**
+     * Auth user and access token might be available – `flowType` hasn't been resolved yet.
+     */
     INDETERMINATE = 'indeterminate',
+    /**
+     * Access token isn't avail. or valid, or auth. user isn't avail.
+     */
     ANONYMOUS = 'anonymous',
+    /**
+     * Access token is avail. and valid, and auth. user is avail.
+     */
     AUTHENTICATED = 'authenticated',
 }
 

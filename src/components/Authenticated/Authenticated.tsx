@@ -10,6 +10,12 @@ export interface AuthenticatedProps {
 
 const Empty = () => null;
 
+/**
+ *   -   `children` rendered if `flowType === FlowType.AUTHENTICATED`: valid access token and auth user are available.
+ *   -   `FallbackComponent` rendered if `flowType === FlowType.ANONYMOUS`: app is unauthorized
+ *   -   `Loader` renderer whenever the app can't determinate if the `flowType` is `FlowType.AUTHENTICATED` ir `FlowType.ANONYMOUS`: authorized or not.
+ * @category React Component
+ */
 export const Authenticated = ({ children, FallbackComponent = Empty, LoaderComponent = Empty }: AuthenticatedProps) => {
     const flowType = useAuthenticated();
 

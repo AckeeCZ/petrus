@@ -10,7 +10,7 @@ export type LogoutFailurePayload = Error;
 const ACTION_TYPE_PREFIX = actionType('LOGOUT');
 
 /**
- * @category Redux Action Creator
+ * @ignore
  */
 export const logout = createApiActions<
     typeof ACTION_TYPE_PREFIX,
@@ -18,3 +18,18 @@ export const logout = createApiActions<
     LogoutSuccessPayload,
     LogoutFailurePayload
 >(ACTION_TYPE_PREFIX);
+
+/**
+ * Triggers a user logout flow: tokens are cleared from a persistent storage and any auth. data are cleared from the reducer.
+ * @category Redux Action Creator
+ * @example
+ * ```ts
+ *   import { put } from 'redux-saga/effects';
+ *   import { logoutRequest } from '@ackee/petrus';
+ *
+ *   function* logoutSaga() {
+ *       yield put(logoutRequest());
+ *   }
+ * ```
+ */
+export const logoutRequest = logout.request;

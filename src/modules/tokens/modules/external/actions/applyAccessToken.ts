@@ -19,7 +19,7 @@ export const applyAccessTokenRequest = createAction<
 >(types.APPLY_ACCESS_TOKEN_REQUEST);
 
 /**
- * @depreacted
+ * @deprecated
  * @ignore
  */
 export const applyAccessTokenResolve = createAction<void, typeof types['APPLY_ACCESS_TOKEN_RESOLVE']>(
@@ -27,7 +27,7 @@ export const applyAccessTokenResolve = createAction<void, typeof types['APPLY_AC
 );
 
 /**
- * @depreacted
+ * @deprecated
  * @ignore
  */
 export const unapplyAccessTokenRequest = createAction<void, typeof types['UNAPPLY_ACCESS_TOKEN_REQUEST']>(
@@ -35,9 +35,21 @@ export const unapplyAccessTokenRequest = createAction<void, typeof types['UNAPPL
 );
 
 /**
- * @depreacted
+ * @deprecated
  * @ignore
  */
 export const unapplyAccessTokenResolve = createAction<void, typeof types['UNAPPLY_ACCESS_TOKEN_RESOLVE']>(
     types.UNAPPLY_ACCESS_TOKEN_RESOLVE,
 );
+
+/**
+ * @deprecated
+ * @ignore
+ */
+export const APPLY_ACCESS_TOKEN_REQUEST = applyAccessTokenRequest.type;
+
+/**
+ * @deprecated
+ * @ignore
+ */
+export const UNAPPLY_ACCESS_TOKEN_REQUEST = unapplyAccessTokenRequest.type;

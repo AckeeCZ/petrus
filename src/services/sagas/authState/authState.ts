@@ -85,6 +85,8 @@ function* authSessionCircuit() {
 
 /**
  * @category Redux Saga
+ * @deprecated
+ * @ignore
  */
 export function* getAuthStateChannel() {
     const authStateChannel: ActionChannelEffect = yield actionChannel([
