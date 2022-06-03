@@ -50,11 +50,31 @@ export const login = createApiActions<
 export const loginRequest = login.request;
 
 /**
+ * Triggered on successful login.
+ *
  * @category Redux Action Type
+ *
+ * @example
+ * ```ts
+ * function* handleLogin() {
+ *    // dispatch login request to '@ackee/petrus'
+ *    yield put(loginRequest({
+ *        email: 'user@test.com',
+ *        password: 'supersecret',
+ *    }));
+ *
+ *    // wait for the request to resolve
+ *    const result = yield take([LOGIN_SUCCESS, LOGIN_FAILURE]);
+ *
+ *    // and then do something (e.g. display login error, redirect user to auth. content)
+ * }
+ * ```
  */
 export const LOGIN_SUCCESS = login.success.type;
 
 /**
+ *
+ * Triggered on failed login.
  * @category Redux Action Type
  */
 export const LOGIN_FAILURE = login.failure.type;

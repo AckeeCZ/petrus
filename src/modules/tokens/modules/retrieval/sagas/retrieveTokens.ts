@@ -74,13 +74,18 @@ function* tokensRetrieval() {
     return fetchUserResultAction.type === fetchUser.success.type;
 }
 
-/**
- * @category Redux Saga
- */
-export function* retrieveTokens() {
+function* retrieveTokensInner() {
     yield put(retrieveTokensRequest());
 
     const tokensRetrieved: boolean = yield tokensRetrieval();
 
     yield put(retrieveTokensResolve(tokensRetrieved));
+}
+
+/**
+ * @category Redux Saga
+ */
+export function* retrieveTokens() {
+    // NOTE: This is required so the tsdocs are readable
+    yield* retrieveTokensInner() as Generator<any, void>;
 }

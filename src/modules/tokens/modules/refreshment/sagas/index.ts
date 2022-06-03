@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 
-import withAuthSession from 'services/sagas/withAuthSession';
+import { withAuthSession } from 'services/sagas/withAuthSession';
 
 import refreshTokens from './refreshTokens';
 import checkAccessTokenExpiration from './checkAccessTokenExpiration';

@@ -6,6 +6,7 @@ import { accessTokenAvailable, setTokens } from 'services/actions';
 
 import { refreshTokens, refreshExpiredToken } from 'modules/tokens/modules/refreshment';
 import { appSelect } from 'services/utils/reduxSaga';
+import type { PetrusTokens } from 'types';
 
 const retrieveTokensApiSelector = apiSelectorFactory(ApiKeys.RETRIEVE_TOKENS);
 
@@ -44,10 +45,7 @@ function* afterRefreshAccessToken() {
     return action.payload;
 }
 
-/**
- * @category Redux Saga
- */
-export default function* getAccessToken() {
+function* getAccessTokenInner() {
     const { sessionState } = yield* appSelect(entitiesSelector);
 
     if (sessionState === AuthSession.ACTIVE) {
@@ -70,3 +68,24 @@ export default function* getAccessToken() {
             return null;
     }
 }
+
+/**
+ * Generator function returning PetrusTokens['accessToken'] or `null`.
+ *
+ * @category Redux Saga
+ *
+ * @example
+ * ```ts
+ * import { getAccessToken } from '@ackee/petrus';
+ *
+ * function* mySaga() {
+ *     const accessToken = yield* getAccessToken();
+ *
+ *     console.log(accessToken);
+ * }
+ * ```
+ */
+export const getAccessToken = () => {
+    // NOTE: this just for nice tsdocs output. Without this casting, the return type would include all types of delegated iteragors, so total unreadable mess.
+    return getAccessTokenInner() as Generator<any, PetrusTokens['accessToken'] | null>;
+};

@@ -1,17 +1,17 @@
-import { createSelector } from 'reselect';
 import { entitiesSelector } from './entities';
 
 /**
  * @category Redux Selector
  */
-export const tokensSelector = createSelector(entitiesSelector, entities => entities.tokens);
+export const tokensSelector = <AppState>(state: AppState) => entitiesSelector<AppState>(state).tokens;
 
 /**
  * @category Redux Selector
  */
-export const tokensPersistenceSelector = createSelector(entitiesSelector, entities => entities.tokensPersistence);
+export const tokensPersistenceSelector = <AppState>(state: AppState) =>
+    entitiesSelector<AppState>(state).tokensPersistence;
 
 /**
  * @category Redux Selector
  */
-export const accessTokenSelector = createSelector(tokensSelector, tokens => tokens?.accessToken ?? null);
+export const accessTokenSelector = <AppState>(state: AppState) => tokensSelector(state)?.accessToken ?? null;
