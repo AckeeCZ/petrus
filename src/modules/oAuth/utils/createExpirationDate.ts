@@ -1,8 +1,27 @@
 /**
- * creates an access token expiration date from expiration timeout value
+ * Converts duration in ms to timestamp.
+ *
  * @param expiresIn - **value** in **ms** when access token expires
  * @returns Access token expiration **date** in ISO string format.
+ *
  * @category Utilities
+ *
+ * @example
+ * ```ts
+ * import { createExpirationDate } from '@ackee/petrus';
+ *
+ * // expiratioDate will be in following format: "2019-02-19T21:02:57.970Z"
+ * const expirationDate = createExpirationDate(3600 * 1000);
+ *
+ * // VALID:
+ * createExpirationDate('3600000');
+ * createExpirationDate(null);
+ * createExpirationDate(undefined);
+ *
+ * // INVALID:
+ * createExpirationDate('foo');
+ * createExpirationDate('foo123');
+ * ```
  */
 export function createExpirationDate(expiresIn: string | number | null | undefined) {
     if (expiresIn === null || expiresIn === undefined) {

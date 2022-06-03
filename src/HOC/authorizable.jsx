@@ -14,6 +14,20 @@ const MockAppLoader = () => <div>Loading...</div>;
  *
  * @deprecated Use `Authenticated` component instead.
  * @category HOC
+ *
+ * @example
+ * ```js
+ * import React from 'react';
+ * import { authorizable } from '@ackee/petrus';
+ *
+ * const AuthContent = <div>User is logged in</div>;
+ * const Firewall = <div>Please login</div>;
+ * const Loader = <div>Loading...</div>;
+ *
+ * const AuthorizedComponent = authorizable(AuthContent, Firewall, Loader);
+ *
+ * export default AuthorizedComponent;
+ * ```
  */
 const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
     const AuthorizedComponent = props => (
