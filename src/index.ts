@@ -15,7 +15,7 @@ export { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } from 'modules/tokens
 export { AUTH_SESSION_END, AUTH_SESSION_PAUSE, AUTH_SESSION_RESUME, AUTH_SESSION_START } from './services/actions';
 
 export { configure } from './configure';
-export { default as authorizable } from './HOC/authorizable';
+export * from './HOC/authorizable';
 export { withAuthSession, getAuthStateChannel, getAccessToken } from './services/sagas';
 export {
     entitiesSelector,

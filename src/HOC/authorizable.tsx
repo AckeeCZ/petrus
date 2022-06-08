@@ -1,9 +1,9 @@
-import React from 'react';
+import type { ComponentType } from 'react';
+import { config } from 'config';
 import getDisplayName from 'react-display-name';
 
-import Authenticated from '../components/Authenticated';
-
-const MockAppLoader = () => <div>Loading...</div>;
+import { Authenticated } from '../components/Authenticated';
+import type { AuthenticatedProps } from '../components/Authenticated';
 
 /**
  * High order component that based on current state of the `auth` reducer renders one of these components:
@@ -29,19 +29,22 @@ const MockAppLoader = () => <div>Loading...</div>;
  * export default AuthorizedComponent;
  * ```
  */
-const withAuthorizable = (AuthorizableComponent, Firewall, Loader = MockAppLoader) => {
-    const AuthorizedComponent = props => (
-        <Authenticated FallbackComponent={Firewall} Loader={Loader}>
+export const authorizable = <Props extends {}>(
+    AuthorizableComponent: ComponentType<Props>,
+    Firewall: AuthenticatedProps['FallbackComponent'],
+    Loader: AuthenticatedProps['LoaderComponent'],
+) => {
+    const AuthorizedComponent = (props: Props) => (
+        <Authenticated FallbackComponent={Firewall} LoaderComponent={Loader}>
             <AuthorizableComponent {...props} />
         </Authenticated>
     );
 
-    // eslint-disable-next-line no-console
-    console.warn('authorizable HOC has been depcreated. Use Authenticated component instead.');
+    config.logger.warn(
+        'authorizable HOC has been depcreated. Use Authenticated component or useAuthenticated hook instead.',
+    );
 
     AuthorizedComponent.displayName = `Authorizable(${getDisplayName(AuthorizableComponent)})`;
 
     return AuthorizedComponent;
 };
-
-export default withAuthorizable;

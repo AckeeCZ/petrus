@@ -9,6 +9,7 @@ export * from './helpers';
 
 export type PetrusLogger = {
     error: Console['error'];
+    warn: Console['warn'];
 };
 
 export type PetrusUser = any;
