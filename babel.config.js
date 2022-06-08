@@ -20,10 +20,12 @@ const config = {
         [
             '@babel/env',
             {
-                useBuiltIns: false,
+                useBuiltIns: 'usage',
                 loose: true,
                 modules: process.env.BABEL_ENV === 'es' ? false : 'commonjs',
                 bugfixes: true,
+                corejs: '3.x',
+                browserslistEnv: 'development',
             },
         ],
     ],

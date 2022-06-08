@@ -50,7 +50,8 @@
         "react": "16.x | 17.x | 18.x",
         "react-redux": "7.x | 8.x",
         "redux": "4.x",
-        "redux-saga": "1.x"
+        "redux-saga": "1.x",
+        "core-js": "3.x"
     },
     "devDependencies": {
         "@ackee/browserslist-config": "^2.0.0",
@@ -70,6 +71,7 @@
         "babel-plugin-module-resolver": "^4.0.0",
         "babel-plugin-transform-imports": "2.0.0",
         "babel-preset-react-app": "^10.0.1",
+        "core-js": "^3.22.8",
         "cross-env": "7.0.3",
         "enzyme": "3.x",
         "enzyme-adapter-react-16": "1.x",
