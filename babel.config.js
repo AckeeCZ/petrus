@@ -9,7 +9,14 @@ const config = {
                 allowDeclareFields: true,
             },
         ],
-        '@babel/react',
+        [
+            '@babel/react',
+            {
+                useSpread: true,
+                useBuiltIns: true,
+                runtime: 'automatic',
+            },
+        ],
         [
             '@babel/env',
             {
@@ -33,16 +40,7 @@ const config = {
                 root: ['./src'],
             },
         ],
-        require.resolve('@babel/plugin-transform-runtime'),
-        [
-            require.resolve('babel-plugin-transform-imports'),
-            {
-                lodash: {
-                    transform: 'lodash/${member}',
-                    preventFullImport: true,
-                },
-            },
-        ],
+        [require.resolve('babel-plugin-transform-imports')],
     ],
     ignore: ['**/__tests__/', '**/*.test.js'],
 };

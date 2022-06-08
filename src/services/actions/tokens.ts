@@ -4,7 +4,7 @@ import type { PetrusTokens } from 'types';
 
 const types = {
     SET_TOKENS: actionType('SET_TOKENS'),
-    DELETE_TOKENS: actionType('SET_TOKENS'),
+    DELETE_TOKENS: actionType('DELETE_TOKENS'),
 } as const;
 
 export const setTokens = createAction<PetrusTokens, typeof types['SET_TOKENS']>(types.SET_TOKENS);
