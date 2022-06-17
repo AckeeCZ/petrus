@@ -10,7 +10,14 @@ export {
 export { checkAccessTokenExpiration } from 'modules/tokens/modules/refreshment';
 
 export { terminate, ACCESS_TOKEN_AVAILABLE, ACCESS_TOKEN_UNAVAILABLE } from './services/actions';
-export { setUserWithTokens, loginRequest, logoutRequest, LOGIN_SUCCESS, LOGIN_FAILURE } from 'modules/auth-session';
+export {
+    setUserWithTokens,
+    loginRequest,
+    loginReset,
+    logoutRequest,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+} from 'modules/auth-session';
 export { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE } from 'modules/tokens/modules/retrieval';
 export { AUTH_SESSION_END, AUTH_SESSION_PAUSE, AUTH_SESSION_RESUME, AUTH_SESSION_START } from './services/actions';
 

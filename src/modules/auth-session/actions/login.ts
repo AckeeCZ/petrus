@@ -49,6 +49,8 @@ export const login = createApiActions<
  */
 export const loginRequest = login.request;
 
+export const loginReset = login.reset;
+
 /**
  * Triggered on successful login.
  *
