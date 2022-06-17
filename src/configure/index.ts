@@ -11,7 +11,6 @@ import type { PetrusCredentials, PetrusCustomConfig, PetrusUser } from 'types';
 export function configure<
     User extends PetrusUser = PetrusUser,
     Credentials extends PetrusCredentials = PetrusCredentials,
-    AppState extends Record<string, any> = Record<string, any>,
 >(customConfig: PetrusCustomConfig<User, Credentials>) {
     if (config.initialized) {
         throw new PetrusError(`'configure' method can be called only once.`);
@@ -25,7 +24,7 @@ export function configure<
 
         logger: customConfig.logger || console,
 
-        selector: (state: AppState) => state.auth,
+        selector: <AppState extends Record<string, any> = Record<string, any>>(state: AppState) => state.auth,
 
         oAuth: oAuthConfig,
 
