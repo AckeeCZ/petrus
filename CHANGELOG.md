@@ -1,5 +1,36 @@
 # Changelog
 
+<a name="6.0.0-beta.0"></a>
+
+## 6.0.0-beta.0 (2022-06-17)
+
+### Added
+
+-   ✨ Export loginReset action [[c13ca1c](https://github.com/AckeeCZ/petrus/commit/c13ca1c1d1ab94a8b19612899543108bea3af1ee)]
+-   ✨ Setup typedocs [[cc2a615](https://github.com/AckeeCZ/petrus/commit/cc2a6158f8ccf66ef0f08e4a3493a9fb35b7533e)]
+-   🎉 Setup TypeScript [[b633bd2](https://github.com/AckeeCZ/petrus/commit/b633bd2fc0045f2cc5e632b605ea6917a369ef8b)]
+
+### Changed
+
+-   🔧 Update babel config - react – use automatic runtime react [[1fcc12e](https://github.com/AckeeCZ/petrus/commit/1fcc12e5d3981bc796749bc18afaa424b545a6c5)]
+-   ⬆️ Bump minimist from 1.2.5 to 1.2.6 [[d9ccd0d](https://github.com/AckeeCZ/petrus/commit/d9ccd0df69424970dc0b8c572c8db79eca2545a0)]
+-   🔧 Setup typedoc [[3983b15](https://github.com/AckeeCZ/petrus/commit/3983b150b6a157dbc0366ff5de61005ea6404431)]
+-   ⬆️ Upgrade minor and patch deps [[73d3fca](https://github.com/AckeeCZ/petrus/commit/73d3fca085d6e3c499ea0a8d2b555b9cc3b51c56)]
+-   ⬆️ Upgrade most of the deps [[db03490](https://github.com/AckeeCZ/petrus/commit/db034906ddc80c15640fdc82f811bcf9b4738a9b)]
+-   🔧 Fix TS types compilation with preserveSymlinks to true [[e95118b](https://github.com/AckeeCZ/petrus/commit/e95118b6178d9cfc6afe25f6f07aa9c2ed351bde)]
+
+### Miscellaneous
+
+-   💥 Require core-js among peerDependencies [[4256648](https://github.com/AckeeCZ/petrus/commit/42566480a64c9204e42725b3220b8381fa0c1ae1)]
+-   🏷️ Migrate authorizable HOC to TS [[f11e416](https://github.com/AckeeCZ/petrus/commit/f11e416078d4015786c11a94ba8caa47bfac3712)]
+-   🗑️ Deprecate applyAccessTokenExternally option [[efbdc33](https://github.com/AckeeCZ/petrus/commit/efbdc33a104a3d1d50e19dbf99f6f33238878d17)]
+-   🏷️ Convert rest of codebase to TS [[21426dd](https://github.com/AckeeCZ/petrus/commit/21426dde2f78c79334c08d2ed994822e277307f5)]
+-   💥 Replace reducerKey option with selector function &amp; require apiKey param at apiSelector [[9bb9b44](https://github.com/AckeeCZ/petrus/commit/9bb9b449c0833f5c5e8c4f733a9dbf78463d40e3)]
+-   🏷️ Migrate to TS all reducers [[f0178b4](https://github.com/AckeeCZ/petrus/commit/f0178b4388b4cafd72794bfa3006a277781b1a55)]
+-   🏷️ Add configuration types [[d224ae5](https://github.com/AckeeCZ/petrus/commit/d224ae5b53af5c0d6ae35e4cc53144d0650237b5)]
+-   🏷️ Migrate all action creators to TS [[50120a9](https://github.com/AckeeCZ/petrus/commit/50120a94b1512c793ed07251634901a7ef5800e5)]
+-   🏷️ Migrate some code to TS [[0132f0a](https://github.com/AckeeCZ/petrus/commit/0132f0a44cdaacd363440753bbbda3ada4d35595)]
+
 <a name="5.3.6"></a>
 
 ## 5.3.6 (2022-05-20)

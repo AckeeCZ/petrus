@@ -1,6 +1,6 @@
 {
     "name": "@ackee/petrus",
-    "version": "5.3.6",
+    "version": "6.0.0-beta.0",
     "description": "A module that handles authentication logic with token based flow.",
     "main": "lib/index.js",
     "module": "es/index.js",
@@ -47,11 +47,11 @@
         "react-display-name": "^0.2.5"
     },
     "peerDependencies": {
+        "core-js": "3.x",
         "react": "16.x | 17.x | 18.x",
         "react-redux": "7.x | 8.x",
         "redux": "4.x",
-        "redux-saga": "1.x",
-        "core-js": "3.x"
+        "redux-saga": "1.x"
     },
     "devDependencies": {
         "@ackee/browserslist-config": "^2.0.0",
