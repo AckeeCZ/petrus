@@ -1,7 +1,7 @@
 {
     "name": "@ackee/petrus",
     "version": "6.0.0-beta.0",
-    "description": "A module that handles authentication logic with token based flow.",
+    "description": "A tool for handling token-based authentication in React/Redux/Redux-Saga applications",
     "main": "lib/index.js",
     "module": "es/index.js",
     "sideEffects": false,
@@ -14,8 +14,8 @@
         "build:types": "yarn build:es:types & yarn build:lib:types",
         "build": "yarn build:es && yarn build:lib && yarn build:types",
         "prepare": "yarn build",
-        "start": "yarn build && onchange 'src/**/*.{js,jsx}' -- yarn push",
-        "lint": "eslint 'src/**/*.{js,jsx}'",
+        "start": "yarn build && onchange 'src/**/*.{ts,tsx}' -- yarn push",
+        "lint": "eslint 'src/**/*.{ts,tsx}'",
         "size:es": "package-size ./es --no-cache",
         "size:lib": "package-size ./lib --no-cache",
         "size": "yarn size:es && yarn size:lib",
@@ -27,9 +27,8 @@
         "type-check": "tsc --noEmit",
         "type-check:watch": "yarn type-check -- --watch",
         "docs:clear": "rm -rf petrus.wiki/**/*.md .nojekyll petrus.wiki/media",
-        "docs:build": "yarn docs:clear && typedoc --tsconfig tsconfig.json"
+        "docs": "yarn docs:clear && typedoc --tsconfig tsconfig.json"
     },
-    "author": "Jiri Smolik <smolikjirka@gmail.com>",
     "contributors": [
         "Marek Janča <marek.janca@ackee.cz>",
         "Lukáš Horák <lukas.horak@ackee.cz>",

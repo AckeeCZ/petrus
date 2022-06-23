@@ -32,6 +32,7 @@ export function createExpirationDate(expiresIn: string | number | null | undefin
 
     if (Number.isNaN(parsedExpiresIn)) {
         throw new TypeError(
+            // eslint-disable-next-line max-len
             `[@ackee/petrus]: 'createExpirationDate' method received an invalid 'expiresIn' value: '${expiresIn}'. Must be one of: null, undefined, number, or string parsable to number.`,
         );
     }

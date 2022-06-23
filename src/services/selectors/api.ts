@@ -1,5 +1,6 @@
 import { config } from 'config';
 import type { ApiKeys } from 'constants/index';
+import type { AppRootState } from 'types';
 
 /**
  * @category Redux Selector
@@ -18,13 +19,11 @@ import type { ApiKeys } from 'constants/index';
  * }
  * ```
  */
-export const apiSelector = <AppState>(state: AppState, apiKey: ApiKeys) => {
+export const apiSelector = (state: AppRootState, apiKey: ApiKeys) => {
     const { api } = config.selector(state);
     return api[apiKey];
 };
 
-export const apiSelectorFactory =
-    (apiKey: ApiKeys) =>
-    <AppState>(state: AppState) => {
-        return apiSelector(state, apiKey);
-    };
+export const apiSelectorFactory = (apiKey: ApiKeys) => (state: AppRootState) => {
+    return apiSelector(state, apiKey);
+};

@@ -4,27 +4,104 @@ import { configure as oAuth } from 'modules/oAuth';
 import { configure as authSession } from 'modules/auth-session';
 import { configure as tokens, TokensPersistence } from 'modules/tokens';
 
-import { createRootReducer } from 'services/reducers';
+import { createRootReducer, PetrusRootState } from 'services/reducers';
 import rootSaga from 'services/sagas';
-import type { PetrusCredentials, PetrusCustomConfig, PetrusUser } from 'types';
+import type { AppRootState, PetrusCustomConfig } from 'types';
 
-export function configure<
-    User extends PetrusUser = PetrusUser,
-    Credentials extends PetrusCredentials = PetrusCredentials,
->(customConfig: PetrusCustomConfig<User, Credentials>) {
+/**
+ * @category Configure
+ * @example
+ * ```ts
+ *   interface Credentials {
+ *       email: string;
+ *       password: string;
+ *   }
+ *   interface UserInfo {
+ *       id: string;
+ *       name: string;
+ *   }
+ *
+ *   type RootState = ReturnType<typeof rootReducer>;
+ *
+ *   declare global {
+ *       namespace Petrus {
+ *           interface ConfigureCredentials {
+ *               value: Credentials;
+ *           }
+ *
+ *           interface ConfigureUser {
+ *               value: UserInfo;
+ *           }
+ *
+ *           interface ConfigureAppRootState {
+ *               value: BackgroundRootState;
+ *           }
+ *       }
+ *   }
+ *
+ *   export const { reducer, saga } = configure({
+ *       selector: state => state.auth,
+ *       handlers: {
+ *           authenticate(credentials: PetrusCredentials) {
+ *               const user: PetrusUser | undefined = {
+ *                   id: '1',
+ *                   name: 'Bob',
+ *               };
+ *
+ *               const tokens: PetrusTokens = {
+ *                   accessToken: {
+ *                       token: '...',
+ *                       expiration: '...',
+ *                   },
+ *                   refreshToken: {
+ *                       token: '...',
+ *                   },
+ *               };
+ *
+ *               return {
+ *                   user,
+ *                   tokens,
+ *               };
+ *           },
+ *           refreshTokens(tokens: Required<PetrusTokens>) {
+ *               const freshTokens: PetrusTokens = {
+ *                   accessToken: {
+ *                       token: '...',
+ *                       expiration: '...',
+ *                   },
+ *                   refreshToken: {
+ *                       token: '...',
+ *                   },
+ *               };
+ *
+ *               return freshTokens;
+ *           },
+ *           getAuthUser(tokens: PetrusTokens) {
+ *               const user: PetrusUser = {
+ *                   id: '1',
+ *                   name: 'Bob',
+ *               };
+ *
+ *               return user;
+ *           },
+ *       },
+ *   });
+ * ```
+ */
+export function configure(customConfig: PetrusCustomConfig) {
     if (config.initialized) {
         throw new PetrusError(`'configure' method can be called only once.`);
     }
 
     const oAuthConfig = oAuth(customConfig.oAuth);
-    const { rootReducer, entitiesInitState } = createRootReducer<User>(customConfig.initialState);
+    const { rootReducer, entitiesInitState } = createRootReducer(customConfig.initialState);
 
     Object.assign(config, {
         initialized: true,
 
         logger: customConfig.logger || console,
 
-        selector: <AppState extends Record<string, any> = Record<string, any>>(state: AppState) => state.auth,
+        selector: (state: AppRootState): PetrusRootState => state.auth,
 
         oAuth: oAuthConfig,
 

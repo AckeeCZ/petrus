@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
-import type { PetrusCustomConfig, PetrusUser } from 'types';
+import type { PetrusCustomConfig } from 'types';
 
 import api from './api';
 import createEntitiesReducer from './entities';
 
-export function createRootReducer<User extends PetrusUser>(
-    customEntitiesInitialState: PetrusCustomConfig<User>['initialState'],
-) {
-    const entities = createEntitiesReducer<User>(customEntitiesInitialState);
+export function createRootReducer(customEntitiesInitialState: PetrusCustomConfig['initialState']) {
+    const entities = createEntitiesReducer(customEntitiesInitialState);
     const rootReducer = combineReducers({
         api,
         entities: entities.reducer,

@@ -9,8 +9,8 @@ const types = {
 /**
  * @category Redux Action Creator
  *
- * ### Override the default `tokensPersistence` value
  * @example
+ * __1. Override the default `tokensPersistence` value:__
  * ```ts
  * import { configure, TokensPersistence } from '@ackee/petrus';
  *
@@ -22,8 +22,8 @@ const types = {
  * });
  * ```
  *
- * ### Set tokens persistence dynamically
  * @example
+ * __2. Set tokens persistence dynamically:__
  * ```ts
  * import { put } from 'redux-saga/effects';
  * import { setTokensPersistence, TokensPersistence } from '@ackee/petrus';

@@ -49,6 +49,9 @@ export const login = createApiActions<
  */
 export const loginRequest = login.request;
 
+/**
+ * @category Redux Action Type
+ */
 export const loginReset = login.reset;
 
 /**

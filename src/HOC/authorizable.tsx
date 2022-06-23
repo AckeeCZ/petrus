@@ -14,7 +14,7 @@ import type { AuthenticatedProps } from '../components/Authenticated';
  *
  * @deprecated Use `Authenticated` component instead.
  * @category HOC
- *
+ * @ignore
  * @example
  * ```js
  * import React from 'react';

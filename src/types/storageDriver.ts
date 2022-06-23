@@ -1,4 +1,4 @@
-import type { HandlerReturnValue } from 'types';
+import type { HandlerReturnValue } from './helpers';
 
 export type StorageDriver = {
     set<Key extends string = string, Value extends Record<Key, any> = Record<Key, any>>(

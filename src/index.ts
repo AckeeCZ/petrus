@@ -40,5 +40,4 @@ export * from './hooks/useAuthenticated';
 export * from './components/Authenticated';
 
 export * from './types';
-export * from './config/types';
 export type { RefreshTokensRequestPayload } from 'modules/tokens/modules/refreshment';

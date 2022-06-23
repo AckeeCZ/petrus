@@ -1,47 +1,63 @@
 import type { IndexedDBStorage, ResetStorage, SessionStorage } from 'config/storageDrivers';
-import type { StorageDriver } from 'config/types';
 import type { AuthSession, FlowType } from 'constants/index';
 import type { TokensPersistence } from 'modules/tokens/modules/storage';
 import type { PetrusRootState } from 'services/reducers';
 import type { HandlerReturnValue } from './helpers';
+import type { StorageDriver } from './storageDriver';
 
 export * from './helpers';
 
-export type PetrusLogger = {
-    error: Console['error'];
-    warn: Console['warn'];
-};
+declare global {
+    namespace Petrus {
+        interface ConfigureUser {}
+        interface ConfigureCredentials {}
+        interface ConfigureTokens {}
+        interface ConfigureAppRootState {}
+    }
+}
 
-export type PetrusUser = any;
+export type PetrusUser = Petrus.ConfigureUser extends { value: unknown } ? Petrus.ConfigureUser['value'] : any;
 
-export type PetrusCredentials = any;
+export type PetrusCredentials = Petrus.ConfigureCredentials extends { value: unknown }
+    ? Petrus.ConfigureCredentials['value']
+    : void;
 
-export type PetrusTokens = {
+export interface Tokens {
     accessToken: {
         token: string;
         /**
          * If `expiration` is omitted, then petrus won't automatically refresh the access token.
          */
         expiration?: string | null;
-    } & Record<string, any>;
+    };
 
     refreshToken?: {
         token: string;
-    } & Record<string, any>;
-};
+    };
+}
+
+export type PetrusTokens = Petrus.ConfigureTokens extends { value: Tokens } ? Petrus.ConfigureTokens['value'] : Tokens;
+
+/**
+ * @ignore
+ */
+export type AppRootState = Petrus.ConfigureAppRootState extends { value: unknown }
+    ? Petrus.ConfigureAppRootState['value']
+    : any;
 
 export type PetrusOAuth = {
     searchParams: Record<string, any>;
 };
 
-export interface PetrusConfig<
-    User extends PetrusUser = PetrusUser,
-    Credentials extends PetrusCredentials = PetrusCredentials,
-    Logger extends PetrusLogger = PetrusLogger,
-> {
-    logger: Logger;
+export type PetrusLogger = {
+    error: Console['error'];
+    warn: Console['warn'];
+};
 
-    selector: <AppState extends Record<string, any> = Record<string, any>>(state: AppState) => PetrusRootState;
+export interface PetrusConfig {
+    logger: PetrusLogger;
+
+    selector: (state: AppRootState) => PetrusRootState;
 
     initialized: boolean;
 
@@ -113,7 +129,7 @@ export interface PetrusConfig<
          * if the URL is valid, the 'parseRedirectUrlParams' method is called.
          * @default 'src/modules/oAuth/config/validateRedirectUrl'
          */
-        validateRedirectUrl: (oAuth: PetrusConfig<User, Credentials, Logger>['oAuth'], location: Location) => boolean;
+        validateRedirectUrl: (oAuth: PetrusConfig['oAuth'], location: Location) => boolean;
 
         /**
          * Parse search params from URL. It must handle both `location.search` and `location.hash`:
@@ -205,13 +221,15 @@ export interface PetrusConfig<
          * - If returned `user` property is undefiend, the `getAuthUser` handler gets called.
          * - Optional if the oauth flow is used instead.
          */
-        authenticate?: (credentails: Credentials) => HandlerReturnValue<{ user?: User | null; tokens: PetrusTokens }>;
+        authenticate?: (
+            credentails: PetrusCredentials,
+        ) => HandlerReturnValue<{ user?: PetrusUser | null; tokens: PetrusTokens }>;
 
         /**
          * - This method is called when tokens are successfully retrieved.
          * - Or when the `authenticate` returns undefined `user` property.
          */
-        getAuthUser: (tokens: PetrusTokens) => HandlerReturnValue<User>;
+        getAuthUser: (tokens: PetrusTokens) => HandlerReturnValue<PetrusUser>;
 
         /**
          * This method is called anytime when access token is expired.
@@ -226,7 +244,7 @@ export interface PetrusConfig<
     };
 }
 
-export interface PetrusEntitiesState<User extends PetrusUser> {
+export interface PetrusEntitiesState {
     /**
      * @initial TokensPersistence.LOCAL
      */
@@ -235,7 +253,7 @@ export interface PetrusEntitiesState<User extends PetrusUser> {
     /**
      * @initial null
      */
-    user: User | null;
+    user: PetrusUser | null;
 
     /**
      * @initial null
@@ -253,11 +271,7 @@ export interface PetrusEntitiesState<User extends PetrusUser> {
     flowType: FlowType;
 }
 
-export interface PetrusCustomConfig<
-    User extends PetrusUser = PetrusUser,
-    Credentials extends PetrusCredentials = PetrusCredentials,
-    Config extends PetrusConfig<User, Credentials> = PetrusConfig<User, Credentials>,
-> {
+export interface PetrusCustomConfig<Config extends PetrusConfig = PetrusConfig> {
     /**
      * This function must return petrus reducer from your application root state,
      * so you can set it on nested level or on different path.
@@ -286,7 +300,7 @@ export interface PetrusCustomConfig<
     /**
      * Initial state of the `entities` reducer.
      */
-    initialState?: Partial<PetrusEntitiesState<User>>;
+    initialState?: Partial<PetrusEntitiesState>;
 
     handlers: Config['handlers'];
 

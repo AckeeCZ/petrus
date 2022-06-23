@@ -1,9 +1,10 @@
 import { select } from 'redux-saga/effects';
+import type { AppRootState } from 'types';
 
-type S<AppState, Result, Args extends any[]> = (s: AppState, ...args: Args) => Result;
+type S<Result, Args extends any[]> = (s: AppRootState, ...args: Args) => Result;
 
-export function* appSelect<AppState, Result, Args extends any[]>(selector: S<AppState, Result, Args>, ...args: Args) {
-    const result: Result = yield select((state: AppState) => {
+export function* appSelect<Result, Args extends any[]>(selector: S<Result, Args>, ...args: Args) {
+    const result: Result = yield select((state: AppRootState) => {
         return selector(state, ...args);
     });
 
