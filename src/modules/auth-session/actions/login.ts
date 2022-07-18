@@ -47,7 +47,8 @@ export const login = createApiActions<
  * })
  * ```
  */
-export const loginRequest = login.request;
+/* @ts-expect-error */
+export const loginRequest = (payload: LoginRequestPayload) => login.request(payload);
 
 /**
  * @category Redux Action Type
