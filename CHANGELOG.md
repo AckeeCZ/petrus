@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="6.0.0-beta.3"></a>
+
+## 6.0.0-beta.3 (2022-07-18)
+
+### Fixed
+
+-   🐛 Fix merging configs [[ec0b7ac](https://github.com/AckeeCZ/petrus/commit/ec0b7acedc1cc2f600d7333a64bf3c2f66e1bdee)]
+
+### Miscellaneous
+
+-   🏷️ Fix type of loginRequest payload [[440d7cd](https://github.com/AckeeCZ/petrus/commit/440d7cdfeda2e64d750a538f7c3bb9490c4b3751)]
+
 <a name="6.0.0-beta.2"></a>
 
 ## 6.0.0-beta.2 (2022-07-18)
