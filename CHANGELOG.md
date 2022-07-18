@@ -1,5 +1,14 @@
 # Changelog
 
+<a name="6.0.0-beta.2"></a>
+
+## 6.0.0-beta.2 (2022-07-18)
+
+### Miscellaneous
+
+-   🏷️ Update types [[329f3fb](https://github.com/AckeeCZ/petrus/commit/329f3fbe8226a29d378998771b09b63c01fb580c)]
+-   🏷️ Move from TS generics to global namespace to support overrides [[405806c](https://github.com/AckeeCZ/petrus/commit/405806cc2e6be58603f1706eb497e037c2c96f5b)]
+
 <a name="6.0.0-beta.0"></a>
 
 ## 6.0.0-beta.0 (2022-06-17)
