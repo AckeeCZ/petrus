@@ -14,6 +14,7 @@ It automatically refreshes access token based on provided expiration timestamp, 
 
 -   [Installation](#installing)
 <!-- -   [Usage Examples](#usage-examples) -->
+-   [API](https://github.com/AckeeCZ/petrus/wiki/Exports)
 
 ---
 

@@ -97,9 +97,9 @@ export function configure(customConfig: PetrusCustomConfig) {
     Object.assign(config, {
         initialized: true,
 
-        logger: customConfig.logger || console,
+        logger: customConfig.logger ?? console,
 
-        selector: (state: AppRootState): PetrusRootState => state.auth,
+        selector: customConfig.selector ?? ((state: AppRootState): PetrusRootState => state.auth),
 
         oAuth: oAuthConfig,
 
