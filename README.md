@@ -4,81 +4,124 @@
 
 # Petrus
 
-The library handles authentication logic with token based flow.
+A tool for handling token-based authentication in React/Redux/Redux-Saga applications.
 
-### Main features
-
--   **automatically refresh access token** before it expires
--   **persisting tokens state** in local or session storage (optional)
--   automatically **fetching an authorized user** after successful tokens retrieval from a persistent storage
--   simple API for auth state management: [`getAuthStateChannel`](./docs/api.md#get-auth-state-channel), [`withAuthSession`](./docs/api.md#with-auth-session)
--   `authorizable` HOC - render content (a firewall, an authorized content or a loader) based on current auth. state
-
-> ### Requirements
->
-> The library relies on `react`, `redux`, `react-redux`, `redux-saga` and `reselect` packages as peer dependencies.
+It automatically refreshes access token based on provided expiration timestamp, persists its state, so the authentication session last as long as user wishes.
 
 ---
 
 ## Table of contents
 
--   [Installing](#installing)
--   [Usage](#usage)
--   [Usage Examples](./docs/usage-examples/index.md)
--   [API Reference](./docs/api.md#api)
-    -   [Components](./docs/api.md#components)
-    -   [Action creators](./docs/api.md#action-creators)
-    -   [Action types](./docs/api.md#action-types)
-    -   [Constants](./docs/api.md#constants)
-    -   [Selectors](./docs/api.md#selectors)
-    -   [Utilities](./docs/api.md#utilities)
-    -   [HOC](./docs/api.md#hoc)
+-   [Installation](#installing)
+<!-- -   [Usage Examples](#usage-examples) -->
 
 ---
 
-## <a name="installing"></a>Installing
-
-Using yarn:
+## Installation
 
 ```bash
 $ yarn add @ackee/petrus
 ```
 
-Using npm:
+### Stack Dependencies
 
-```bash
-$ npm i -S @ackee/petrus
+The library required following peer dependencies:
+
+```
+ "core-js": "3.x",
+ "react": "16.x | 17.x | 18.x",
+ "react-redux": "7.x | 8.x",
+ "redux": "4.x",
+ "redux-saga": "1.x"
 ```
 
-## <a name="usage"></a>Usage
+---
+
+<!-- ## Usage examples
+
+### Basic configurations
+ -->
+
+<!-- -   [Sign-in with endpoint on your backend]()
+-   [Sign-in with OAuth – Implicit grant flow]()
+-   [Sign-in with OAuth – Web application flow]()
+    -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method to fetch the access token after
+
+--- -->
+
+<!--
+## Basic setup
 
 ### Minimal required configuration
 
-```js
-import { configure } from '@ackee/petrus';
+```ts
+    // 1. Provide authenticate, refreshTokens and getAuthUser methods
+    const { reducer, saga } = configure({
+        selector: state => state.auth,
+        handlers: {
+            authenticate(credentials: PetrusCredentials) {
+                const user: PetrusUser | undefined = {
+                    id: '1',
+                    name: 'Bob',
+                };
 
-// 1. Provide authenticate, refreshTokens and getAuthUser methods
-const { saga, reducer } = configure({
-    handlers: {
-        authenticate,
-        refreshTokens,
-        getAuthUser,
-    },
-});
+                const tokens: PetrusTokens = {
+                    accessToken: {
+                        token: '...',
+                        expiration: '...',
+                    },
+                    refreshToken: {
+                        token: '...',
+                    },
+                };
 
-// 2. Add auth reducer
-const rootReducer = combineReducers({
-    auth: reducer
-});
+                return {
+                    user,
+                    tokens,
+                };
+            },
 
-// 3. And launch the saga
-function*() {
-    yield all([saga()])
-}
-```
+            refreshTokens(tokens: Required<PetrusTokens>) {
+                const freshTokens: PetrusTokens = {
+                    accessToken: {
+                        token: '...',
+                        expiration: '...',
+                    },
+                    refreshToken: {
+                        token: '...',
+                    },
+                };
 
-> To see defaults and available configurations with examples, go [here](./docs/api.md#configure).
+                return freshTokens;
+            },
 
+            getAuthUser(tokens: PetrusTokens) {
+                const user: PetrusUser = {
+                    id: '1',
+                    name: 'Bob',
+                };
+
+                return user;
+            },
+        },
+    });
+
+    // 2. Add auth reducer
+    const rootReducer = combineReducers({
+        auth: reducer
+    });
+
+    // 3. And launch the saga
+    function*() {
+        yield all([saga()])
+    }
+``` -->
+
+<!-- -   [Sign-in with endpoint]()
+    -   [Sign-in with OAuth]()
+
+> To see defaults and available configurations with examples, go [here](./docs/api.md#configure). -->
+<!--
 ### Usage with [`@ackee/antonio`](https://github.com/AckeeCZ/antonio/tree/master/packages/@ackee/antonio-auth#requestauthheaderinterceptorrequest-request-request)
 
 ### With OAuth2
@@ -91,4 +134,4 @@ function*() {
 -   [Web application flow](https://docs.gitlab.com/ee/api/oauth2.html#web-application-flow)
     -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method.
 
-See how to setup `@ackee/petrus` for these flows [here](./docs/oAuth.md).
+See how to setup `@ackee/petrus` for these flows [here](./docs/oAuth.md). -->

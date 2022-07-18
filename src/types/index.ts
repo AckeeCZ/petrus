@@ -7,19 +7,30 @@ import type { StorageDriver } from './storageDriver';
 
 export * from './helpers';
 
-declare global {
-    namespace Petrus {
-        interface ConfigureUser {}
-        interface ConfigureCredentials {}
-        interface ConfigureTokens {}
-        interface ConfigureAppRootState {}
-    }
-}
+/**
+ * @ignore
+ */
+export interface ConfigurePetrusUser {}
 
-export type PetrusUser = Petrus.ConfigureUser extends { value: unknown } ? Petrus.ConfigureUser['value'] : any;
+/**
+ * @ignore
+ */
+export interface ConfigurePetrusCredentials {}
 
-export type PetrusCredentials = Petrus.ConfigureCredentials extends { value: unknown }
-    ? Petrus.ConfigureCredentials['value']
+/**
+ * @ignore
+ */
+export interface ConfigurePetrusTokens {}
+
+/**
+ * @ignore
+ */
+export interface ConfigurePetrusAppRootState {}
+
+export type PetrusUser = ConfigurePetrusUser extends { value: unknown } ? ConfigurePetrusUser['value'] : any;
+
+export type PetrusCredentials = ConfigurePetrusCredentials extends { value: unknown }
+    ? ConfigurePetrusCredentials['value']
     : void;
 
 export interface Tokens {
@@ -36,13 +47,13 @@ export interface Tokens {
     };
 }
 
-export type PetrusTokens = Petrus.ConfigureTokens extends { value: Tokens } ? Petrus.ConfigureTokens['value'] : Tokens;
+export type PetrusTokens = ConfigurePetrusTokens extends { value: Tokens } ? ConfigurePetrusTokens['value'] : Tokens;
 
 /**
  * @ignore
  */
-export type AppRootState = Petrus.ConfigureAppRootState extends { value: unknown }
-    ? Petrus.ConfigureAppRootState['value']
+export type AppRootState = ConfigurePetrusAppRootState extends { value: unknown }
+    ? ConfigurePetrusAppRootState['value']
     : any;
 
 export type PetrusOAuth = {
@@ -59,6 +70,9 @@ export interface PetrusConfig {
 
     selector: (state: AppRootState) => PetrusRootState;
 
+    /**
+     * @ignore
+     */
     initialized: boolean;
 
     /**
@@ -271,38 +285,38 @@ export interface PetrusEntitiesState {
     flowType: FlowType;
 }
 
-export interface PetrusCustomConfig<Config extends PetrusConfig = PetrusConfig> {
+export interface PetrusCustomConfig {
     /**
      * This function must return petrus reducer from your application root state,
      * so you can set it on nested level or on different path.
      * @default (state) => state.auth
      */
-    selector: Config['selector'];
+    selector: PetrusConfig['selector'];
 
     /**
      * @default Console
      */
-    logger?: Config['logger'];
+    logger?: PetrusConfig['logger'];
 
     oAuth?: {
-        origin: Config['oAuth']['origin'];
-        redirectPathname: Config['oAuth']['redirectPathname'];
-        validateRedirectUrl?: Config['oAuth']['validateRedirectUrl'];
-        parseRedirectUrlParams?: Config['oAuth']['parseRedirectUrlParams'];
-        fetchAccessToken?: Config['oAuth']['fetchAccessToken'];
-        enforceAccessTokenScheme?: Config['oAuth']['enforceAccessTokenScheme'];
-        enforceRefreshTokenScheme?: Config['oAuth']['enforceRefreshTokenScheme'];
-        processTokens?: Config['oAuth']['processTokens'];
+        origin: PetrusConfig['oAuth']['origin'];
+        redirectPathname: PetrusConfig['oAuth']['redirectPathname'];
+        validateRedirectUrl?: PetrusConfig['oAuth']['validateRedirectUrl'];
+        parseRedirectUrlParams?: PetrusConfig['oAuth']['parseRedirectUrlParams'];
+        fetchAccessToken?: PetrusConfig['oAuth']['fetchAccessToken'];
+        enforceAccessTokenScheme?: PetrusConfig['oAuth']['enforceAccessTokenScheme'];
+        enforceRefreshTokenScheme?: PetrusConfig['oAuth']['enforceRefreshTokenScheme'];
+        processTokens?: PetrusConfig['oAuth']['processTokens'];
     };
 
-    tokens?: Partial<Config['tokens']>;
+    tokens?: Partial<PetrusConfig['tokens']>;
 
     /**
      * Initial state of the `entities` reducer.
      */
     initialState?: Partial<PetrusEntitiesState>;
 
-    handlers: Config['handlers'];
+    handlers: PetrusConfig['handlers'];
 
     /**
      * Set a custom storage driver for a given `TokensPersistence`.

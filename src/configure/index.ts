@@ -23,20 +23,18 @@ import type { AppRootState, PetrusCustomConfig } from 'types';
  *
  *   type RootState = ReturnType<typeof rootReducer>;
  *
- *   declare global {
- *       namespace Petrus {
- *           interface ConfigureCredentials {
+ *   declare module '@ackee/petrus' {
+ *           interface ConfigurePetrusCredentials {
  *               value: Credentials;
  *           }
  *
- *           interface ConfigureUser {
+ *           interface ConfigurePetrusUser {
  *               value: UserInfo;
  *           }
  *
- *           interface ConfigureAppRootState {
+ *           interface ConfigurePetrusAppRootState {
  *               value: BackgroundRootState;
  *           }
- *       }
  *   }
  *
  *   export const { reducer, saga } = configure({
