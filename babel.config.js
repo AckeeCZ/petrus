@@ -5,8 +5,8 @@ const config = {
         [
             '@babel/typescript',
             {
-                onlyRemoveTypeImports: true,
-                allowDeclareFields: true,
+                // onlyRemoveTypeImports: true,
+                // allowDeclareFields: true,
             },
         ],
         [
@@ -21,11 +21,12 @@ const config = {
             '@babel/env',
             {
                 useBuiltIns: 'usage',
-                loose: true,
+                // loose: true,
                 modules: process.env.BABEL_ENV === 'es' ? false : 'commonjs',
                 bugfixes: true,
                 corejs: '3.x',
-                browserslistEnv: 'development',
+                // browserslistEnv: 'development',
+                browserslistEnv: 'production',
             },
         ],
     ],
