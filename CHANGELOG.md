@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0-beta.8"></a>
+
+## 6.0.0-beta.8 (2022-08-15)
+
+### Changed
+
+-   🔧 Adjust babel config [[30c21a3](https://github.com/AckeeCZ/petrus/commit/30c21a307c750377c4e622446fe88585044fede2)]
+
 <a name="6.0.0-beta.7"></a>
 
 ## 6.0.0-beta.7 (2022-08-15)
