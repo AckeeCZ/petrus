@@ -1,4 +1,4 @@
 {
-    "sandboxes": ["new", "vanilla", "@ackee/petrus - basic setup"],
+    "sandboxes": ["ackee-petrus-basic-template-uibtsw"],
     "node": "14"
 }
