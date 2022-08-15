@@ -27,7 +27,8 @@
         "type-check": "tsc --noEmit",
         "type-check:watch": "yarn type-check -- --watch",
         "docs:clear": "rm -rf petrus.wiki/**/*.md .nojekyll petrus.wiki/media",
-        "docs": "yarn docs:clear && typedoc --tsconfig tsconfig.json"
+        "docs": "yarn docs:clear && typedoc --tsconfig tsconfig.json",
+        "release:beta": "yarn release && npm publish --tag beta"
     },
     "contributors": [
         "Marek Janča <marek.janca@ackee.cz>",

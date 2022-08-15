@@ -9,3 +9,4 @@ export enum TokensPersistence {
     LOCAL = 'local',
     SESSION = 'session',
 }
+console.log({ TokensPersistence });
