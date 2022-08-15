@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0-beta.5"></a>
+
+## 6.0.0-beta.5 (2022-08-15)
+
+### Miscellaneous
+
+-   💥 Remove ApiKeys enum, use ApiKey type instead [[392d02c](https://github.com/AckeeCZ/petrus/commit/392d02c318528ab27449ed238c15d230946a07fe)]
+
 <a name="6.0.0-beta.4"></a>
 
 ## 6.0.0-beta.4 (2022-08-15)
