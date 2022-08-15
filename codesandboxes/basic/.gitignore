@@ -1,0 +1,11 @@
+node_modules
+lib
+es
+dist
+.DS_Store
+node_modules_bak
+yalc.*
+.yalc
+petrus.wiki
+.parcel-cache
+.husky
