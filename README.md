@@ -38,10 +38,16 @@ The library required following peer dependencies:
 
 ---
 
-<!-- ## Usage examples
+## Usage examples
 
-### Basic configurations
- -->
+<!-- Checkout https://codesandbox.io/docs/importing#using-githubboxcom -->
+
+1.  [Basic configuration](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/basic)
+    -   Obtaining tokens with `authenticate` method by sending credentials to an endpoint from `loginRequest` Redux action.
+    -   Fetching authorized user with `getAuthUser` method.
+    -   Automatically refreshing `accessToken` based on provided `expiration` prop.
+    -   Tokens and auth. user local persistence in IndexedDB.
+    -   Using custom TS types for auth user, tokens, and credentials.
 
 <!-- -   [Sign-in with endpoint on your backend]()
 -   [Sign-in with OAuth – Implicit grant flow]()
@@ -49,74 +55,6 @@ The library required following peer dependencies:
     -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method to fetch the access token after
 
 --- -->
-
-<!--
-## Basic setup
-
-### Minimal required configuration
-
-```ts
-    // 1. Provide authenticate, refreshTokens and getAuthUser methods
-    const { reducer, saga } = configure({
-        selector: state => state.auth,
-        handlers: {
-            authenticate(credentials: PetrusCredentials) {
-                const user: PetrusUser | undefined = {
-                    id: '1',
-                    name: 'Bob',
-                };
-
-                const tokens: PetrusTokens = {
-                    accessToken: {
-                        token: '...',
-                        expiration: '...',
-                    },
-                    refreshToken: {
-                        token: '...',
-                    },
-                };
-
-                return {
-                    user,
-                    tokens,
-                };
-            },
-
-            refreshTokens(tokens: Required<PetrusTokens>) {
-                const freshTokens: PetrusTokens = {
-                    accessToken: {
-                        token: '...',
-                        expiration: '...',
-                    },
-                    refreshToken: {
-                        token: '...',
-                    },
-                };
-
-                return freshTokens;
-            },
-
-            getAuthUser(tokens: PetrusTokens) {
-                const user: PetrusUser = {
-                    id: '1',
-                    name: 'Bob',
-                };
-
-                return user;
-            },
-        },
-    });
-
-    // 2. Add auth reducer
-    const rootReducer = combineReducers({
-        auth: reducer
-    });
-
-    // 3. And launch the saga
-    function*() {
-        yield all([saga()])
-    }
-``` -->
 
 <!-- -   [Sign-in with endpoint]()
     -   [Sign-in with OAuth]()

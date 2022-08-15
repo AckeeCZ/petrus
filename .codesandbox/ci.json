@@ -1,4 +1,4 @@
 {
-    "sandboxes": ["ackee-petrus-basic-template-uibtsw"],
+    "sandboxes": ["/codesandboxes/basic"],
     "node": "14"
 }
