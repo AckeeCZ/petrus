@@ -19,14 +19,7 @@ export enum AuthSession {
     INACTIVE = 'INACTIVE',
 }
 
-export enum ApiKeys {
-    FETCH_USER = 'fetchUser',
-    LOGIN = 'login',
-    LOGOUT = 'logout',
-    REFRESH_TOKENS = 'refreshTokens',
-    RETRIEVE_TOKENS = 'retrieveTokens',
-}
-
+export type ApiKey = 'fetchUser' | 'login' | 'logout' | 'refreshTokens' | 'retrieveTokens';
 /**
  * `FlowType` gives you current high-level auth. state.
  *

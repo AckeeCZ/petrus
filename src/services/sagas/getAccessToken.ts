@@ -1,6 +1,6 @@
 import { take, race } from 'redux-saga/effects';
 
-import { AuthSession, ApiKeys } from 'constants/index';
+import { AuthSession } from 'constants/index';
 import { entitiesSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
 import { accessTokenAvailable, setTokens } from 'services/actions';
 
@@ -8,7 +8,7 @@ import { refreshTokens, refreshExpiredToken } from 'modules/tokens/modules/refre
 import { appSelect } from 'services/utils/reduxSaga';
 import type { PetrusTokens } from 'types';
 
-const retrieveTokensApiSelector = apiSelectorFactory(ApiKeys.RETRIEVE_TOKENS);
+const retrieveTokensApiSelector = apiSelectorFactory('retrieveTokens');
 
 function* preSessionResolvement() {
     const retriveTokensApi = yield* appSelect(retrieveTokensApiSelector);

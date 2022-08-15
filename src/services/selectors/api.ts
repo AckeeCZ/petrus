@@ -1,5 +1,5 @@
 import { config } from 'config';
-import type { ApiKeys } from 'constants/index';
+import type { ApiKey } from 'constants/index';
 import type { AppRootState } from 'types';
 
 /**
@@ -9,9 +9,9 @@ import type { AppRootState } from 'types';
  * ```ts
  * import { select } from 'redux-saga/effects';
  * import { createSelector } from 'reselect';
- * import { apiSelector, ApiKeys } from '@ackee/petrus';
+ * import { apiSelector } from '@ackee/petrus';
  *
- * const fetchUserSelector = createSelector(apiSelector, api => api[ApiKeys.FETCH_USER]);
+ * const fetchUserSelector = createSelector(apiSelector, api => api.fetchUser);
  *
  * function* selectFetchUser() {
  *     const { inProgress, success, error } = yield select(fetchUserSelector);
@@ -19,11 +19,11 @@ import type { AppRootState } from 'types';
  * }
  * ```
  */
-export const apiSelector = (state: AppRootState, apiKey: ApiKeys) => {
+export const apiSelector = (state: AppRootState, apiKey: ApiKey) => {
     const { api } = config.selector(state);
     return api[apiKey];
 };
 
-export const apiSelectorFactory = (apiKey: ApiKeys) => (state: AppRootState) => {
+export const apiSelectorFactory = (apiKey: ApiKey) => (state: AppRootState) => {
     return apiSelector(state, apiKey);
 };
