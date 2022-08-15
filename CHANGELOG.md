@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0-beta.10"></a>
+
+## 6.0.0-beta.10 (2022-08-15)
+
+### Miscellaneous
+
+-   Adjust babel config [[b06f3e2](https://github.com/AckeeCZ/petrus/commit/b06f3e286ceed6e4973e491cbe35d8bf1917b1c1)]
+
 <a name="6.0.0-beta.9"></a>
 
 ## 6.0.0-beta.9 (2022-08-15)
