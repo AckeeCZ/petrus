@@ -5,8 +5,8 @@ const config = {
         [
             '@babel/typescript',
             {
-                // onlyRemoveTypeImports: true,
-                // allowDeclareFields: true,
+                onlyRemoveTypeImports: true,
+                allowDeclareFields: true,
             },
         ],
         [
