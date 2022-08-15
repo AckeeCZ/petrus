@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0-beta.6"></a>
+
+## 6.0.0-beta.6 (2022-08-15)
+
+### Miscellaneous
+
+-   🚧 Log out enum for codesandbox [[c7c5f83](https://github.com/AckeeCZ/petrus/commit/c7c5f833a775dda2c43aa3330ca6675046375c16)]
+
 <a name="6.0.0-beta.5"></a>
 
 ## 6.0.0-beta.5 (2022-08-15)
