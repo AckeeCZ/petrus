@@ -1,0 +1,4 @@
+{
+    "sandboxes": ["new", "vanilla", "@ackee/petrus - basic setup"],
+    "node": "14"
+}

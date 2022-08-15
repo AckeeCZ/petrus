@@ -25,7 +25,6 @@ const config = {
                 modules: process.env.BABEL_ENV === 'es' ? false : 'commonjs',
                 bugfixes: true,
                 corejs: '3.x',
-                // browserslistEnv: 'development',
                 browserslistEnv: 'production',
             },
         ],
