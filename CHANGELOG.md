@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0-beta.7"></a>
+
+## 6.0.0-beta.7 (2022-08-15)
+
+### Removed
+
+-   🔥 Remove console.log for a dev purpose [[a94629f](https://github.com/AckeeCZ/petrus/commit/a94629fc47fbc75a6a0fff4294733219e697fbf3)]
+
 <a name="6.0.0-beta.6"></a>
 
 ## 6.0.0-beta.6 (2022-08-15)

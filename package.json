@@ -1,6 +1,6 @@
 {
     "name": "@ackee/petrus",
-    "version": "6.0.0-beta.6",
+    "version": "6.0.0-beta.7",
     "description": "A tool for handling token-based authentication in React/Redux/Redux-Saga applications",
     "main": "lib/index.js",
     "module": "es/index.js",
@@ -21,14 +21,14 @@
         "size": "yarn size:es && yarn size:lib",
         "test": "BABEL_ENV=test jest --watch",
         "test:ci": "BABEL_ENV=test jest --passWithNoTests",
-        "changelog": "npx gitmoji-changelog",
+        "changelog": "gitmoji-changelog",
         "version": "yarn changelog && code --wait CHANGELOG.md && git add CHANGELOG.md",
         "release": "git fetch origin && yarn version",
         "type-check": "tsc --noEmit",
         "type-check:watch": "yarn type-check -- --watch",
         "docs:clear": "rm -rf petrus.wiki/**/*.md .nojekyll petrus.wiki/media",
         "docs": "yarn docs:clear && typedoc --tsconfig tsconfig.json",
-        "release:beta": "yarn release && npm publish --tag beta"
+        "release:beta": "yarn release; npm publish --tag beta"
     },
     "contributors": [
         "Marek Janča <marek.janca@ackee.cz>",
@@ -84,6 +84,7 @@
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-testing-library": "^5.5.0",
+        "gitmoji-changelog": "^2.3.0",
         "husky": "4.2.5",
         "jest": "28.1.0",
         "lint-staged": "10.2.9",
