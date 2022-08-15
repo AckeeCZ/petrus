@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0-beta.4"></a>
+
+## 6.0.0-beta.4 (2022-08-15)
+
+### Removed
+
+-   🔥 Remove config Proxy preventing premature config reads (it throws false positive error) [[74b97de](https://github.com/AckeeCZ/petrus/commit/74b97de6f3e1e3e5a2bc75e6083d4d0b1ffc5b1a)]
+
 <a name="6.0.0-beta.3"></a>
 
 ## 6.0.0-beta.3 (2022-07-18)
