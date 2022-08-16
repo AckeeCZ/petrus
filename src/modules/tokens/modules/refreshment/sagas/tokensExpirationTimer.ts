@@ -1,8 +1,6 @@
 import type { Task } from 'redux-saga';
 import { cancel, fork, call, delay } from 'redux-saga/effects';
 
-import { config } from 'config';
-
 import { validateTimeoutValue, calcTimeoutValue } from './utils';
 import type { DefaultFn } from 'types';
 
@@ -26,7 +24,7 @@ function* startTimer(timeout: number, callbackSaga: DefaultFn) {
 export function* setTimer(expiration: string, callbackSaga: DefaultFn) {
     const timeout = calcTimeoutValue(expiration);
 
-    validateTimeoutValue(timeout, config.tokens);
+    validateTimeoutValue(timeout);
 
     timerTask = yield fork(startTimer, timeout, callbackSaga);
 }

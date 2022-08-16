@@ -1,4 +1,4 @@
-import { config } from 'config';
+import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import type { PetrusOAuth, PetrusTokens } from 'types';
 
 function* getOAuthTokens() {
@@ -35,7 +35,13 @@ export function* getMaybeOAuthTokens() {
     try {
         return yield* getOAuthTokens();
     } catch (e) {
-        config.logger.error(e);
+        if (isPetrusError(e)) {
+            config.logger.error(e);
+        } else {
+            config.logger.error(
+                new PetrusError(PetrusErrorType.GET_OAUTH_TOKENS_FAILURE, `Failed to get oAuth tokens.`, e as Error),
+            );
+        }
         return null;
     }
 }

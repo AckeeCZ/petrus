@@ -1,6 +1,6 @@
 import { takeLeading, put } from 'redux-saga/effects';
 
-import { config } from 'config';
+import { config, PetrusError, PetrusErrorType } from 'config';
 import { deleteTokens } from 'services/actions';
 import { logout } from '../actions';
 
@@ -27,8 +27,8 @@ function* logoutHandler() {
 
         yield put(logout.success());
     } catch (e) {
-        const error = e as Error;
-        config.logger.error(error.toString());
+        const error = new PetrusError(PetrusErrorType.LOGOUT_FAILURE, 'Failed to logout.', e as Error);
+        config.logger.error(error);
         yield put(logout.failure(error));
     }
 }

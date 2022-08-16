@@ -1,6 +1,6 @@
 import { put, takeLeading } from 'redux-saga/effects';
 
-import { config, PetrusError } from 'config';
+import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import { setTokens, deleteTokens } from 'services/actions';
 import { tokensSelector } from 'services/selectors';
 import { validateTokens } from 'services/utils';
@@ -17,6 +17,7 @@ export default function* refreshTokensHandler() {
 
             if (!tokens?.refreshToken) {
                 throw new PetrusError(
+                    PetrusErrorType.UNAVAILABLE_TOKENS,
                     `Can't refresh access token without a refresh token. Received 'tokens': ${JSON.stringify(
                         tokens,
                         null,
@@ -35,9 +36,18 @@ export default function* refreshTokensHandler() {
 
             yield put(refreshTokens.success());
         } catch (e) {
-            const error = e as Error;
-            config.logger.error(error.toString());
-            yield put(refreshTokens.failure(error));
+            if (isPetrusError(e)) {
+                config.logger.error(e);
+                yield put(refreshTokens.failure(e));
+            } else {
+                const error = new PetrusError(
+                    PetrusErrorType.REFRESH_TOKENS_FAILURE,
+                    `Failed to refresh tokens.`,
+                    e as Error,
+                );
+                config.logger.error(error);
+                yield put(refreshTokens.failure(error));
+            }
             yield put(deleteTokens());
         }
     });

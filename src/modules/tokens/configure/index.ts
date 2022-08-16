@@ -1,4 +1,4 @@
-import { PetrusError } from 'config';
+import { PetrusError, PetrusErrorType } from 'config';
 import { isFn } from 'services/utils';
 import type { PetrusConfig, PetrusCustomConfig } from 'types';
 
@@ -10,7 +10,10 @@ export const handlers = ({
     refreshTokens: PetrusConfig['handlers']['refreshTokens'];
 } => {
     if (!isFn(refreshTokens)) {
-        throw new PetrusError(`'refreshTokens' is not a function: Received argument: ${refreshTokens}.`);
+        throw new PetrusError(
+            PetrusErrorType.INVALID_REFRESH_TOKENS_HANDLER,
+            `'refreshTokens' is not a function: Received argument: ${refreshTokens}.`,
+        );
     }
 
     return {

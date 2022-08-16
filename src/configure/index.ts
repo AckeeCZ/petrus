@@ -1,4 +1,4 @@
-import { PetrusError, config, storageDrivers } from 'config';
+import { PetrusError, config, storageDrivers, PetrusErrorType } from 'config';
 
 import { configure as oAuth } from 'modules/oAuth';
 import { configure as authSession } from 'modules/auth-session';
@@ -88,7 +88,10 @@ import type { AppRootState, PetrusCustomConfig } from 'types';
  */
 export function configure(customConfig: PetrusCustomConfig) {
     if (config.initialized) {
-        throw new PetrusError(`'configure' method can be called only once.`);
+        throw new PetrusError(
+            PetrusErrorType.CONFIGURE_METHOD_CAN_BE_CALLED_ONLY_ONCE,
+            `'configure' method can be called only once.`,
+        );
     }
 
     const oAuthConfig = oAuth(customConfig.oAuth);

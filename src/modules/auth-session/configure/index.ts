@@ -1,4 +1,4 @@
-import { PetrusError } from 'config';
+import { PetrusError, PetrusErrorType } from 'config';
 import { isFn } from 'services/utils';
 
 import { TokensPersistence } from 'modules/tokens';
@@ -12,13 +12,17 @@ export const handlers = (
     authenticate: PetrusConfig['handlers']['authenticate'];
 } => {
     if (!oAuthEnabled && !isFn(authenticate)) {
-        throw new PetrusError(`'authenticate' is not a function: Received argument: '${authenticate}'.`);
+        throw new PetrusError(
+            PetrusErrorType.INVALID_AUTHENTICATE_HANDLER,
+            `'authenticate' is not a function: Received argument: '${authenticate}'.`,
+        );
     }
 
     const { LOCAL, NONE } = TokensPersistence;
 
     if (tokensPersistence === LOCAL && !isFn(getAuthUser)) {
         throw new PetrusError(
+            PetrusErrorType.INVALID_GET_AUTH_USER_HANDLER,
             // eslint-disable-next-line max-len
             `'getAuthUser' is not a function: '${getAuthUser}'. Tokens persistence is set to '${LOCAL}'. Change tokens persistence to '${NONE}' or provide function for fetching authorized user.`,
         );

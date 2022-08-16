@@ -1,6 +1,6 @@
 import { put, takeLeading } from 'redux-saga/effects';
 
-import { config, PetrusError } from 'config';
+import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import { setTokens } from 'services/actions';
 import { validateTokens } from 'services/utils';
 import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
@@ -18,7 +18,10 @@ export default function* loginHandler() {
             const { authenticate } = config.handlers;
 
             if (!authenticate) {
-                throw new PetrusError(`Can't login, missing the 'authenticate' handler`);
+                throw new PetrusError(
+                    PetrusErrorType.INVALID_AUTHENTICATE_HANDLER,
+                    `Can't login, missing the 'authenticate' handler`,
+                );
             }
 
             const {
@@ -38,9 +41,14 @@ export default function* loginHandler() {
 
             yield put(login.success());
         } catch (e) {
-            const error = e as Error;
-            config.logger.error(new PetrusError(`User login failed: ${error.toString()}`));
-            yield put(login.failure(error));
+            if (isPetrusError(e)) {
+                config.logger.error(e);
+                yield put(login.failure(e));
+            } else {
+                const error = new PetrusError(PetrusErrorType.LOGIN_FAILURE, `Failed to login user.`, e as Error);
+                config.logger.error(error);
+                yield put(login.failure(error));
+            }
         }
     });
 }

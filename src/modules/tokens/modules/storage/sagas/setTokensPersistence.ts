@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import { config } from 'config';
+import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import { TokensPersistence } from 'modules/tokens/modules/storage/constants';
 
 import { setTokensPersistence } from '../actions';
@@ -34,7 +34,17 @@ export default function* setTokensPersistenceHandler() {
         try {
             yield applyTokensPersistence(action.payload);
         } catch (e) {
-            config.logger.error(e);
+            if (isPetrusError(e)) {
+                config.logger.error(e);
+            } else {
+                config.logger.error(
+                    new PetrusError(
+                        PetrusErrorType.SET_TOKENS_PERSISTENCE_FAILURE,
+                        'Failed to set tokens persistence.',
+                        e as Error,
+                    ),
+                );
+            }
         }
     });
 }

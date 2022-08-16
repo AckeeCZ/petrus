@@ -1,4 +1,4 @@
-import { PetrusError } from 'config';
+import { PetrusError, PetrusErrorType } from 'config';
 
 function isPlainObject<T extends Record<string, any>>(o: T) {
     return typeof o === 'object' && o.constructor === Object;
@@ -6,13 +6,19 @@ function isPlainObject<T extends Record<string, any>>(o: T) {
 
 export default function validateTokens<T extends Record<string, any>>(tokens?: T): void | never {
     if (!tokens || !isPlainObject(tokens)) {
-        throw new PetrusError(`'tokens' must be an object including 'accessToken' property.`);
+        throw new PetrusError(
+            PetrusErrorType.INVALID_TOKENS,
+            `'tokens' must be an object including 'accessToken' property.`,
+        );
     }
 
     const { accessToken } = tokens;
 
     if (!isPlainObject(accessToken) || !accessToken.token) {
-        throw new PetrusError(`'tokens.accessToken' must be an object including at least 'token' property.`);
+        throw new PetrusError(
+            PetrusErrorType.INVALID_TOKENS,
+            `'tokens.accessToken' must be an object including at least 'token' property.`,
+        );
     }
 }
 
