@@ -1,6 +1,6 @@
 import { put, takeLeading } from 'redux-saga/effects';
 
-import { PetrusError, config } from 'config';
+import { PetrusError, config, PetrusErrorType, isPetrusError } from 'config';
 import { entitiesSelector } from 'services/selectors';
 
 import { fetchUser, login } from '../actions';
@@ -12,23 +12,38 @@ function* fetchUserHandler() {
         const { tokens } = yield* appSelect(entitiesSelector);
 
         if (!tokens) {
-            throw new PetrusError(`Can't call 'getAuthUser' handler while the tokens are missing.`);
+            throw new PetrusError(
+                PetrusErrorType.UNAVAILABLE_TOKENS,
+                `Can't call 'getAuthUser' handler while the tokens are missing.`,
+            );
         }
 
         /* @ts-expect-error */
         const user: PetrusUser = yield config.handlers.getAuthUser(tokens);
 
         if (!user) {
-            throw new PetrusError(`'getAuthUser' method must return authorized user.`);
+            throw new PetrusError(
+                PetrusErrorType.UNAVAILABLE_AUTH_USER,
+                `'getAuthUser' method must return authorized user.`,
+            );
         }
 
         yield put(fetchUser.success(user));
 
         yield put(login.success());
     } catch (e) {
-        const error = e as Error;
-        config.logger.error(error.toString());
-        yield put(fetchUser.failure(error));
+        if (isPetrusError(e)) {
+            config.logger.error(e);
+            yield put(fetchUser.failure(e));
+        } else {
+            const error = new PetrusError(
+                PetrusErrorType.GET_AUTH_USER_FAILURE,
+                'Failed to obtain auth user.',
+                e as Error,
+            );
+            config.logger.error(error);
+            yield put(fetchUser.failure(error));
+        }
     }
 }
 

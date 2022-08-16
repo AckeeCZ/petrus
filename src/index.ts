@@ -32,7 +32,7 @@ export {
     tokensPersistenceSelector,
 } from './services/selectors';
 export { createExpirationDate } from './modules/oAuth';
-export { storageDrivers, isPetrusError } from './config';
+export { storageDrivers, isPetrusError, PetrusErrorType } from './config';
 export * from './constants';
 export { retrieveTokens } from 'modules/tokens/modules/retrieval';
 

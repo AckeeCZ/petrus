@@ -1,6 +1,6 @@
 import { put, takeLeading, take } from 'redux-saga/effects';
 
-import { config } from 'config';
+import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import { setTokens } from 'services/actions';
 import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
@@ -30,9 +30,18 @@ export default function* directLogin() {
 
             yield put(login.success());
         } catch (e) {
-            const error = e as Error;
-            config.logger.error(`Failed to set user with tokens: ${error.toString()}.`);
-            yield put(login.failure(error));
+            if (isPetrusError(e)) {
+                config.logger.error(e);
+                yield put(login.failure(e));
+            } else {
+                const error = new PetrusError(
+                    PetrusErrorType.DIRECT_LOGIN_FAILURE,
+                    `Failed to set user with tokens.`,
+                    e as Error,
+                );
+                config.logger.error(error);
+                yield put(login.failure(error));
+            }
         }
     });
 }

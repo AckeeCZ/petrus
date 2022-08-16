@@ -1,5 +1,5 @@
-import { PetrusError, config } from 'config';
-import type { PetrusConfig, PetrusTokens } from 'types';
+import { PetrusError, config, PetrusErrorType } from 'config';
+import type { PetrusTokens } from 'types';
 
 export const isTokenExpired = (token: PetrusTokens['accessToken']) => {
     return Boolean(token && token.expiration && Date.parse(token.expiration) <= Date.now());
@@ -11,24 +11,11 @@ export function calcTimeoutValue(expiration: string) {
     return Math.max(timeout - config.tokens.requestDurationEstimate, 0);
 }
 
-interface ValidateTimeoutValueProps {
-    minRequiredExpiration: PetrusConfig['tokens']['minRequiredExpiration'];
-    requestDurationEstimate: PetrusConfig['tokens']['requestDurationEstimate'];
-}
-
-export function validateTimeoutValue(
-    timeout: number,
-    { minRequiredExpiration, requestDurationEstimate }: ValidateTimeoutValueProps,
-) {
+export function validateTimeoutValue(timeout: number) {
     if (timeout === 0) {
-        throw new PetrusError(`Can't set 0 timeout for refreshing tokens. Check the token 'expiration' propererty.`);
-    }
-
-    if (timeout < minRequiredExpiration) {
         throw new PetrusError(
-            `Token 'timeout' value is too low. Minimum required value is: ${
-                minRequiredExpiration + requestDurationEstimate
-            }ms.`,
+            PetrusErrorType.INVALID_TIMEOUT,
+            `Can't set 0 timeout for refreshing tokens. Check the token 'expiration' propererty.`,
         );
     }
 
@@ -40,7 +27,10 @@ export function validateTimeoutValue(
     const MAX_ALLOWED_VALUE = 2147483647;
 
     if (timeout > MAX_ALLOWED_VALUE) {
-        throw new Error(`Timeout for refreshing access token must be <= ${MAX_ALLOWED_VALUE}, received: ${timeout}.`);
+        throw new PetrusError(
+            PetrusErrorType.INVALID_TIMEOUT,
+            `Timeout for refreshing access token must be <= ${MAX_ALLOWED_VALUE}, received: ${timeout}.`,
+        );
     }
 }
 
@@ -51,9 +41,10 @@ export function validateExpiration(expiration: string) {
     const timeout = calcTimeoutValue(expiration);
 
     try {
-        validateTimeoutValue(timeout, config.tokens);
+        validateTimeoutValue(timeout);
         return true;
     } catch (error) {
+        config.logger.error(error);
         return false;
     }
 }
