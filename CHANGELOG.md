@@ -1,5 +1,20 @@
 # Changelog
 
+<a name="6.0.0-beta.11"></a>
+
+## 6.0.0-beta.11 (2022-08-16)
+
+### Added
+
+-   ✨ Import basic codesandbox template [[eece1b9](https://github.com/AckeeCZ/petrus/commit/eece1b93d078b7af218b91b87a238e6c75652d63)]
+-   ✨ Setup codesandbox CI [[c95b1ad](https://github.com/AckeeCZ/petrus/commit/c95b1ad7f4db295f39d84f86f22aefd05403a617)]
+
+### Changed
+
+-   ♻️ Extend PetrusError with type and originalError props [[b479c11](https://github.com/AckeeCZ/petrus/commit/b479c1195481f4d1a05a122c1525591e83cb77db)]
+-   🔧 Use local codesandbox for CI and as an usage example too [[8884d4b](https://github.com/AckeeCZ/petrus/commit/8884d4b9df229470140eb8191ea8442f0ce37f0f)]
+-   🔧 Update list of snadboxes [[34cf6dd](https://github.com/AckeeCZ/petrus/commit/34cf6dde4a4ab6561318b85c4c09c601d607da28)]
+
 <a name="6.0.0-beta.10"></a>
 
 ## 6.0.0-beta.10 (2022-08-15)
