@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="6.0.0"></a>
+
+## 6.0.0 (2022-08-18)
+
+### Added
+
+-   ✨ Add oauth-authorization-code usage example [[21a8c12](https://github.com/AckeeCZ/petrus/commit/21a8c1252edeaeeca7229e12dc3d203001066a2c)]
+
 <a name="6.0.0-beta.11"></a>
 
 ## 6.0.0-beta.11 (2022-08-16)
