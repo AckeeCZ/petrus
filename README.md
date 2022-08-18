@@ -1,19 +1,19 @@
 ![ackee|Petrus](media/ackee_git_frontend_petrus.png)
 
-# [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AckeeCZ/petrus/blob/master/LICENSE) [![CI Status](https://img.shields.io/travis/com/AckeeCZ/petrus.svg?style=flat)](https://travis-ci.com/AckeeCZ/petrus) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request) [![Dependency Status](https://img.shields.io/david/AckeeCZ/petrus.svg?style=flat-square)](https://david-dm.org/AckeeCZ/petrus) [![bundlephobia](https://flat.badgen.net/bundlephobia/min/@ackee/petrus)](https://bundlephobia.com/result?p=@ackee/petrus) [![bundlephobia](https://flat.badgen.net/bundlephobia/minzip/@ackee/petrus)](https://bundlephobia.com/result?p=@ackee/petrus)
+# [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AckeeCZ/petrus/blob/master/LICENSE) [![bundlephobia](https://flat.badgen.net/bundlephobia/minzip/@ackee/petrus)](https://bundlephobia.com/result?p=@ackee/petrus)
 
 # Petrus
 
-A tool for handling token-based authentication in React/Redux/Redux-Saga applications.
+A tool for handling token-based authentication in `react`, `redux`, `redux-saga` applications.
 
-It automatically refreshes access token based on provided expiration timestamp, persists its state, so the authentication session last as long as user wishes.
+It automatically refreshes an access token based on provided expiration timestamp, persists state, so the authentication session can last longer.
 
 ---
 
 ## Table of contents
 
--   [Installation](#installing)
-<!-- -   [Usage Examples](#usage-examples) -->
+-   [Installation](#installation)
+-   [Usage Examples](#usage-examples)
 -   [API](https://github.com/AckeeCZ/petrus/wiki/Exports)
 
 ---
@@ -40,37 +40,40 @@ The library required following peer dependencies:
 
 ## Usage examples
 
-<!-- Checkout https://codesandbox.io/docs/importing#using-githubboxcom -->
+<!-- These codesandboxes are generated as described here: https://codesandbox.io/docs/importing#using-githubboxcom -->
 
-1.  [Basic configuration](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/basic)
-    -   Obtaining tokens with `authenticate` method by sending credentials to an endpoint from `loginRequest` Redux action.
-    -   Fetching authorized user with `getAuthUser` method.
-    -   Automatically refreshing `accessToken` based on provided `expiration` prop.
-    -   Tokens and auth. user local persistence in IndexedDB.
-    -   Using custom TS types for auth user, tokens, and credentials.
+### Authentication flows
 
-<!-- -   [Sign-in with endpoint on your backend]()
--   [Sign-in with OAuth – Implicit grant flow]()
--   [Sign-in with OAuth – Web application flow]()
-    -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method to fetch the access token after
+1.  Direct authentication (with password)
 
---- -->
+    -   [Basic config](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/basic?file=/src/modules/petrus/index.ts)
+        -   Obtaining tokens with `authenticate` method by sending credentials to an endpoint from `loginRequest` Redux action.
+        -   Fetching authorized user with `getAuthUser` method.
+        -   Automatically refreshing `accessToken` based on provided `expiration` prop.
+        -   Tokens and auth. user local persistence in IndexedDB.
+        -   Using custom TS types for auth user, tokens, and credentials.
 
-<!-- -   [Sign-in with endpoint]()
-    -   [Sign-in with OAuth]()
+2.  Federated authentication (with a token)
 
-> To see defaults and available configurations with examples, go [here](./docs/api.md#configure). -->
-<!--
-### Usage with [`@ackee/antonio`](https://github.com/AckeeCZ/antonio/tree/master/packages/@ackee/antonio-auth#requestauthheaderinterceptorrequest-request-request)
+    -   [OAuth 2.0 – Authorization Code Flow](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/oauth-authorization-code?file=/src/modules/petrus/index.ts)
 
-### With OAuth2
+        > What's an authorization code flow?
+        >
+        > -   The front channel flow is used by the client application to obtain an authorization code grant.
+        > -   The back channel is used by the client application to exchange the authorization code grant for an access token (and optionally a refresh token).
+        > -   High security flow.
 
-`@ackee/petrus` supports following OAuth2 flows:
+    -   OAuth 2.0 – Implicit Flow
 
--   [Implicit grant flow](https://docs.gitlab.com/ee/api/oauth2.html#implicit-grant-flow)
-    -   Matches with the default configuration.
-    -   `origin` property is required
--   [Web application flow](https://docs.gitlab.com/ee/api/oauth2.html#web-application-flow)
-    -   Additionally to the _Implicit grant flow_, you have to provide the `fetchAccessToken` method.
+        > What's an implicit flow?
+        >
+        > -   An access token is returned directly from the authorization request (front channel only). It typically does not support refresh tokens.
+        > -   This flow is also called 2 Legged OAuth.
+        > -   Low security by default, make sure to follow at least [these security rules](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth#security-and-the-enterprise).
 
-See how to setup `@ackee/petrus` for these flows [here](./docs/oAuth.md). -->
+    Of course, you can choose from any other numerous flows available.<br/>
+    Learn more about OAuth flows in ["What the heck is OAuth?"](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth) article.
+
+### Other examples
+
+3.  Usage with [`@ackee/antonio` API client](https://github.com/AckeeCZ/antonio/tree/master/packages/@ackee/antonio-auth#requestauthheaderinterceptorrequest-request-request)

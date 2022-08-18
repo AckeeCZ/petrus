@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "allowJs": true,
+        "jsx": "react-jsx",
+        "lib": ["es6", "dom"],
+        "isolatedModules": true,
+        "rootDir": "src",
+        "target": "es6",
+        "skipLibCheck": true,
+        "baseUrl": "src",
+        "importsNotUsedAsValues": "error",
+        "paths": {
+            "modules/*": ["./modules/*"],
+            "types/*": ["./types/*"]
+        }
+    },
+    "include": ["src"]
+}
