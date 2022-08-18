@@ -1,4 +1,4 @@
 {
-    "sandboxes": ["/codesandboxes/basic"],
+    "sandboxes": ["/codesandboxes/basic", "/codesandboxes/oauth-authorization-code"],
     "node": "14"
 }

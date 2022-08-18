@@ -26,7 +26,7 @@ $ yarn add @ackee/petrus
 
 ### Stack Dependencies
 
-The library required following peer dependencies:
+`@ackee/petrus` requires a following peer dependencies:
 
 ```
  "core-js": "3.x",
@@ -46,7 +46,7 @@ The library required following peer dependencies:
 
 1.  Direct authentication (with password)
 
-    -   [Basic config](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/basic?file=/src/modules/petrus/index.ts)
+    -   [Basic config](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/basic)
         -   Obtaining tokens with `authenticate` method by sending credentials to an endpoint from `loginRequest` Redux action.
         -   Fetching authorized user with `getAuthUser` method.
         -   Automatically refreshing `accessToken` based on provided `expiration` prop.
@@ -55,7 +55,7 @@ The library required following peer dependencies:
 
 2.  Federated authentication (with a token)
 
-    -   [OAuth 2.0 – Authorization Code Flow](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/oauth-authorization-code?file=/src/modules/petrus/index.ts)
+    -   [OAuth 2.0 – Authorization Code Flow](https://githubbox.com/AckeeCZ/petrus/tree/master/codesandboxes/oauth-authorization-code)
 
         > What's an authorization code flow?
         >

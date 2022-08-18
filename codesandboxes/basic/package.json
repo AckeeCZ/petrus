@@ -9,7 +9,7 @@
         "format": "prettier --config ./prettier.config.js  --write"
     },
     "dependencies": {
-        "@ackee/petrus": "6.0.0-beta.11",
+        "@ackee/petrus": "6.0.0",
         "@reduxjs/toolkit": "1.8.3",
         "@types/react": "18.0.15",
         "@types/react-dom": "18.0.6",
