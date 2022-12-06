@@ -6,7 +6,7 @@
     "module": "es/index.js",
     "sideEffects": false,
     "scripts": {
-        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.{js,jsx,ts,tsx}'",
+        "prettier": "prettier --config ./prettier.config.cjs --write './src/**/*.{js,jsx,ts,tsx}'",
         "build:lib": "rm -rf ./lib && cross-env BABEL_ENV=lib babel src --out-dir lib  --extensions \".ts,.js,.tsx,.jsx\"",
         "build:es": "rm -rf ./es && cross-env BABEL_ENV=es babel src --out-dir es --extensions \".ts,.js,.tsx,.jsx\"",
         "build:es:types": "tsc -p tsconfig.types.es.json && tsc-alias -p tsconfig.types.es.json",
@@ -19,8 +19,8 @@
         "size:es": "package-size ./es --no-cache",
         "size:lib": "package-size ./lib --no-cache",
         "size": "yarn size:es && yarn size:lib",
-        "test": "BABEL_ENV=test jest --watch",
-        "test:ci": "BABEL_ENV=test jest --passWithNoTests",
+        "test": "jest --watch",
+        "test:ci": "jest --passWithNoTests",
         "changelog": "gitmoji-changelog",
         "version": "yarn changelog && code --wait CHANGELOG.md && git add CHANGELOG.md",
         "release": "git fetch origin && yarn version",
@@ -42,6 +42,7 @@
     "dependencies": {
         "@ackee/redux-utils": "^4.1.2",
         "@reduxjs/toolkit": "^1.8.1",
+        "@types/jest": "^29.2.4",
         "idb": "5.0.4",
         "react-display-name": "^0.2.5"
     },
@@ -65,15 +66,12 @@
         "@types/react-redux": "^7.1.24",
         "@typescript-eslint/eslint-plugin": "^5.25.0",
         "@typescript-eslint/parser": "^5.25.0",
-        "babel-jest": "28.1.0",
         "babel-plugin-custom-import-path-transform": "^1.0.3",
         "babel-plugin-module-resolver": "^4.0.0",
         "babel-plugin-transform-imports": "2.0.0",
         "babel-preset-react-app": "^10.0.1",
         "core-js": "^3.22.8",
         "cross-env": "7.0.3",
-        "enzyme": "3.x",
-        "enzyme-adapter-react-16": "1.x",
         "eslint": "^8.16.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-compat": "^4.0.2",
@@ -85,7 +83,7 @@
         "eslint-plugin-testing-library": "^5.5.0",
         "gitmoji-changelog": "^2.3.0",
         "husky": "4.2.5",
-        "jest": "28.1.0",
+        "jest": "^29.3.1",
         "lint-staged": "10.2.9",
         "onchange": "7.1.0",
         "package-size": "2.x",
@@ -95,6 +93,7 @@
         "react-redux": "8.0.2",
         "redux": "4.x",
         "redux-saga": "1.x",
+        "ts-jest": "^29.0.3",
         "tsc-alias": "^1.6.7",
         "typedoc": "^0.22.17",
         "typedoc-github-wiki-theme": "^1.0.1",
@@ -108,8 +107,8 @@
         }
     },
     "lint-staged": {
-        "*.{ts,tsx,js,jsx,json,scss,less,css,md}": [
-            "prettier --config ./prettier.config.js --write"
+        "*.{ts,tsx,js,jsx,json,md}": [
+            "prettier --config ./prettier.config.cjs --write"
         ]
     },
     "publishConfig": {
