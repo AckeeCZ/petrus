@@ -1,7 +1,13 @@
 import { PetrusError, PetrusErrorType } from 'config';
 
-function isPlainObject<T extends Record<string, any>>(o: T) {
-    return typeof o === 'object' && o.constructor === Object;
+export function isPlainObject(o: any): o is Record<string, any> {
+    if (typeof o !== 'object' || !o || o[Symbol.toStringTag] !== undefined) {
+        return false;
+    }
+
+    const stringfied = JSON.stringify(o);
+
+    return stringfied[0] === '{' && stringfied[stringfied.length - 1] === '}';
 }
 
 export default function validateTokens<T extends Record<string, any>>(tokens?: T): void | never {
