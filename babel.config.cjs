@@ -44,7 +44,7 @@ const config = {
         ],
         [require.resolve('babel-plugin-transform-imports')],
     ],
-    ignore: ['**/__tests__/', '**/*.test.js'],
+    ignore: ['**/__tests__/', '**/*.test.ts'],
 };
 
 module.exports = config;
