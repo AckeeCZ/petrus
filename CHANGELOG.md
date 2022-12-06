@@ -1,12 +1,25 @@
 # Changelog
 
-<a name="6.0.0"></a>
+<a name="6.0.1"></a>
 
-## 6.0.0 (2022-08-18)
+## 6.0.1 (2022-12-06)
 
 ### Added
 
--   ✨ Add oauth-authorization-code usage example [[21a8c12](https://github.com/AckeeCZ/petrus/commit/21a8c1252edeaeeca7229e12dc3d203001066a2c)]
+-   ✨ Setup jest [[a7b51c2](https://github.com/AckeeCZ/petrus/commit/a7b51c24da21541f44d7c246533e0336e83c3691)]
+-   ✨ Add oauth-authorization-code [[21a8c12](https://github.com/AckeeCZ/petrus/commit/21a8c1252edeaeeca7229e12dc3d203001066a2c)]
+
+### Changed
+
+-   🔧 Update petrus pkg version in examples [[d5cf6a4](https://github.com/AckeeCZ/petrus/commit/d5cf6a46e292c05e6323f2a10f8f4871fbe47ead)]
+
+### Fixed
+
+-   🐛 Fix isPlainObject util [[8ca92fc](https://github.com/AckeeCZ/petrus/commit/8ca92fc7cc5db195ab2a397e98be5b83eda0ccd6)]
+
+### Miscellaneous
+
+-   Bump terser from 4.8.0 to 4.8.1 [[5c5c9c0](https://github.com/AckeeCZ/petrus/commit/5c5c9c083c6998ba1fd9e5140457ff3c305570e7)]
 
 <a name="6.0.0-beta.11"></a>
 
