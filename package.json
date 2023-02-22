@@ -47,11 +47,11 @@
         "react-display-name": "^0.2.5"
     },
     "peerDependencies": {
-        "core-js": "3.x",
-        "react": "16.x | 17.x | 18.x",
-        "react-redux": "7.x | 8.x",
-        "redux": "4.x",
-        "redux-saga": "1.x"
+        "core-js": "3",
+        "react": "16 - 18",
+        "react-redux": "7 - 8",
+        "redux": "4",
+        "redux-saga": "1"
     },
     "devDependencies": {
         "@ackee/browserslist-config": "^2.0.0",
