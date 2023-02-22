@@ -1,5 +1,14 @@
 # Changelog
 
+<a name="6.0.2"></a>
+
+## 6.0.2 (2023-02-22)
+
+### Changed
+
+-   ⬆️ Upgrade browserslist [[69b9112](https://github.com/AckeeCZ/petrus/commit/69b9112ba0cbb686473c44255aebfc2600357505)]
+-   🔧 Update format of peer deps [[16eaf3a](https://github.com/AckeeCZ/petrus/commit/16eaf3a6200d1dfad433cca4a83f1a66329c0baa)]
+
 <a name="6.0.1"></a>
 
 ## 6.0.1 (2022-12-06)
