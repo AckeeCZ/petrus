@@ -54,7 +54,7 @@
         "redux-saga": "1"
     },
     "devDependencies": {
-        "@ackee/browserslist-config": "^2.0.0",
+        "@ackee/browserslist-config": "^3.0.0",
         "@ackee/eslint-config": "^4.0.0",
         "@babel/cli": "7.17.10",
         "@babel/core": "7.18.0",

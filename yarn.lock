@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ackee/browserslist-config@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ackee/browserslist-config/-/browserslist-config-2.0.0.tgz#b570633f6960c4170ee4591d51d264391ed1a2d5"
-  integrity sha512-J0lEEam+ixz0FuSDy/r0kQor+JTdjFQY6IPEgsWK5SDHqClocLPwkOQQxL297ujRCQovdOea2nMKu5x6n3hqWw==
+"@ackee/browserslist-config@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ackee/browserslist-config/-/browserslist-config-3.0.0.tgz#054203f4f1196093c9ecb7b694cdbd1215f3678a"
+  integrity sha512-K1mR2Me/AnoT09TJy1CPZijIuxAeQ+J35+NCDPy9vLgdWLj/t6u9++KMNy3esV2HK7JKLtHzLTjTgROHlndrwg==
 
 "@ackee/eslint-config@^4.0.0":
   version "4.0.0"
@@ -3265,9 +3265,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001304, caniuse-lite@^1.0.30001332:
-  version "1.0.30001376"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001376.tgz"
-  integrity sha512-I27WhtOQ3X3v3it9gNs/oTpoE5KpwmqKR5oKPA8M0G7uMXh9Ty81Q904HpKUrM30ei7zfcL5jE7AXefgbOfMig==
+  version "1.0.30001457"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001457.tgz"
+  integrity sha512-SDIV6bgE1aVbK6XyxdURbUE89zY7+k1BBBaOwYwkNCglXlel/E7mELiHC64HQ+W0xSKlqWhV9Wh7iHxUjMs4fA==
 
 capture-stack-trace@^1.0.0:
   version "1.0.1"
