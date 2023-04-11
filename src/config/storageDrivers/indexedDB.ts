@@ -1,3 +1,4 @@
+import { config } from 'config';
 import { openDB as openDBReal } from 'idb';
 
 const noop = () => {};
@@ -27,15 +28,29 @@ async function openDB() {
 
 const db = openDB();
 
+async function accessDB(operation: 'get' | 'put' | 'delete', key: string, value?: any) {
+    try {
+        return (await db)[operation](DATABASE_STORE_NAME, key, value);
+    } catch (e) {
+        const ignoresError = 'A mutation operation was attempted on a database that did not allow mutations.';
+
+        if ((e as Error).message !== ignoresError) {
+            config.logger.error(e);
+        }
+
+        return null;
+    }
+}
+
 export const indexedDB = {
     async get<Key extends string>(key: Key) {
-        return (await db).get(DATABASE_STORE_NAME, key);
+        return accessDB('get', key);
     },
     async set<Key extends string, Value extends any>(key: Key, val: Value) {
-        return (await db).put(DATABASE_STORE_NAME, val, key);
+        await accessDB('put', key, val);
     },
     async remove<Key extends string>(key: Key) {
-        return (await db).delete(DATABASE_STORE_NAME, key);
+        await accessDB('delete', key);
     },
 } as const;
 
