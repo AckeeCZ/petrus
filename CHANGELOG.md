@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="6.0.3"></a>
+
+## 6.0.3 (2023-04-12)
+
+### Fixed
+
+-   🐛 Fix accessing indexedDB in incognito mode [[1b8ff5e](https://github.com/AckeeCZ/petrus/commit/1b8ff5eda4be271bc4ad35a1eaab8c924a01c82c)]
+
+### Miscellaneous
+
+-   Merge pull request [#115](https://github.com/AckeeCZ/petrus/issues/115) from AckeeCZ/fix/indexdb-incognito-mode [[95d220d](https://github.com/AckeeCZ/petrus/commit/95d220d308c63c1129ae3cc77a82a1f25388accf)]
+
 <a name="6.0.2"></a>
 
 ## 6.0.2 (2023-02-22)
