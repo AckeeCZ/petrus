@@ -30,7 +30,10 @@ const db = openDB();
 
 async function accessDB(operation: 'get' | 'put' | 'delete', key: string, value?: any) {
     try {
-        return (await db)[operation](DATABASE_STORE_NAME, key, value);
+        if (operation === 'put') {
+            return (await db)[operation](DATABASE_STORE_NAME, value, key);
+        }
+        return (await db)[operation](DATABASE_STORE_NAME, key);
     } catch (e) {
         const ignoresError = 'A mutation operation was attempted on a database that did not allow mutations.';
 
