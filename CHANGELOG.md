@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="6.0.4"></a>
+
+## 6.0.4 (2023-04-25)
+
+### Fixed
+
+-   🐛 Fix incorrect parameters order of IndexedDB put [[8a6b791](https://github.com/AckeeCZ/petrus/commit/8a6b791e61d0aa2780761b6419f577131cbda25d)]
+
+### Miscellaneous
+
+-   Merge pull request [#116](https://github.com/AckeeCZ/petrus/issues/116) from AckeeCZ/fix/store-tokens-error [[305ff39](https://github.com/AckeeCZ/petrus/commit/305ff3960aeb50e049a3d6b2e19cd1dcff63a4f6)]
+
 <a name="6.0.3"></a>
 
 ## 6.0.3 (2023-04-12)
