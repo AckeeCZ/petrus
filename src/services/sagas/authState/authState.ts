@@ -1,5 +1,4 @@
-import type { ActionChannelEffect } from 'redux-saga/effects';
-import { actionChannel, all, call, put } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 
 import { fetchUser, login, logout } from 'modules/auth-session';
 import { refreshTokens } from 'modules/tokens/modules/refreshment';
@@ -72,24 +71,6 @@ function* authSessionCircuit() {
     ];
 
     yield call(deepCircuit, [authSessionUnits[0], ...authSessionInterruptionUnits, authSessionUnits[1]]);
-}
-
-/**
- * @category Redux Saga
- * @deprecated
- * @ignore
- */
-export function* getAuthStateChannel() {
-    const authStateChannel: ActionChannelEffect = yield actionChannel([
-        authSessionStart,
-        authSessionPause,
-        authSessionResume,
-        authSessionEnd,
-        accessTokenAvailable,
-        accessTokenUnavailable,
-    ]);
-
-    return authStateChannel;
 }
 
 export default function* authState() {

@@ -25,7 +25,7 @@ export {
     AUTH_SESSION_START,
     terminate,
 } from './services/actions';
-export { getAccessToken, getAuthStateChannel, withAuthSession } from './services/sagas';
+export { getAccessToken, withAuthSession } from './services/sagas';
 export {
     accessTokenSelector,
     apiSelector,
