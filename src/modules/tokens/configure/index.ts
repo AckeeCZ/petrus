@@ -22,7 +22,6 @@ export const handlers = ({
 };
 
 export const options = (customOptions: PetrusCustomConfig['tokens']): PetrusConfig['tokens'] => ({
-    applyAccessTokenExternally: false,
     autoStartTokensRetrieval: true,
     ...refreshmentConfig.options,
     ...customOptions,

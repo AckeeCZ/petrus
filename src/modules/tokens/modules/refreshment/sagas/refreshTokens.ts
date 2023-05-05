@@ -1,14 +1,13 @@
 import { put, takeLeading } from 'redux-saga/effects';
 
 import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
-import { setTokens, deleteTokens } from 'services/actions';
+import { deleteTokens, setTokens } from 'services/actions';
 import { tokensSelector } from 'services/selectors';
 import { validateTokens } from 'services/utils';
-import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
-import { refreshTokens } from '../actions';
 import { appSelect } from 'services/utils/reduxSaga';
 import type { PetrusTokens } from 'types';
+import { refreshTokens } from '../actions';
 
 export default function* refreshTokensHandler() {
     yield takeLeading(refreshTokens.request, function* (action) {
@@ -31,8 +30,6 @@ export default function* refreshTokensHandler() {
             validateTokens(refreshedTokens);
 
             yield put(setTokens(refreshedTokens));
-
-            yield* applyAccessTokenExternally(refreshedTokens);
 
             yield put(refreshTokens.success());
         } catch (e) {

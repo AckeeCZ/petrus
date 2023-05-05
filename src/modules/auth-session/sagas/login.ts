@@ -3,10 +3,9 @@ import { put, takeLeading } from 'redux-saga/effects';
 import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import { setTokens } from 'services/actions';
 import { validateTokens } from 'services/utils';
-import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
-import { fetchUser, login } from '../actions';
 import type { PetrusTokens, PetrusUser } from 'types';
+import { fetchUser, login } from '../actions';
 
 function* resolveAuthUser(tokens: PetrusTokens, user?: PetrusUser): Generator<any, PetrusUser> {
     return user ? user : yield config.handlers.getAuthUser(tokens);
@@ -34,7 +33,6 @@ export default function* loginHandler() {
 
             validateTokens(tokens);
             yield put(setTokens(tokens));
-            yield* applyAccessTokenExternally(tokens);
 
             const authUser = yield* resolveAuthUser(tokens, user);
             yield put(fetchUser.success(authUser));
