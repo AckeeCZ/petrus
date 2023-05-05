@@ -10,7 +10,6 @@ export { TokensPersistence, setTokensPersistence } from 'modules/tokens';
 export { checkAccessTokenExpiration } from 'modules/tokens/modules/refreshment';
 export type { RefreshTokensRequestPayload } from 'modules/tokens/modules/refreshment';
 export { RETRIEVE_TOKENS_REQUEST, RETRIEVE_TOKENS_RESOLVE, retrieveTokens } from 'modules/tokens/modules/retrieval';
-export * from './HOC/authorizable';
 export * from './components/Authenticated';
 export { PetrusErrorType, isPetrusError, storageDrivers } from './config';
 export { configure } from './configure';
