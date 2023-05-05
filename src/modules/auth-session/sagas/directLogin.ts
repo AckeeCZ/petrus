@@ -1,13 +1,12 @@
-import { put, takeLeading, take } from 'redux-saga/effects';
+import { put, take, takeLeading } from 'redux-saga/effects';
 
 import { config, isPetrusError, PetrusError, PetrusErrorType } from 'config';
 import { setTokens } from 'services/actions';
-import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
 
-import { login, logout, setUserWithTokens, fetchUser } from '../actions';
-import { loginSelector } from '../selectors';
-import { appSelect } from 'services/utils/reduxSaga';
 import { validateTokens } from 'services/utils';
+import { appSelect } from 'services/utils/reduxSaga';
+import { fetchUser, login, logout, setUserWithTokens } from '../actions';
+import { loginSelector } from '../selectors';
 
 export default function* directLogin() {
     yield takeLeading(setUserWithTokens, function* (action) {
@@ -25,8 +24,6 @@ export default function* directLogin() {
 
             yield put(fetchUser.success(user));
             yield put(setTokens(tokens));
-
-            yield* applyAccessTokenExternally(tokens);
 
             yield put(login.success());
         } catch (e) {

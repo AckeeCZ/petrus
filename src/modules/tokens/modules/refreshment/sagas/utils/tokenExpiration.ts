@@ -1,8 +1,12 @@
-import { PetrusError, config, PetrusErrorType } from 'config';
+import { PetrusError, PetrusErrorType, config } from 'config';
 import type { PetrusTokens } from 'types';
 
-export const isTokenExpired = (token: PetrusTokens['accessToken']) => {
-    return Boolean(token && token.expiration && Date.parse(token.expiration) <= Date.now());
+export const isTokenExpired = (token?: PetrusTokens['accessToken']) => {
+    if (!token?.expiration) {
+        return true;
+    }
+
+    return Date.parse(token.expiration) - config.tokens.requestDurationEstimate <= Date.now();
 };
 
 export function calcTimeoutValue(expiration: string) {

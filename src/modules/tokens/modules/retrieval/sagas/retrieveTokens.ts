@@ -1,20 +1,19 @@
-import { take, put } from 'redux-saga/effects';
+import { put, take } from 'redux-saga/effects';
 
 import { config } from 'config';
-import { setTokens, deleteTokens } from 'services/actions';
+import { deleteTokens, setTokens } from 'services/actions';
 import { tokensPersistenceSelector } from 'services/selectors';
 
-import { getMaybeOAuthTokens } from 'modules/oAuth';
 import { fetchUser } from 'modules/auth-session';
-import { applyAccessTokenExternally } from 'modules/tokens/modules/external';
+import { getMaybeOAuthTokens } from 'modules/oAuth';
 
+import { isTokenExpired, refreshTokens } from '../../refreshment';
 import { TokensPersistence, storageHandlers } from '../../storage';
-import { refreshTokens, isTokenExpired } from '../../refreshment';
 
-import { retrieveTokensRequest, retrieveTokensResolve } from '../actions';
 import { appSelect } from 'services/utils/reduxSaga';
-import type { PetrusTokens } from 'types';
 import { areTokensValid } from 'services/utils/validateTokens';
+import type { PetrusTokens } from 'types';
+import { retrieveTokensRequest, retrieveTokensResolve } from '../actions';
 
 function* tokensRetrieval() {
     const tokensPersistence = yield* appSelect(tokensPersistenceSelector);
@@ -56,8 +55,6 @@ function* tokensRetrieval() {
         }
     } else {
         yield put(setTokens(tokens));
-
-        yield* applyAccessTokenExternally(tokens);
     }
 
     yield put(fetchUser.request());

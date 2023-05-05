@@ -194,16 +194,6 @@ export interface PetrusConfig {
 
     tokens: {
         /**
-         * If true, anytime valid non-expired tokens becomes available
-         * the `applyAccessTokenRequest` is dispatch. Until the `applyAccessTokenResolve` is dispatched by any external service, the auth. flow is paused.
-         * This gives you the option to do something with access token externally, e.g. injected to the Authorization header.
-         *
-         * @default false
-         * @deprecated
-         */
-        applyAccessTokenExternally: boolean;
-
-        /**
          * If `false`, petrus won't start tokens retrieval saga automatically but it's up to you to call the `retrieveTokens` saga.
          * By calling `retrieveTokens` saga, petrus starts the authentication flow. Either it signs-in user with avail. access token or it won't if the access token is expired and couldn't be refreshed.
          * @default true
@@ -212,12 +202,12 @@ export interface PetrusConfig {
 
         /**
          * Refresh tokens `${requestDurationEstimate}`ms before token expires.
-         * @default 500 // ms
+         * @default 120_000 // 2 minute
          */
         requestDurationEstimate: number;
 
         /**
-         * @default 60_000 // 1 minute
+         * @default 120_000 // 2 minute
          */
         minRequiredExpiration: number;
 

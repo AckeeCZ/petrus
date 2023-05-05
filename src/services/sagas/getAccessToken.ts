@@ -1,14 +1,33 @@
-import { take, race } from 'redux-saga/effects';
+import { put, take } from 'redux-saga/effects';
 
 import { AuthSession } from 'constants/index';
-import { entitiesSelector, accessTokenSelector, apiSelectorFactory } from 'services/selectors/index';
-import { accessTokenAvailable, setTokens } from 'services/actions';
+import { setTokens } from 'services/actions';
+import { accessTokenSelector, apiSelectorFactory, entitiesSelector, tokensSelector } from 'services/selectors/index';
 
-import { refreshTokens, refreshExpiredToken } from 'modules/tokens/modules/refreshment';
+import { isTokenExpired } from 'modules/tokens/modules/refreshment';
+import { refreshTokensTask } from 'modules/tokens/modules/refreshment/sagas/refreshTokens';
 import { appSelect } from 'services/utils/reduxSaga';
 import type { PetrusTokens } from 'types';
 
 const retrieveTokensApiSelector = apiSelectorFactory('retrieveTokens');
+
+function* obtainValidAccesToken() {
+    const tokens = yield* appSelect(tokensSelector);
+
+    if (!tokens) {
+        return null;
+    }
+
+    if (isTokenExpired(tokens.accessToken)) {
+        const refreshedTokens = yield* refreshTokensTask(tokens);
+
+        yield put(setTokens(refreshedTokens));
+
+        return refreshedTokens.accessToken;
+    }
+
+    return tokens.accessToken;
+}
 
 function* preSessionResolvement() {
     const retriveTokensApi = yield* appSelect(retrieveTokensApiSelector);
@@ -17,52 +36,27 @@ function* preSessionResolvement() {
         return null;
     }
 
-    const accessToken = yield* appSelect(accessTokenSelector);
+    const accessToken = yield* obtainValidAccesToken();
 
-    if (accessToken) {
-        return accessToken;
+    if (!accessToken) {
+        yield take(setTokens);
+
+        return yield* appSelect(accessTokenSelector);
     }
 
-    yield take(setTokens);
-
-    return yield* appSelect(accessTokenSelector);
-}
-
-function* afterRefreshAccessToken() {
-    const effects = {
-        success: refreshTokens.success,
-        failure: refreshTokens.failure,
-    } as const;
-
-    const result: Partial<typeof effects> = yield race(effects);
-
-    if (result.failure) {
-        return null;
-    }
-
-    const action: ReturnType<typeof accessTokenAvailable> = yield take(accessTokenAvailable);
-
-    return action.payload;
+    return accessToken;
 }
 
 function* getAccessTokenInner() {
     const { sessionState } = yield* appSelect(entitiesSelector);
 
-    if (sessionState === AuthSession.ACTIVE) {
-        yield* refreshExpiredToken();
-    }
-
-    const { sessionState: authSessionState } = yield* appSelect(entitiesSelector);
-
-    switch (authSessionState) {
+    switch (sessionState) {
         case null:
             return yield* preSessionResolvement();
 
         case AuthSession.ACTIVE:
-            return yield* appSelect(accessTokenSelector);
-
         case AuthSession.PAUSED:
-            return yield* afterRefreshAccessToken();
+            return yield* obtainValidAccesToken();
 
         default:
             return null;

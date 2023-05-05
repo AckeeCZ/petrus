@@ -1,32 +1,26 @@
-import type { ActionChannelEffect } from 'redux-saga/effects';
-import { put, call, all, actionChannel } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 
-import { config } from 'config';
-
+import { fetchUser, login, logout } from 'modules/auth-session';
 import { refreshTokens } from 'modules/tokens/modules/refreshment';
-import { unapplyAccessTokenExternally, applyAccessTokenResolve } from 'modules/tokens/modules/external';
-import { login, logout, fetchUser } from 'modules/auth-session';
 
 import { tokensSelector } from 'services/selectors';
 
 import {
     accessTokenAvailable,
     accessTokenUnavailable,
-    authSessionStart,
     authSessionEnd,
     authSessionPause,
     authSessionResume,
+    authSessionStart,
 } from '../../actions';
 
-import { simpleCircuit, deepCircuit } from '../circuits';
 import { appSelect } from 'services/utils/reduxSaga';
+import { deepCircuit, simpleCircuit } from '../circuits';
 
 function* tokenAvailabilityCircuit() {
-    const { applyAccessTokenExternally } = config.tokens;
-
     const tokenAvailabilityUnits = [
         {
-            pattern: applyAccessTokenExternally ? applyAccessTokenResolve : [login.success, refreshTokens.success],
+            pattern: [login.success, refreshTokens.success],
             *task() {
                 const tokens = yield* appSelect(tokensSelector);
                 if (tokens) {
@@ -37,10 +31,6 @@ function* tokenAvailabilityCircuit() {
         {
             pattern: [refreshTokens.request, logout.success, fetchUser.failure],
             *task() {
-                if (applyAccessTokenExternally) {
-                    yield* unapplyAccessTokenExternally();
-                }
-
                 yield put(accessTokenUnavailable());
             },
         },
@@ -81,24 +71,6 @@ function* authSessionCircuit() {
     ];
 
     yield call(deepCircuit, [authSessionUnits[0], ...authSessionInterruptionUnits, authSessionUnits[1]]);
-}
-
-/**
- * @category Redux Saga
- * @deprecated
- * @ignore
- */
-export function* getAuthStateChannel() {
-    const authStateChannel: ActionChannelEffect = yield actionChannel([
-        authSessionStart,
-        authSessionPause,
-        authSessionResume,
-        authSessionEnd,
-        accessTokenAvailable,
-        accessTokenUnavailable,
-    ]);
-
-    return authStateChannel;
 }
 
 export default function* authState() {

@@ -8,8 +8,8 @@ type TokensRefreshmentOptions = {
 
 export const options: TokensRefreshmentOptions = {
     // refresh tokens 0.5s before token expires
-    requestDurationEstimate: 500, // 0.5s
-    minRequiredExpiration: 1000 * 60, // 1m
+    requestDurationEstimate: 2 * 60 * 100, // 2m,
+    minRequiredExpiration: 2 * 60 * 1000, // 2m
 
     checkTokenExpirationOnTabFocus: true,
 } as const;
