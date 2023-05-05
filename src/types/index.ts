@@ -202,12 +202,12 @@ export interface PetrusConfig {
 
         /**
          * Refresh tokens `${requestDurationEstimate}`ms before token expires.
-         * @default 500 // ms
+         * @default 120_000 // 2 minute
          */
         requestDurationEstimate: number;
 
         /**
-         * @default 60_000 // 1 minute
+         * @default 120_000 // 2 minute
          */
         minRequiredExpiration: number;
 

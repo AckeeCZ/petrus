@@ -1,12 +1,12 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
 
 import { entitiesSelector } from 'services/selectors';
 import { appSelect } from 'services/utils/reduxSaga';
 
-import { refreshTokens, checkAccessTokenExpiration } from '../actions';
+import { checkAccessTokenExpiration, refreshTokens } from '../actions';
 import { isTokenExpired } from './utils';
 
-export function* refreshExpiredToken() {
+function* refreshExpiredToken() {
     const { tokens } = yield* appSelect(entitiesSelector);
 
     if (tokens && isTokenExpired(tokens.accessToken)) {

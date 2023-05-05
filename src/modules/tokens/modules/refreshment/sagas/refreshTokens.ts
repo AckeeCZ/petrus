@@ -7,27 +7,29 @@ import { validateTokens } from 'services/utils';
 
 import { appSelect } from 'services/utils/reduxSaga';
 import type { PetrusTokens } from 'types';
-import { refreshTokens } from '../actions';
+import { refreshTokens, RefreshTokensRequestPayload } from '../actions';
+
+export function* refreshTokensTask(currentTokens?: RefreshTokensRequestPayload) {
+    const tokens = currentTokens ? currentTokens : yield* appSelect(tokensSelector);
+
+    if (!tokens?.refreshToken) {
+        throw new PetrusError(
+            PetrusErrorType.UNAVAILABLE_TOKENS,
+            `Can't refresh access token without a refresh token. Received 'tokens': ${JSON.stringify(tokens, null, 2)}`,
+        );
+    }
+
+    const refreshedTokens: PetrusTokens = yield config.handlers.refreshTokens(tokens as Required<PetrusTokens>);
+
+    validateTokens(refreshedTokens);
+
+    return refreshedTokens;
+}
 
 export default function* refreshTokensHandler() {
     yield takeLeading(refreshTokens.request, function* (action) {
         try {
-            const tokens = action.payload ? action.payload : yield* appSelect(tokensSelector);
-
-            if (!tokens?.refreshToken) {
-                throw new PetrusError(
-                    PetrusErrorType.UNAVAILABLE_TOKENS,
-                    `Can't refresh access token without a refresh token. Received 'tokens': ${JSON.stringify(
-                        tokens,
-                        null,
-                        2,
-                    )}`,
-                );
-            }
-
-            const refreshedTokens: PetrusTokens = yield config.handlers.refreshTokens(tokens as Required<PetrusTokens>);
-
-            validateTokens(refreshedTokens);
+            const refreshedTokens = yield* refreshTokensTask(action.payload);
 
             yield put(setTokens(refreshedTokens));
 
