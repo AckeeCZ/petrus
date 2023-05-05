@@ -1,5 +1,27 @@
 # Changelog
 
+<a name="7.0.0-beta.0"></a>
+
+## 7.0.0-beta.0 (2023-05-05)
+
+### Added
+
+-   ✅ Add test for isTokenExpired util [[232392c](https://github.com/AckeeCZ/petrus/commit/232392cf35da3580bd5e7a1bfa4936e4683ce261)]
+
+### Changed
+
+-   ♻️ Obtain access token without relying on the current API state from redux store [[c2d1c38](https://github.com/AckeeCZ/petrus/commit/c2d1c3893a728e15849cefa8abf3d07e72ce1a8f)]
+
+### Breaking
+
+-   🔥 Remove deprecated getAuthStateChannel [[ef1c7e3](https://github.com/AckeeCZ/petrus/commit/ef1c7e32c5ec20c1f8dd29046787040b7d6811d2)]
+-   🔥 Remove deprecated authorizable HOC [[3f8733b](https://github.com/AckeeCZ/petrus/commit/3f8733b7a00beaaab9f04943473ed193747844d6)]
+-   🔥 Remove already depreacted apply access token externally feature [[72c7c22](https://github.com/AckeeCZ/petrus/commit/72c7c223c6ebae14f71485f356640239d9e18054)]
+
+### Miscellaneous
+
+-   Merge pull request [#117](https://github.com/AckeeCZ/petrus/issues/117) from AckeeCZ/feat/7.0.0 [[216ba88](https://github.com/AckeeCZ/petrus/commit/216ba88b11ec00bf9bf9aabd6b0b0cdf6b403374)]
+
 <a name="6.0.4"></a>
 
 ## 6.0.4 (2023-04-25)
