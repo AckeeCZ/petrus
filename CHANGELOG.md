@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="7.0.2"></a>
+
+## 7.0.2 (2024-06-11)
+
+### Changed
+
+-   ⬆️ Upgrade node to v20 in CI [[c3d120d](https://github.com/AckeeCZ/petrus/commit/c3d120dd588eb16452e76f018f738fddf39ea67f)]
+
 <a name="7.0.1"></a>
 
 ## 7.0.1 (2024-06-11)
