@@ -42,9 +42,7 @@
     "dependencies": {
         "@ackee/redux-utils": "^4.1.2",
         "@reduxjs/toolkit": "^1.8.1",
-        "@types/jest": "^29.2.4",
-        "idb": "5.0.4",
-        "react-display-name": "^0.2.5"
+        "idb": "5.0.4"
     },
     "peerDependencies": {
         "core-js": "3",
@@ -61,6 +59,7 @@
         "@babel/preset-env": "7.18.0",
         "@babel/preset-react": "7.17.12",
         "@babel/preset-typescript": "^7.17.12",
+        "@types/jest": "^29.2.4",
         "@types/node": "^14.18.18",
         "@types/react": "^18.0.9",
         "@types/react-redux": "^7.1.24",
