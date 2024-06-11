@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="7.0.1"></a>
+
+## 7.0.1 (2024-06-11)
+
+### Removed
+
+-   ➖ Move @types/jest among dev dep. &amp; remove unused react-display-name [[e5edec9](https://github.com/AckeeCZ/petrus/commit/e5edec96706cbe3957d62f968f3e7ecc5d94ae80)]
+
 <a name="7.0.0"></a>
 <a name="7.0.0-beta.0"></a>
 

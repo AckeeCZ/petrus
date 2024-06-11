@@ -1,6 +1,6 @@
 {
     "name": "@ackee/petrus",
-    "version": "7.0.0",
+    "version": "7.0.1",
     "description": "A tool for handling token-based authentication in React/Redux/Redux-Saga applications",
     "main": "lib/index.js",
     "module": "es/index.js",
