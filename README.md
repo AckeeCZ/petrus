@@ -1,3 +1,14 @@
+> # ⚠️ Deprecated in favour of [Bear Auth](https://github.com/AckeeCZ/bear-auth/tree/main)
+> Why?
+> - `@ackee/petrus` works great in the stack of redux and redux saga, i.e. generators but in promise-based stack, it's basically useless.
+> - The API design is old and somewhat cumbersome.
+> 
+> __On the contranery, the Bear Auth can be used just in vanilla JS and in within generators stack as well. It's 2x smaller. The API has been designed like pure functions (rather than one heavy object) to support tree-shaking. Plus it got some new features__.
+> 
+> 👉 [Bear Auth](https://github.com/AckeeCZ/bear-auth/tree/main)
+
+---
+
 ![ackee|Petrus](media/ackee_git_frontend_petrus.png)
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AckeeCZ/petrus/blob/master/LICENSE) [![bundlephobia](https://flat.badgen.net/bundlephobia/minzip/@ackee/petrus)](https://bundlephobia.com/result?p=@ackee/petrus)
