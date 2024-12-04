@@ -3,7 +3,7 @@
 > - `@ackee/petrus` works great in the stack of redux and redux saga, i.e. generators but in promise-based stack, it's basically useless.
 > - The API design is old and somewhat cumbersome.
 > 
-> __On the contranery, the Bear Auth can be used just in vanilla JS and in within generators stack as well. It's 2x smaller. The API has been designed like pure functions (rather than one heavy object) to support tree-shaking. Plus it got some new features__.
+> __On the contrary, the Bear Auth can be used just in vanilla JS and in within generators stack as well. It's 2x smaller. The API has been designed like pure functions (rather than one heavy object) to support tree-shaking. Plus it got some new features__.
 > 
 > 👉 [Bear Auth](https://github.com/AckeeCZ/bear-auth/tree/main)
 
