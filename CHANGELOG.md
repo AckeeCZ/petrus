@@ -1,5 +1,14 @@
 # Changelog
 
+<a name="7.0.3"></a>
+
+## 7.0.3 (2024-12-04)
+
+### Miscellaneous
+
+-   Update README.md [[5495a05](https://github.com/AckeeCZ/petrus/commit/5495a05a98101aa7e1fa446f171f428d11bd0635)]
+-   Update README.md [[2e4c31a](https://github.com/AckeeCZ/petrus/commit/2e4c31a6859338ef0b506ea46b88ce7557f70318)]
+
 <a name="7.0.2"></a>
 
 ## 7.0.2 (2024-06-11)
