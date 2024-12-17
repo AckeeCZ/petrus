@@ -74,15 +74,15 @@ export const { saga, reducer } = configure({
 import { create, setRefreshTokenHook, setFetchAuthInfoHook, setLogoutHook } from '@bear-auth/core';
 
 // 1. Call this only once. The `create` method returns a string ID of Bear Auth instance which you will refer to with each method.
-const bearAuth = create();
+export const bearAuth = create();
 
-type AuthInfo = {
+export type AuthInfo = {
     name: string;
     age: number;
 };
 
 // 2. Set hook for refreshing access token
-setRefreshTokenHook<AuthInfo>(bearAuth, async session => {
+const refreshToken = setRefreshTokenHook<AuthInfo>(bearAuth, async session => {
     console.log('TODO: refresh access token');
 
     return {
@@ -95,7 +95,7 @@ setRefreshTokenHook<AuthInfo>(bearAuth, async session => {
 });
 
 // 3. Set hook for fetching authentication info (e.g. auth user)
-setFetchAuthInfoHook<AuthInfo>(bearAuth, async session => {
+const refetchAuthInfo = setFetchAuthInfoHook<AuthInfo>(bearAuth, async session => {
     console.log('TODO: fetch auth user');
 
     // This method must resolve with `AuthUser` type
@@ -122,7 +122,7 @@ import { authenticate } from '@bear-auth/core';
 async function loginUser(email: string, password: string) {
     // TODO: call your API and receive access and refresh token token
 
-    await authenticate({
+    await authenticate<AuthInfo>({
         accessToken: '...',
         refreshToken: '...',
         expiration: '...', // a timestamp in ISO format
@@ -149,7 +149,7 @@ But we haven't set any persistent storage yet. Let's fix it:
 import { setStorage } from '@bear-auth/core';
 
 // Call this starting the auth. flow (e.g. before calling `retrieveAuthSession` or `authenticate` methods)
-setStorage(bearAuth, {
+setStorage<AuthInfo>(bearAuth, {
     // The schema looks like this:
     version: 1,
     async set(key, data) {},
@@ -176,7 +176,7 @@ const storage = createIndexedDBStorage({
 });
 
 // And just pass it to the method:
-setStorage(bearAuth, storage);
+setStorage<AuthInfo>(bearAuth, storage);
 ```
 
 [Check out all complete available API of the `@bear-auth/core`](https://github.com/AckeeCZ/bear-auth/blob/main/packages/core/docs/API.md).
@@ -194,7 +194,7 @@ import { AuthBearSection } from './AuthBearSection';
 //   E.g. `setRefreshTokenHook` returns `refreshToken` trigger, etc.
 function App() {
     return (
-        <BearAuthProvider id={bearAuthId} actions={{ refetchAuthInfo, refreshToken, logout }}>
+        <BearAuthProvider<AuthInfo> id={bearAuthId} actions={{ refetchAuthInfo, refreshToken, logout }}>
             <AuthBearSection />
         </BearAuthProvider>
     );
@@ -224,7 +224,7 @@ export const AuthBearSection = () => {
                 onClick={async () => {
                     // TODO: login on your API
                     // Pass received tokens to the Bear auth
-                    await authenticate({
+                    await authenticate<AuthInfo>({
                         accessToken: '...',
                         refreshToken: '...',
                         expiration: '...',
