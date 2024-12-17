@@ -5,8 +5,8 @@
 > 
 > __On the contrary, the Bear Auth can be used just in vanilla JS and in within generators stack as well. It's over 3x smaller. The API has been designed like pure functions (rather than one heavy object) to support tree-shaking. Plus it got some new features__.
 > 
-> 👉 [Bear Auth](https://github.com/AckeeCZ/bear-auth/tree/main)
-> 👉 [Migration guide from `@ackee/petrus` to the Bear Auth](https://github.com/AckeeCZ/petrus/blob/master/MIGRATION_GUIDE_TO_BEAR_AUTH.md)
+> - 👉 [Bear Auth](https://github.com/AckeeCZ/bear-auth/tree/main)
+> - 👉 [Migration guide from `@ackee/petrus` to the Bear Auth](https://github.com/AckeeCZ/petrus/blob/master/MIGRATION_GUIDE_TO_BEAR_AUTH.md)
 
 ---
 
